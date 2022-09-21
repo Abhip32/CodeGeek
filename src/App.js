@@ -25,6 +25,7 @@ import AdminAddQuestion from "./componentServer/AdminAddQuestion";
 import AdminHome from "./componentServer/AdminHome";
 import ApproveCertificate from "./componentServer/ApproveCertificate";
 import AdminHostEvent from "./componentServer/AdminHostEvent";
+import pagenotfound from "./componentsUser/pagenotfound";
 
 function App() {
   const [type, setType]= useState("Login")

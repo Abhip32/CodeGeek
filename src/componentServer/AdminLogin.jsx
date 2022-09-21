@@ -13,7 +13,7 @@ function Login() {
     const [sidebarVisible, setsidebarVisible] = useState(true);
     const [languagesstats, setlanguagestats] = useState([]);
     const [teststats, setteststats] = useState([]);
-    const [user, setUser] = useState("")
+    const [user, setUser] = useState([])
 
     function show() {
         var x = document.getElementById("password");
@@ -23,45 +23,70 @@ function Login() {
             x.type = "password";
         }
     }
+    
 
 
-    async function handleSubmit(event) {
+    async function handleSubmit(event,callback) {
         event.preventDefault();
 
-        console.log("getData");
-            Axios.post(`http://localhost:8000/usersData`).then((res) => {
-              setUser(res.data.users);
-              console.log(res.data);
+         await Axios.post(`http://localhost:8000/usersData`).then((res) => {
+              user.push(res.data.users);
+              console.log(user);
           })
       
-          Axios.post(`http://localhost:8000/getbardata`).then((res) => {
-              setteststats(res.data);
-              console.log(res.data);
+          await  Axios.post(`http://localhost:8000/getbardata`).then((res) => {
+              teststats.push(res.data)
+              console.log(teststats);
           })
       
-          Axios.post(`http://localhost:8000/getpiedata`).then((res) => {
-              setlanguagestats(res.data);
-              console.log(res.data);
+          await Axios.post(`http://localhost:8000/getpiedata`).then((res) => {
+              languagesstats.push(res.data);
+              console.log(languagesstats);
           })
 
 
-        Axios.post(`http://localhost:8000/adminlogin`, {
+        await Axios.post(`http://localhost:8000/adminlogin`, {
             user: document.getElementById("username").value,
             pass: document.getElementById("password").value
         }).then((res) => {
-            console.log(res.data)
-            if (teststats.length!=0) {
+            console.log(res.data._id);
+            if (res.data._id!=undefined&&languagesstats.length > 0) {
                 navigate("/AdminHome", {
                     state: {
-                        name: res.data.username.name,
-                        pic: res.data.username.pic,
-                        lang: languagesstats,
-                        test: teststats,
+                        name: res.data.name,
+                        pic: res.data.pic,
+                        lang: languagesstats[0],
+                        test: teststats[0],
                         userstat: user
                     }
                 })
                 window.location.reload(false);
             } 
+            else if(res.data._id!=undefined&&languagesstats.length==0) 
+            {
+                setstatus("Wait");
+                if(languagesstats[0]!=0) {
+                    handleSubmit(event);
+                }
+                else
+                {
+                    navigate("/AdminHome", {
+                        state: {
+                            name: res.data.name,
+                            pic: res.data.pic,
+                            lang: languagesstats,
+                            test: teststats,
+                            userstat: user
+                        }
+                    })
+                    window.location.reload(false);
+                }
+                
+            }
+            else
+            {
+                setstatus("Invalid username or password");
+            }
         })
 
 

@@ -23,6 +23,33 @@ function AdminHome() {
   
   console.log(location.state);
 
+  var something = () =>  {
+    var executed = false;
+    return function() {
+        if (!executed) {
+            executed = true;
+            Axios.post(`http://localhost:8000/usersData`).then((res) => {
+              setUserstat(res.data.users);
+              console.log(res.data);
+          })
+        
+          Axios.post(`http://localhost:8000/getbardata`).then((res) => {
+              setteststats(res.data);
+              console.log(res.data);
+          })
+        
+          Axios.post(`http://localhost:8000/getpiedata`).then((res) => {
+              setlanguagestats(res.data);
+              console.log(res.data);
+          })
+        }
+    };
+};
+
+if(languagesstats==[])
+{
+  something();
+}
  
 
   const greet=() =>{
@@ -30,6 +57,10 @@ function AdminHome() {
     time = today.getHours();
     var message ="";
     var icon="";
+    console.log("getData");
+    
+    
+
     if(time <=12&&time>=0)
     {
       message = "Good Morning";

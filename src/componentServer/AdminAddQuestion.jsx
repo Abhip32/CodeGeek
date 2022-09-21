@@ -55,11 +55,11 @@ function AdminAddQuestion() {
   }
   
   return (
-    <div style={{display:'flex',height:"100vh",width:"98vw"}}>
+    <div style={{display:'flex',height:"100vh",background: "linear-gradient(#9796f0,#2a0845)"}}>
       <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat}}/>
       <div style={{padding:"20px"}}>
-          <h2>Add Question Here</h2>
-          <form>
+          <h2 style={{fontWeight: "900",color:"white",textShadow:"1px 1px 20px black"}}>Add Question Here</h2>
+          <form style={{background: "white",padding:"20px",borderRadius:"2vw"}}>
               <h5>Enter Question : <input type="text" placeholder='Enter the Question' onChange={(e)=>{setProblem(e.target.value)}}/></h5>
               <h5>Language : <select onChange={e=>setLanguage(e.target.value)}>
               <option value="">Select Language</option>
