@@ -1,0 +1,43 @@
+
+.Home{
+    background-color: whitesmoke;
+    height: 100vh;
+    
+}
+
+.Intro{
+    @media (min-width: 350px) and (max-width: 767px) {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        #launchimg{
+            width: 100%;
+        }
+    }
+      
+    /* Media Query for Tablets Ipads portrait mode */
+    @media (min-width: 768px) and (max-width: 1024px){
+        display: flex;
+    }
+      
+    /* Media Query for Laptops and Desktops */
+    @media (min-width: 1025px) and (max-width: 1280px){
+        display: flex;
+    }
+      
+    /* Media Query for Large screens */
+    @media (min-width: 1281px) {
+        display: flex;
+    
+    }
+    h1{
+        padding: 10%;
+    }
+    align-items: center;
+    color: #3b1e5b;
+    font-size: 40.001px;
+    letter-spacing: -0.013em;
+    font-family: "Open Sans", sans-serif;
+    font-size: 46px;
+    width: 90vw;
+}

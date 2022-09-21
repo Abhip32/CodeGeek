@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+}
+
+.canvas {
+    height: 200px;
+    width: 250px;
+    margin-bottom: 40px;
+}
+
+.NoWarning{
+    display: none;
+}
+
+._1stWarning{
+    color: yellow;
+    background-color: black;
+}
+
+
+._2ndWarning{
+    color: orange;
+    background-color: black;
+}
+
+._3rdWarning{
+    color: red;
+    background-color: black;
+}

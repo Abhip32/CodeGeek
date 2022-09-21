@@ -1,0 +1,67 @@
+.WebsiteHeading{
+    font-family: 'Montserrat', sans-serif;
+}
+
+button.navbar-toggler.collapsed{
+    background-color: white;
+}
+
+button.navbar-toggler{
+    background-color: white;
+}
+
+span.navbar-toggler.icon{
+    background-color: white;
+}
+
+
+.nlink{
+    color: white;
+    margin-right: 0.2vw;
+    margin-left: 1.3vw;
+    margin-top: auto;
+    margin-bottom: auto;
+    font-size: 1.8vh;
+    font-family: 'Montserrat', sans-serif;
+
+    &:hover{
+        color: #8458B3;
+        cursor: pointer;
+    }
+}
+
+.Asidebar{
+    float: left;
+    .sidebarintro{
+    .sidebarpic{
+        width: 70px;
+        height: 70px;
+        margin: 20px;
+        border-radius: 200px;
+        box-shadow: 1px 1px 18px white;
+    }
+    padding: 20px;
+    color: white;
+    width: 15vw;
+    height: 100vh;
+    box-shadow: 1px 1px 18px black;
+    background-color: black;
+}
+}
+
+.profilepic{
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    box-shadow: 2px 2px 18px white;
+    background-color: #8458B3;
+    float: right;
+    position: absolute;
+    right: 5vw;
+    top: 10px;
+    &:hover{
+        cursor: pointer;
+    }
+}
+
+

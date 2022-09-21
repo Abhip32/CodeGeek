@@ -1,0 +1,118 @@
+@media (min-width: 350px) and (max-width: 767px) {
+    form{
+      width: 90vw;
+      margin: 5vw;
+    }
+  }
+  
+  /* Media Query for Tablets Ipads portrait mode */
+  @media (min-width: 768px) and (max-width: 1024px){
+    form{
+      width: 30vw;
+    }
+  }
+  
+  /* Media Query for Laptops and Desktops */
+  @media (min-width: 1025px) and (max-width: 1280px){
+    .Asidebar{
+        width: 15vw;
+        background-color: black;
+    }
+  }
+  
+  /* Media Query for Large screens */
+  @media (min-width: 1281px) {
+  
+  }
+
+
+.icon{
+  &:hover{
+    color: violet;
+  }
+}
+
+
+  .AdminHome{
+    width: 100%;
+    height: 100vh;
+    background-image: linear-gradient(#9796f0,#2a0845);
+}
+.AdminHomeBody{
+  display: flex;
+
+  .Tier11{
+    width: 350px;
+    height: 350px;
+    height: max-content;
+    background-color: white;
+    margin: 20px;
+    padding: 30px;
+    border-radius: 30px;
+  }
+
+
+  .Tier12{
+    width: 350px;
+    height: 400px;
+    background-color: white;
+    margin: 20px;
+    padding: 30px;
+    border-radius: 30px;
+  }
+
+  .Tier13{
+    width: 400px;
+    height: 400px;
+    background-color: white;
+    margin: 20px;
+    padding: 30px;
+    border-radius: 30px;
+  }
+}
+
+
+
+.chartjs-tooltip{
+  color: #2a0845;
+}
+
+.icon{
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 20px;
+    h6{
+        margin-top: 4px;
+    }
+}
+
+.NoASidebar{
+    display: none;
+}
+
+@keyframes example {
+    from {width:5vw;}
+    to {width: 15vw;}
+  }
+.ShortASidebar{
+    float: left;
+    .sidebarintro{
+    .sidebarpic{
+        width: 40px;
+        height: 40px;
+        margin-top: 20px;
+        border-radius: 200px;
+        box-shadow: 1px 1px 18px white;
+    }
+    padding: 20px;
+    color: white;
+    width: 5vw;
+    height: 100vh;
+    box-shadow: 1px 1px 18px black;
+    background-color: black;
+
+}
+}
