@@ -42,8 +42,9 @@ recordRoutes.route('/getbardata').post(function (req, res) {
             data1.push(pass1)
             data1.push(fail)
             data1.push(unfair)
-            console.log(data1);
-            res.send(data1);
+            res.send(data1)
+            console.log(data1)
+            
 
 })
 
@@ -88,8 +89,9 @@ recordRoutes.route('/getpiedata').post(function (req, res) {
             data.push(datacpp)
             data.push(datajava)
             data.push(datapython)
-            console.log(data);
-            res.send(data);
+            res.send(data)
+            console.log(data)
+            
 
         })
      
@@ -120,14 +122,12 @@ recordRoutes.route("/adminlogin").post(function (req, res) {
     db_connect
     .collection("Admin_Credentials")
     .find({ "name": user }).toArray().then ((ans) => {
-        if(ans.length!=0)
+        if(ans.length!=0&&ans[0].password==pass)
         {
-            res.send({username:ans[0]})
-            
-
+            res.send(ans[0]);
         }
         else{
-            res.send(ans[0]);
+            res.send("error");
         }
     }).catch((err) => {
     console.log(err.Message);
