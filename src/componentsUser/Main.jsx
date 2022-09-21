@@ -232,7 +232,7 @@ function Main(props) {
           <p class="num">{index+1}</p>
         </div>
         <div class="info flex">
-          <img src={item.pic} alt="" class="p_img"/>
+          <img src={item.pic} style={{width:"60px",height:"60px"}} alt="" class="p_img"/>
           <p class="link">{item.name}</p>
           <p class="points">{item.c_points}</p>
         </div>
@@ -303,7 +303,7 @@ function Main(props) {
           <p class="num">{index+1}</p>
         </div>
         <div class="info flex">
-          <img src={item.pic} alt="" class="p_img"/>
+          <img src={item.pic} style={{width:"60px",height:"60px"}} alt="" class="p_img"/>
           <p class="link">{item.name}</p>
           <p class="points">{item.cpp_points}</p>
         </div>
@@ -374,7 +374,7 @@ function Main(props) {
           <p class="num">{index+1}</p>
         </div>
         <div class="info flex">
-          <img src={item.pic} alt="" class="p_img"/>
+          <img src={item.pic} style={{width:"60px",height:"60px"}} alt="" class="p_img"/>
           <p class="link">{item.name}</p>
           <p class="points">{item.java_points}</p>
         </div>
@@ -446,7 +446,7 @@ function Main(props) {
           <p class="num">{index+1}</p>
         </div>
         <div class="info flex">
-          <img src={item.pic} alt="" class="p_img"/>
+          <img src={item.pic} style={{width:"60px",height:"60px"}} alt="" class="p_img"/>
           <p class="link">{item.name}</p>
           <p class="points">{item.python_points}</p>
         </div>
