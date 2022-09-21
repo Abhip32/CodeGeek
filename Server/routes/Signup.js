@@ -35,7 +35,6 @@ recordRoutes.route("/SignUp").post(function (req, res) {
         if (err) out="fail"
         else out="success"
         console.log("1 document inserted");
-        db.close();
       });
       res.send("success");
 })
