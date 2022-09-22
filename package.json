@@ -23,6 +23,7 @@
     "pdf-to-base64": "^1.0.3",
     "ramda": "^0.28.0",
     "react": "^18.2.0",
+    "react-audio-player": "^0.17.0",
     "react-bootstrap": "^2.5.0",
     "react-bootstrap-sidebar": "0.0.1",
     "react-dom": "^18.2.0",

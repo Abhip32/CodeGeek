@@ -9,8 +9,11 @@ import "../stylesheet/WebcamModified.css";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {useLocation} from 'react-router-dom';
+import warning from './warning';
+import ReactAudioPlayer from "react-audio-player";
 
-var count=-35;
+
+var count=-10;
 var active = false;
 
 
@@ -27,6 +30,15 @@ const emotions = [
   "😭 sad : ",
   "😯 surprise : ",
 ];
+
+const  audio=new Audio("https://storage.soundoftext.com/63e50a20-1efc-11ed-819c-13da3a62a907.mp3")
+
+const warningEmit =()=>
+{
+    <ReactAudioPlayer 
+      src="https://storage.soundoftext.com/63e50a20-1efc-11ed-819c-13da3a62a907.mp3"
+    autoPlay/>
+}
 
 const link =
   "https://raw.githubusercontent.com/clementreiffers/emotion-recognition-website/main/resnet50js_ferplus/model.json";
@@ -54,16 +66,21 @@ const link =
     heightBoundingBox * context.canvas.height
   ); 
 
+ 
+
 
   if((xCenterBoundingBox<0.20946518272161484||xCenterBoundingBox>0.5195659756660461)&&xCenterBoundingBox.length!=0)
   {
      count=count+1;
+     audio.play();
     
+     
   }
 
   if((yCenterBoundingBox>0.5532440972328186||yCenterBoundingBox<0.0429329723119735)&&yCenterBoundingBox.length!=0)        
   {
       count=count+1;
+      audio.play();
   }
 
   if(xCenterBoundingBox.length!=0&&yCenterBoundingBox.length!=0)       
@@ -71,9 +88,10 @@ const link =
      active=true;
   }  
 
-  if(xCenterBoundingBox.length==0&&yCenterBoundingBox.length==0&&active)        
+  if(xCenterBoundingBox.length==0&&yCenterBoundingBox.length==0&&active&&window.location.href=="http://localhost:3000/Examination")        
   {
         count=count+1;
+        audio.play();
   } 
   
   context.stroke();
@@ -205,7 +223,7 @@ const WebcamModified = (props) => {
 
 
 
-  const [disqualified,setdisqualified]=useState(false);
+
 
   const dis=()=>{
     navigate("/ExamEnd",{state:{username: props.username, id: props.id, lang: props.lang}})
@@ -235,6 +253,10 @@ const WebcamModified = (props) => {
         <h3 className={count<=49&&count>=25&&props.type=='test'? "_2ndWarning" : "NoWarning"}>2nd Warning {count}</h3>
         <h3 className={count<=74&&count>=50&&props.type=='test'? "_3rdWarning" : "NoWarning"}>3rd Warning {count}</h3>
         <h3 className={count>=100 &&props.type=='test'?  dis(): "NoWarning"}>You are disqualified</h3> 
+
+      
+        
+        
         
         <Webcam
           audio={false}

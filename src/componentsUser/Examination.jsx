@@ -41,7 +41,9 @@ function Examination() {
 	]
 
 const options = {
-	fontSize: fontSize
+	fontSize: fontSize,
+    contextmenu:false,
+    
 }
 
 
@@ -162,6 +164,7 @@ function change()
           deadline.setSeconds(deadline.getSeconds() + 200);
           return deadline;
       }
+
     
       // We can use useEffect so that when the component
       // mount the timer will start as soon as possible
@@ -244,14 +247,8 @@ function change()
                 defaultLanguage={location.state.language}
                 defaultValue="# Enter your code here"
                 onChange={(value) => { setUserCode(value) }}
-                onPaste={(e)=>{
-                    e.preventDefault()
-                    return false;
-                }} 
-                onCopy={(e)=>{
-                    e.preventDefault()
-                    return false;}}
             />
+            
             <div className='InteractionMenu'>
                 <input type="checkbox" className="inp" id="inp" onClick={change}/>
                 <p>Test against custom input</p>
