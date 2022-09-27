@@ -50,13 +50,13 @@
     margin-right: auto;
     color:white;
     margin-bottom: 20px;
+    transition: transform 1s;
     &:hover{
-        transform: scale(1.03);
+        transform: scale(1.05);
     }
 
     button{
         background-color: #02729e;
-        box-shadow: 2px 2px 18px rgb(1, 230, 93);
         margin: 10px;
         margin-left: 20px;
         width: 100px;

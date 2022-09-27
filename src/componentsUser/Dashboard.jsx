@@ -3,7 +3,7 @@ import {useLocation} from 'react-router-dom';
 import { useState } from 'react';
 import Axios from "axios";
 import "./Dashboard.scss"
-import {GiPoliceBadge} from "react-icons/gi"
+import {GiDuration, GiPoliceBadge} from "react-icons/gi"
 import {TbCertificate} from "react-icons/tb"
 import { jsPDF } from "jspdf";
 
@@ -26,6 +26,9 @@ function Dashboard() {
     const [cpplink,setCppLink]= useState("");
     const [javalink,setJavaLink]= useState("");
     const [pythonlink,setPythonLink]= useState("");
+    const [subscription,setSubscription]= useState("");
+    const [duration,setDuration]= useState("");
+    const [end,setEnd]= useState("");
 
     Axios.post(`http://localhost:8000/getUserInfoAll`,{
         user: location.state.username
@@ -48,6 +51,9 @@ function Dashboard() {
         setCppCerti(res.data.Cpp_certificate);    
         setJavaCerti(res.data.Java_certificate);
         setPythonCerti(res.data.Python_certificate);    
+        setSubscription(res.data.subscription);
+        setDuration(res.data.duration);
+        setEnd(res.data.end);
       })
 
     const Approve=(lang)=>{
@@ -116,6 +122,9 @@ function Dashboard() {
                 <p>{phoneno}</p>
                 <h6>Bio : </h6>
                 <p>{bio}</p>
+                <h6>Type of Subscription : {subscription}</h6>
+                <h6>Duration of Subscription : {duration} months</h6>
+                <h6>Subscription Expires At : {end}</h6>
             </div>
 
         </div>

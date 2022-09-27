@@ -3,6 +3,8 @@ import "./AdminLogin.scss";
 import axios from 'axios';
 import {useNavigate, useLocation} from "react-router-dom";
 import Axios from 'axios';
+import {AiOutlineMail} from "react-icons/ai"
+import {FaEye, FaEyeSlash} from 'react-icons/fa'
 
 
 function Login() {
@@ -13,16 +15,23 @@ function Login() {
     const [sidebarVisible, setsidebarVisible] = useState(true);
     const [languagesstats, setlanguagestats] = useState([]);
     const [teststats, setteststats] = useState([]);
+    const [moneystats, setmoneystats] = useState([]);
+    const [substats, setsubstats] = useState([]);
     const [user, setUser] = useState([])
+    const [icon, setIcon] = useState("hide");
 
     function show() {
+        console.log("show pass");
         var x = document.getElementById("password");
         if (x.type === "password") {
             x.type = "text";
+            setIcon("hide")
         } else {
             x.type = "password";
+            setIcon("show")
         }
     }
+
     
 
 
@@ -44,6 +53,16 @@ function Login() {
               console.log(languagesstats);
           })
 
+          await Axios.post(`http://localhost:8000/getTotalTransactions`).then((res) => {
+                console.log(res.data);
+                moneystats.push(res.data.price);
+          })
+
+          await Axios.post(`http://localhost:8000/getTotalTransactionsbyCatagory`).then((res) => {
+                console.log(res.data);
+                substats.push(res.data);
+          })
+
 
         await Axios.post(`http://localhost:8000/adminlogin`, {
             user: document.getElementById("username").value,
@@ -57,7 +76,9 @@ function Login() {
                         pic: res.data.pic,
                         lang: languagesstats[0],
                         test: teststats[0],
-                        userstat: user
+                        userstat: user,
+                        moneystats: moneystats,
+                        substats: substats
                     }
                 })
                 window.location.reload(false);
@@ -76,7 +97,8 @@ function Login() {
                             pic: res.data.pic,
                             lang: languagesstats,
                             test: teststats,
-                            userstat: user
+                            userstat: user,
+                            moneystats: moneystats
                         }
                     })
                     window.location.reload(false);
@@ -117,45 +139,82 @@ function Login() {
 
     return (
         <div className="Login">
-            <img className="LoginImg" src="https://img.freepik.com/free-vector/admin-concept-illustration_114360-3427.jpg?w=2000"/>
-            <form className="LoginForm">
-                <h3>Admin Login</h3>
-                <label for="username">Username</label>
-                <input type="text" placeholder="Email or Phone" id="username"/>
-
-                <label for="password">Password</label>
-                <div className="pass">
-                    <input type="password" placeholder="Password" id="password"
-                        style={
-                            {marginBottom: '20px'}
-                        }/>
-                    <input type="checkbox" className="smallerCheckbox"
-                        onClick={show}
-                        style={
-                            {marginTop: '2vh'}
-                        }/>
+        <div class="container">
+            <main class="signup-container">
+                <h1 class="heading-primary">Log in<span class="span-blue">.</span>
+                </h1>
+                <p class="text-mute">Enter your credentials to access your account.</p>
+                <div class="login-wrapper">
+                    <a href="#" class="btn btn-google">
+                        <img src="https://img.icons8.com/fluency/48/000000/google-logo.png"/>
+                        Log In with Google
+                    </a>
+                    <div class="line-breaker">
+                        <span class="line"></span>
+                        <span>or</span>
+                        <span class="line"></span>
+                    </div>
                 </div>
-                <p style={
-                    status.length > 10 ? {
-                        color: 'red'
-                    } : {
-                        color: 'black'
-                    }
-                }>
-                    {status}</p>
-                <br/>
 
-                <button style={
-                        {borderRadius: '40px'}
-                    }
-                    onClick={
-                        (e) => handleSubmit(e)
-                }>Log In</button>
-                <br/>
-                <br/>
-            </form>
+                <form class="signup-form">
+                    <label class="inp">
+                        <input type="email" id="username" class="input-text" placeholder="&nbsp;"/>
+                        <span class="label">Email</span>
+                        <span class="input-icon"><AiOutlineMail/></span>
+                    </label>
+                    <label class="inp">
+                        <input type="password" class="input-text" placeholder="&nbsp;" id="password"/>
+                        <span class="label">Password</span>
+                        <span class="input-icon input-icon-password" data-password>
+                            <div style={
+                                icon == "hide" ? {
+                                    display: "block"
+                                } : {
+                                    display: "none"
+                                }
+                            }><FaEyeSlash onClick={
+                                    () => {
+                                        show()
+                                    }
+                                }/></div>
+                        <div style={
+                            icon == "show" ? {
+                                display: "block"
+                            } : {
+                                display: "none"
+                            }
+                        }><FaEye onClick={
+                                () => {
+                                    show()
+                                }
+                            }/>
+                        </div>
+                </span>
+            </label>
+            <button class="btn btn-login"
+                onClick={handleSubmit}>Login</button>
+                <h6 style={{color:"red",fontWeight:"bolder"}}>{status}</h6>
+        </form>
+    </main>
 
-        </div>
+    <div class="welcome-container">
+        <h1 class="heading-secondary">
+            Hello Admin
+            <br/><em style={
+                {color: '#2196f3'}
+            }>CODE</em>
+            <em style={
+                {color: 'black'}
+            }>GEEK</em>
+        </h1>
+        <br/>
+        <br/>
+        <img src="https://cdn.dribbble.com/users/76502/screenshots/5251755/jet_animation.gif" alt=""/>
+    </div>
+</div>
+
+
+</div>
     )
 }
 

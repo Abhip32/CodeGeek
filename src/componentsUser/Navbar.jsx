@@ -15,13 +15,14 @@ function NavbarFunction(props) {
   const [profileImage, setprofileImage] = useState("");
   const location = useLocation();
   let navigate = useNavigate();
+  
 
   if(props.type=="Login")
   {
     return (
       <Navbar bg="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/"><h3 className='WebsiteHeading'><em style={{color: '#8458B3'}}>CODE</em><em style={{color: 'white'}}>GEEK</em></h3></Navbar.Brand>
+        <Navbar.Brand href="/"><h3 className='WebsiteHeading'><em style={{color: '#2196f3'}}>CODE</em><em style={{color: 'white'}}>GEEK</em></h3></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
@@ -46,7 +47,7 @@ function NavbarFunction(props) {
     return (
       <Navbar bg="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/"><h3 className='WebsiteHeading'><em style={{color: '#8458B3'}}>CODE</em><em style={{color: 'white'}}>GEEK</em></h3></Navbar.Brand>
+        <Navbar.Brand href="/"><h3 className='WebsiteHeading'><em style={{color: '#2196f3'}}>CODE</em><em style={{color: 'white'}}>GEEK</em></h3></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

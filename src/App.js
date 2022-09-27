@@ -25,7 +25,8 @@ import AdminAddQuestion from "./componentServer/AdminAddQuestion";
 import AdminHome from "./componentServer/AdminHome";
 import ApproveCertificate from "./componentServer/ApproveCertificate";
 import AdminHostEvent from "./componentServer/AdminHostEvent";
-import pagenotfound from "./componentsUser/pagenotfound";
+import Buysubscription from "./componentsUser/Buysubscription";
+import Pagenotfound from "./componentsUser/Pagenotfound";
 
 function App() {
   const [type, setType]= useState("Login")
@@ -36,17 +37,20 @@ function App() {
         setType("LoggedIn");
       }
 
-      if(window.location.href.includes("Admin")&&window.location.href!=="http://localhost:3000/AdminLogin")
+    if(window.location.href.includes("Admin")&&window.location.href!=="http://localhost:3000/AdminLogin")
       {
+        console.log("sda");
         if(type=="Login"||type=="LoggedIn")
         {
           setType("LoggedInAdmin");
         } 
-        
-        
       }
     
 }, []) 
+
+
+
+
   return (
     <div className="App">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet"></link>
@@ -54,6 +58,7 @@ function App() {
       <Navbar type={type}/>
       <Routes>
       <Route path="/" element={<Navbar type="Login"/>&&<Home/>} />
+      <Route path="/Buysubscription" element={<Buysubscription/>} />
       <Route path="/Login" element={<Login/>} />
       <Route path="/Home" element={<Main id= "123"/>}/>
       <Route path="/SignUp" element={<SignUp/>} />

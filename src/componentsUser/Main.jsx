@@ -172,7 +172,7 @@ function Main(props) {
       id="controlled-tab-example"
       activeKey={key}
       onSelect={(k) => setKey(k)}
-      className="mb-3"
+      className="mb-3 gap-10"
       style={{backgroundColor:'black',margin:'0px',padding:'0px'}}
     >
       <Tab eventKey="C" title="C Programming" selected style={{background: "",padding:"0px"}}>

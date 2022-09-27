@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {AiOutlineMenuUnfold,AiOutlineMenuFold,AiFillHome,AiFillFileAdd} from "react-icons/ai"
 import {TbCertificate} from "react-icons/tb"
+import "./SidebarAdmin.scss";
 
 //import react pro sidebar components
 import {
@@ -29,7 +30,6 @@ import {BsCalendar2Event} from "react-icons/bs";
 
 //import sidebar css from react-pro-sidebar module and our custom css
 import "react-pro-sidebar/dist/css/styles.css";
-import "./AdminHome.scss"
 import AdminHome from "./AdminHome";
 import AdminAddQuestion from "./AdminAddQuestion";
 
@@ -50,12 +50,12 @@ const Header = (props) => {
   };
 
   const goToAdminApprove = () => {
-    navigate("/AdminApproveCertificate", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat}})
+    navigate("/AdminApproveCertificate", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat,moneystats:props.name.moneystats,substats:props.name.substats}})
     window.location.reload(false);
   }
 
   const goToHome = () => {
-    navigate("/AdminHome", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat}})
+    navigate("/AdminHome", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat,moneystats:props.name.moneystats,substats:props.name.substats}})
   }
 
 
@@ -63,7 +63,7 @@ const Header = (props) => {
 
   return (
     <div style={{display:"flex"}}>
-      <div id="header">
+      <div id="header" style={{backgroundColor:"white"}}>
         {/* collapsed props to change menu size using menucollapse state */}
         <ProSidebar collapsed={menuCollapse}>
           <SidebarHeader>
@@ -71,7 +71,7 @@ const Header = (props) => {
               {/* small and big change using menucollapse state */}
               <p>{menuCollapse ? <center>
                                     <div style={{marginTop:"20px"}}><br/>
-                                    <img src={props.name.pic} style={{width:"50px",height:"50px",borderRadius:"100px",boxShadow:"1px 1px 15px white"}}/>
+                                    <img src={props.name.pic} style={{width:"50px",height:"50px",borderRadius:"100px",boxShadow:"1px 1px 15px black",marginLeft:"auto",marginRight:"auto"}}/>
                                       <br/>
                                       <br/>
                                       <div className="closemenu" onClick={menuIconClick}>
@@ -82,9 +82,9 @@ const Header = (props) => {
                                 </center> : 
                                 <center>
                                   <div style={{marginTop:"20px"}}>
-                                    <h2 style={{color:"white"}}>{props.name.user}</h2>
+                                    <h2>{props.name.user}</h2>
                                       <br/>
-                                    <img src={props.name.pic} style={{width:"70px",height:"70px",borderRadius:"100px",boxShadow:"1px 1px 15px white"}}/>
+                                    <img src={props.name.pic} style={{width:"70px",height:"70px",borderRadius:"100px",boxShadow:"1px 1px 15px black"}}/>
                                       <br/>
                                       <br/>
                                     <div className="closemenu" onClick={menuIconClick}>
@@ -98,12 +98,12 @@ const Header = (props) => {
           </SidebarHeader>
           <SidebarContent>
             <Menu iconShape="square">
-              <MenuItem active={true} style={{background:"transparant"}} onClick={()=>goToHome()} icon={<AiFillHome />}>
+              <MenuItem onClick={()=>goToHome()} icon={<AiFillHome  size={20}/>}>
                 Home
               </MenuItem>
-              <MenuItem onClick={()=>navigate("/AdminAddQuestion", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat}})}  icon={<AiFillFileAdd />}>Add Question</MenuItem>
-              <MenuItem onClick={()=>goToAdminApprove()}  icon={<TbCertificate />}>Approve Certificates</MenuItem>
-              <MenuItem onClick={()=>navigate("/AdminHostEvent", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat}})}  icon={<BsCalendar2Event />}>Host Event</MenuItem>
+              <MenuItem onClick={()=>navigate("/AdminAddQuestion", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat,moneystats:props.name.moneystats,substats:props.name.substats}})}  icon={<AiFillFileAdd size={20} />}>Add Question</MenuItem>
+              <MenuItem onClick={()=>goToAdminApprove()}  icon={<TbCertificate size={20} />}>Approve Certificates</MenuItem>
+              <MenuItem onClick={()=>navigate("/AdminHostEvent", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat,moneystats:props.name.moneystats,substats:props.name.substats}})}  icon={<BsCalendar2Event size={20} />}>Host Event</MenuItem>
             </Menu>
           </SidebarContent>
          

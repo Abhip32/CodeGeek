@@ -26,10 +26,60 @@ recordRoutes.route("/SignUp").post(function (req, res) {
     let email=req.body.email;
     let phoneno=req.body.phoneno;
     let bio=req.body.bio;
+    let sub=req.body.subscription;
+    const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    console.log(sub+" "+month);
+
+    if(sub=="Basic"&&month+1<=12)
+    {
+        let end=`${day}-${month+1}-${year}`;
+        console.log(end);
+        var myobj = { name: user, password: pass, pic: pic, email: email, phone: phoneno, bio : bio, c_points:[],cpp_points:[],java_points:[],python_points:[],C_certificate:"",Cpp_certificate:"",Java_certificate:"",Python_certificate:"",linkc:"",linkcp:"",linkj:"",linkp:"",subscription:sub,duration:"1",end:end};
+    }
+    if(sub=="Basic"&&month+1>12)
+    {
+        console.log(sub);
+        let end=`${day}-${month+1-12}-${year+1}`;
+        var myobj = { name: user, password: pass, pic: pic, email: email, phone: phoneno, bio : bio, c_points:[],cpp_points:[],java_points:[],python_points:[],C_certificate:"",Cpp_certificate:"",Java_certificate:"",Python_certificate:"",linkc:"",linkcp:"",linkj:"",linkp:"",subscription:sub,duration:"1",end:end};
+    }
+
+
+    if(sub=="Lite"&&month+3<=12)
+    {
+        console.log(sub);
+        let end=`${day}-${month+3}-${year}`;
+        var myobj = { name: user, password: pass, pic: pic, email: email, phone: phoneno, bio : bio, c_points:[],cpp_points:[],java_points:[],python_points:[],C_certificate:"",Cpp_certificate:"",Java_certificate:"",Python_certificate:"",linkc:"",linkcp:"",linkj:"",linkp:"",subscription:sub,duration:"3",end:end};
+    }
+
+    if(sub=="Lite"&&month+3>12)
+    {
+        console.log(sub);
+        let end=`${day}-${month+3-12}-${year+1}`;
+        var myobj = { name: user, password: pass, pic: pic, email: email, phone: phoneno, bio : bio, c_points:[],cpp_points:[],java_points:[],python_points:[],C_certificate:"",Cpp_certificate:"",Java_certificate:"",Python_certificate:"",linkc:"",linkcp:"",linkj:"",linkp:"",subscription:sub,duration:"3",end:end};
+    }
+
+    if(sub=="Pro"&&month+6<=12)
+    {
+        console.log(sub);
+        let end=`${day}-${month+6}-${year}`;
+        var myobj = { name: user, password: pass, pic: pic, email: email, phone: phoneno, bio : bio, c_points:[],cpp_points:[],java_points:[],python_points:[],C_certificate:"",Cpp_certificate:"",Java_certificate:"",Python_certificate:"",linkc:"",linkcp:"",linkj:"",linkp:"",subscription:sub,duration:"6",end:end};
+    }
+
+    if(sub=="Pro"&&month+6>12)
+    {
+        console.log(sub);
+        let end=`${day}-${month+6-12}-${year+1}`;
+        var myobj = { name: user, password: pass, pic: pic, email: email, phone: phoneno, bio : bio, c_points:[],cpp_points:[],java_points:[],python_points:[],C_certificate:"",Cpp_certificate:"",Java_certificate:"",Python_certificate:"",linkc:"",linkcp:"",linkj:"",linkp:"",subscription:sub,duration:"6",end:end};
+    }
+    
     var out="";
 
     let db_connect = dbo.getDb();
-    var myobj = { name: user, password: pass, pic: pic, email: email, phone: phoneno, bio : bio, c_points:[],cpp_points:[],java_points:[],python_points:[],C_certificate:"",Cpp_certificate:"",Java_certificate:"",Python_certificate:"",linkc:"",linkcp:"",linkj:"",linkp:""};
+   
     db_connect
     .collection("Login_Credentials").insertOne(myobj, function(err, res) {
         if (err) out="fail"

@@ -4,6 +4,14 @@ import {useLocation,useNavigate} from 'react-router-dom'
 import { useState } from 'react';
 import SidebarAdmin from './SidebarAdmin'
 import Axios from 'axios';
+import "./AdminAddQuestion.scss";
+import {BsQuestionSquareFill} from 'react-icons/bs'
+import {FaCode} from 'react-icons/fa'
+import {MdDescription} from 'react-icons/md'
+import {VscOutput} from 'react-icons/vsc';
+import {HiIdentification} from 'react-icons/hi';
+import {SiOpslevel} from 'react-icons/si';
+import {GrAdd} from 'react-icons/gr';
 
 function AdminAddQuestion() {
   const location = useLocation();
@@ -20,6 +28,8 @@ function AdminAddQuestion() {
   const [ouput,setouput]=useState("");
   const [level,setLevel]=useState("");
   const [userstat,setUserstat]=useState(location.state.userstat)
+  const [moneystats,setMoneyState]=useState(location.state.moneystats)
+  const [substats, setsubstats] = useState(location.state.substats);
 
   const addQuestion=(e)=>{
     e.preventDefault();
@@ -55,13 +65,13 @@ function AdminAddQuestion() {
   }
   
   return (
-    <div style={{display:'flex',height:"100vh",background: "linear-gradient(#9796f0,#2a0845)"}}>
-      <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat}}/>
-      <div style={{padding:"20px"}}>
-          <h2 style={{fontWeight: "900",color:"white",textShadow:"1px 1px 20px black"}}>Add Question Here</h2>
-          <form style={{background: "white",padding:"20px",borderRadius:"2vw"}}>
-              <h5>Enter Question : <input type="text" placeholder='Enter the Question' onChange={(e)=>{setProblem(e.target.value)}}/></h5>
-              <h5>Language : <select onChange={e=>setLanguage(e.target.value)}>
+    <div class="addQuePage" style={{display:'flex',height:"100%",background: "#E2E8F0"}}>
+      <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
+      <div style={{marginTop:"30px",margin:"40px"}}>
+      <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",borderRadius:"20px"}}><GrAdd/> Add Question Here</h2>
+          <form style={{background: "white",padding:"40px",borderRadius:"2vw",textAlign:"left",width:"70vw"}}>
+              <h5><BsQuestionSquareFill  style={{margin:"20px"}}/>Enter Question : <input style={{margin:"20px"}} type="text" placeholder='Enter the Question' onChange={(e)=>{setProblem(e.target.value)}}/></h5>
+              <h5><FaCode style={{margin:"20px"}}/>Language : <select  style={{margin:"20px"}} onChange={e=>setLanguage(e.target.value)}>
               <option value="">Select Language</option>
                   <option value="c">c Language</option>
                   <option value="cpp">cpp Language</option>
@@ -69,18 +79,20 @@ function AdminAddQuestion() {
                   <option value="python3">Python Language</option>
                   </select></h5>
 
-                  <h5>Enter Description :</h5>
-                  <textarea onChange={(e)=>{setDescription(e.target.value)}} placeholder='Enter the Description'/>
+                  <h5><MdDescription style={{margin:"20px"}}/> Enter Description :</h5>
+                  <textarea style={{margin:"20px"}} onChange={(e)=>{setDescription(e.target.value)}} placeholder='Enter the Description'/>
 
-                  <h5>Expected Output :</h5>
-                  <textarea onChange={(e)=>{setouput(e.target.value)}} placeholder='Enter the Output'/>
+                  <h5><VscOutput style={{margin:"20px"}}/> Expected Output :</h5>
+                  <textarea style={{margin:"20px"}} onChange={(e)=>{setouput(e.target.value)}} placeholder='Enter the Output'/>
 
-                  <h5>Identifier</h5>
+                  <br/>
+                  <h5> <HiIdentification style={{margin:"20px"}} /> Identifier : </h5>
                   {
-                      getIdentifier(Language)&&<h2 style={identifer=="1"? {display:'none'}:{display:'block'}}>{identifer}</h2>
+                      getIdentifier(Language)&&<h5 style={identifer=="1"? {display:'none'}:{display:'block',margin:"20px"}}>{identifer}</h5>
                   }
+                  <br/>
 
-            <h5>Level : <select onChange={e=>setLevel(e.target.value)}>
+            <h5> <SiOpslevel style={{margin:"20px"}}/>Level : <select style={{margin:"20px"}} onChange={e=>setLevel(e.target.value)}>
               <option value="">Select Language</option>
                   <option value="Basic Level">Basic Level</option>
                   <option value="Medium Level">Medium Level</option>

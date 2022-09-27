@@ -143,7 +143,7 @@ recordRoutes.route("/getPointsInfo").post(function (req, res) {
                 {
                     res.send({pic:ans[0].pic.toString("utf8"),email:ans[0].email,phone:ans[0].phone,bio:ans[0].bio,id:ans[0]._id,
                               c_points:sumc,cpp_points:sumcpp,python_points:sumpython,java_points:sumjava,C_certificate:ans[0].C_certificate,
-                              Cpp_certificate:ans[0].Cpp_certificate,Java_certificate:ans[0].Java_certificate,Python_certificate:ans[0].Python_certificate,linkc:ans[0].linkc,linkcp:ans[0].linkcp,linkj:ans[0].linkj,linkp:ans[0].linkp});     
+                              Cpp_certificate:ans[0].Cpp_certificate,Java_certificate:ans[0].Java_certificate,Python_certificate:ans[0].Python_certificate,linkc:ans[0].linkc,linkcp:ans[0].linkcp,linkj:ans[0].linkj,linkp:ans[0].linkp,subscription:ans[0].subscription,duration:ans[0].duration,end:ans[0].end});     
                 }
             });
         

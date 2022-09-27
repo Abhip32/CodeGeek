@@ -14,13 +14,16 @@ function AdminHostEvent() {
   const [teststats, setteststats] = useState(location.state.test);
   const [user,setUser]=useState(location.state.name)
   const [userstat,setUserstat]=useState(location.state.userstat)
+  const [moneystats,setMoneyState]=useState(location.state.moneystats)
+  const [substats, setsubstats] = useState(location.state.substats);
+  
   
 
 
   
   return (
     <div style={{display:'flex',height:"100vh",width:"98vw"}}>
-      <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat}}/>
+      <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
       <div style={{padding:"20px"}}>
             Admin Host Event
       </div>

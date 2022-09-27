@@ -28,6 +28,10 @@ function Examination() {
 
 
     const [loading, setLoading] = useState(false);
+   
+
+  
+    
 
     const languages = [
 		{ value: "c", label: "C" },
@@ -53,6 +57,8 @@ function compile() {
 	if (userCode === ``) {
 	return
 	}
+
+    if (sessionStorage.getItem("is_reloaded")) alert('Reloaded!');
 
 	// Post request to compile endpoint
 	Axios.post(`http://localhost:8000/compile`, {
@@ -164,6 +170,21 @@ function change()
           deadline.setSeconds(deadline.getSeconds() + 200);
           return deadline;
       }
+
+      if (sessionStorage.getItem('reloaded') != null) {
+        console.log('page was reloaded');
+    }
+    document.addEventListener("keydown", (e)=>{
+        if (e.keyCode === 116) {
+          e.preventDefault();
+      
+           // your code here
+           // var r = confirm("Reload!");
+           // if (r == true)
+           //  window.location.reload();
+        }
+      })
+      
 
     
       // We can use useEffect so that when the component

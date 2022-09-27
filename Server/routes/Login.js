@@ -18,13 +18,23 @@ recordRoutes.route("/login").post(function (req, res) {
   let user=req.body.user;
 	let pass=req.body.pass;
   let db_connect = dbo.getDb();
+  const date = new Date();
+
+    let day = date.getDate();
+    let month = date.getMonth() + 1;
+    let year = date.getFullYear();
+    let today=`${day}-${month+1}-${year}`
   db_connect
       .collection("Login_Credentials")
       .find({ "name": user })
       .toArray().then ((ans) => {
-        if(ans.length!=0&&ans[0].password==pass)
+        if(ans.length!=0&&ans[0].password==pass&&today<ans[0].end)
         {
             res.status(200).send(ans);
+        }
+        else if(ans.length!=0&&ans[0].password==pass&&today>ans[0].end)
+        {
+          res.status(305).send(ans);
         }
         else{
             res.status(404).send(ans);
