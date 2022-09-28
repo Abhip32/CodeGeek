@@ -37,6 +37,7 @@ function Login() {
 
     async function handleSubmit(event,callback) {
         event.preventDefault();
+        setstatus("wait")
 
          await Axios.post(`http://localhost:8000/usersData`).then((res) => {
               user.push(res.data.users);
@@ -144,17 +145,7 @@ function Login() {
                 <h1 class="heading-primary">Log in<span class="span-blue">.</span>
                 </h1>
                 <p class="text-mute">Enter your credentials to access your account.</p>
-                <div class="login-wrapper">
-                    <a href="#" class="btn btn-google">
-                        <img src="https://img.icons8.com/fluency/48/000000/google-logo.png"/>
-                        Log In with Google
-                    </a>
-                    <div class="line-breaker">
-                        <span class="line"></span>
-                        <span>or</span>
-                        <span class="line"></span>
-                    </div>
-                </div>
+              
 
                 <form class="signup-form">
                     <label class="inp">
@@ -191,9 +182,9 @@ function Login() {
                         </div>
                 </span>
             </label>
+            <h6 style={{color:"red",fontWeight:"bolder"}}>{status}</h6>
             <button class="btn btn-login"
                 onClick={handleSubmit}>Login</button>
-                <h6 style={{color:"red",fontWeight:"bolder"}}>{status}</h6>
         </form>
     </main>
 

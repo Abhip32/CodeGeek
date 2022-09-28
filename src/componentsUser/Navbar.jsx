@@ -26,7 +26,7 @@ function NavbarFunction(props) {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-              <a className="nlink" onClick={() =>navigate("/Login")}>Login</a>
+              <a className="nlink" onClick={() =>navigate("/Login" ,{state: {result:""}})}>Login</a>
               <a className="nlink" onClick={() =>navigate("/AdminLogin")}>Employee Login</a>
           </Nav>
         </Navbar.Collapse>

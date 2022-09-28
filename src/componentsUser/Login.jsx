@@ -1,8 +1,11 @@
-import {React, useState} from 'react'
 import "./Login.scss";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {AiOutlineMail} from "react-icons/ai"
 import {FaEye, FaEyeSlash} from 'react-icons/fa'
+import React, { useState, useEffect } from 'react';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { gapi } from 'gapi-script';
+import Axios from "axios";
 
 
 function Login() {
@@ -10,6 +13,47 @@ function Login() {
     const [icon, setIcon] = useState("hide");
     const [link, setLink] = useState("");
     let navigate = useNavigate();
+    let location = useLocation();
+
+    const [ profile, setProfile ] = useState([]);
+    const clientId = '316466299912-nr5umh7iho0hsag07864a414fd2kl6hd.apps.googleusercontent.com';
+
+    useEffect(() => {
+        const initClient = () => {
+            gapi.client.init({
+                clientId: clientId,
+                scope: ''
+            });
+        };
+        gapi.load('client:auth2', initClient);
+    });
+
+    const onSuccess = (res) => {
+        Axios.post(`http://localhost:8000/glogin`, {
+            email:res.profileObj.email
+        }).then((res) => {
+            console.log(res.data);
+            if(res.data!="failed")
+            {
+                navigate("/home", {
+                    state: {
+                        username: res.data
+                    }
+                })
+                window.location.reload(false);
+            }
+            else{
+                setstatus("Email not Registered Sign Up first");
+            }
+
+            
+            
+        })
+    }
+
+    const onFailure = (err) => {
+        console.log('failed', err);
+    };
 
     function show() {
         console.log("show pass");
@@ -24,7 +68,10 @@ function Login() {
     }
 
 
+
     async function onSubmit(e) {
+        
+
         e.preventDefault();
         let data = {
             user: document.getElementById("email").value,
@@ -66,10 +113,15 @@ function Login() {
                     </h1>
                     <p class="text-mute">Enter your credentials to access your account.</p>
                     <div class="login-wrapper">
-                        <a href="#" class="btn btn-google">
-                            <img src="https://img.icons8.com/fluency/48/000000/google-logo.png"/>
-                            Log In with Google
-                        </a>
+                        <GoogleLogin 
+                            className="btn-google"
+                            clientId={clientId}
+                            buttonText="Sign in with Google"
+                            onSuccess={onSuccess}
+                            onFailure={onFailure}
+                            cookiePolicy={'single_host_origin'}
+                            isSignedIn={true}
+                        />
                         <div class="line-breaker">
                             <span class="line"></span>
                             <span>or</span>
@@ -78,6 +130,7 @@ function Login() {
                     </div>
 
                     <form class="signup-form">
+                       <h3 style={{color:"greenyellow"}}>{location.state.result!=undefined&&location.state.result}</h3>
                         <label class="inp">
                             <input type="email" id="email" class="input-text" placeholder="&nbsp;"/>
                             <span class="label">Email</span>

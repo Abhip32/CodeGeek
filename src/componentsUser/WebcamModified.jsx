@@ -14,7 +14,7 @@ import ReactAudioPlayer from "react-audio-player";
 
 
 
-var count=-35;
+var count=-450;
 var active = false;
 
 
@@ -66,36 +66,39 @@ const link =
  facesdata.push(xCenterBoundingBox,yCenterBoundingBox);
 
 
- 
-
-
-  if((xCenterBoundingBox<0.20946518272161484||xCenterBoundingBox>0.5195659756660461)&&xCenterBoundingBox.length!=0)
+  if((xCenterBoundingBox<0.20946518272161484||xCenterBoundingBox>0.5195659756660461)&&xCenterBoundingBox.length!=0&&window.location.href==="http://localhost:3000/Examination"&&active)
   {
      count=count+1;
      audio.play();     
   }
 
-  if((yCenterBoundingBox>0.5532440972328186||yCenterBoundingBox<0.0429329723119735)&&yCenterBoundingBox.length!=0)        
+  if((yCenterBoundingBox>0.5532440972328186||yCenterBoundingBox<0.0429329723119735)&&yCenterBoundingBox.length!=0&&window.location.href==="http://localhost:3000/Examination"&&active)        
   {
       count=count+1;
-      audio.play();
+
+          audio.play();
   }
 
-  if(xCenterBoundingBox.length!=0||yCenterBoundingBox.length!=0)       
+  if(xCenterBoundingBox.length!=0&&yCenterBoundingBox.length!=0&&window.location.href==="http://localhost:3000/Examination")       
   {
-     active=true;
+      active=true;
+      if(count<0)
+      {
+        count=0;
+      }
   }  
 
-  if(xCenterBoundingBox.length==0&&yCenterBoundingBox.length==0&&active&&window.location.href=="http://localhost:3000/Examination")        
+  if(xCenterBoundingBox.length==0&&yCenterBoundingBox.length==0&&active&&window.location.href=="http://localhost:3000/Examination"&&active)        
   {
         count=count+1;
-        audio.play();
+          audio.play();        
   } 
 
-  if(facesdata[0].length>=2&&facesdata[1].length>=2)
+  if(facesdata[0].length>=2&&facesdata[1].length>=2&&window.location.href==="http://localhost:3000/Examination"&&active)
   {
         count=count+1;
-        audio1.play();
+
+          audio.play();
   }
   
   context.stroke();
@@ -159,11 +162,11 @@ const WebcamModified = (props) => {
     console.log("full");
   }
   
-  function notFullScreen() {
+  async function notFullScreen() {
     console.log("nfull");
     if(count>-10&&window.location.href==="http://localhost:3000/Examination")
     {
-      audio3.play();
+      await audio3.play();
       count=100;
     }
 
@@ -256,6 +259,7 @@ const WebcamModified = (props) => {
           style={{ objectFit: "cover" }}
           className="canvas"
         />
+        <h3>{count}</h3>
   
         <h3 className={count<=0&&props.type=='test'? "_0stWarning" : "NoWarning"}>No Warning </h3>
         <h3 className={count<=20&&count>1&&props.type=='test'? "_1stWarning" : "NoWarning"}>1st Warning </h3>
@@ -264,6 +268,7 @@ const WebcamModified = (props) => {
         <h3 className={count<=80&&count>=61&&props.type=='test'? "_4thWarning" : "NoWarning"}>4th Warning </h3>
         <h3 className={count<=99&&count>=81&&props.type=='test'? "_5thWarning" : "NoWarning"}>5th Warning </h3>
         <h3 className={count>=100 &&props.type=='test'?  dis(): "NoWarning"}>You are disqualified</h3> 
+
 
       
         

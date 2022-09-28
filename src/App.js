@@ -27,6 +27,8 @@ import ApproveCertificate from "./componentServer/ApproveCertificate";
 import AdminHostEvent from "./componentServer/AdminHostEvent";
 import Buysubscription from "./componentsUser/Buysubscription";
 import Pagenotfound from "./componentsUser/Pagenotfound";
+import AdminTransactions from "./componentServer/AdminTransactions";
+import AdminPlan from "./componentServer/AdminPlan";
 
 function App() {
   const [type, setType]= useState("Login")
@@ -77,6 +79,8 @@ function App() {
       <Route path="/AdminAddQuestion" element={<AdminAddQuestion/>} />
       <Route path="/AdminApproveCertificate" element={<ApproveCertificate/>} />
       <Route path="/AdminHostEvent" element={<AdminHostEvent/>} />
+      <Route path="/AdminTransaction" element={<AdminTransactions/>} />
+      <Route path="/AdminPlans" element={<AdminPlan/>} />
       </Routes>
     </Router>
   </div>

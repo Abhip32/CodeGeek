@@ -23,6 +23,7 @@ function Login() {
     const [img, setImg] = useState("");
     const [index, setIndex] = useState(0);
     const [data, setData] = useState([]);
+    const [errors, setErrors] = useState([]);
 
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
@@ -47,19 +48,29 @@ function Login() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        Axios.post(`http://localhost:8000/SignUp`, {
+      
+            Axios.post(`http://localhost:8000/SignUp`, {
             user: document.getElementById("username").value,
             pass: document.getElementById("password").value,
             pic: img,
             email: document.getElementById("email").value,
             phoneno: document.getElementById("phoneno").value,
-            bio: document.getElementById("bio").value,
-            subscription:subscription
+            bio: document.getElementById("bio").value
         }).then((res) => {
-            setSuccess(res.data);
-            window.scrollTo(0, 0);
-            navigate("/Login");
+            if(res.data.length==0)
+            {
+                console.log(res.data);
+                setSuccess(res.data);
+                navigate("/Buysubscription", {state: {username: document.getElementById("username").value}})
+
+            }
+            else
+            {
+                window.scrollTo(0, 0);
+                setErrors(res.data);
+            }
         })
+        
     };
 
 
@@ -74,6 +85,12 @@ function Login() {
 
 
                         <form class="signup-form">
+                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[0]}</h3>
+                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[1]}</h3>
+                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[2]}</h3>
+                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[3]}</h3>
+                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[4]}</h3>
+                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[5]}</h3>
                             <label class="inp">
                                 <input type="email" id="username" class="input-text" placeholder="&nbsp;"/>
                                 <span class="label">Username</span>
@@ -161,13 +178,8 @@ function Login() {
                         </span>
                         <span class="input-icon"><AiFillInfoCircle/></span>
                     </label>
-                    <h4>Choose Your Plan</h4>
-                    <select onChange={e=>setSubscription(e.target.value)} style={{padding:"15px",backgroundColor: "rgb(232, 240, 254)",border:"none",borderRadius:"20px"}}>
-                        <option value="Basic">Basic</option>
-                        <option value="Lite">Lite</option>
-                        <option value="Pro">Pro</option>
-                    </select>
-                    <CardContainer/>
+                    
+                    
                     
 
                     <button class="btn btn-login"

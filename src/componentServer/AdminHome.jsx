@@ -118,7 +118,7 @@ if(languagesstats==[])
                  </div>
                  <div>
                  <p>Total Number of Users</p>
-                  <h5>{location.state.userstat}</h5>
+                  <h5>{location.state.userstat[0]}</h5>
                  </div>
                   
       </div>  
@@ -128,7 +128,7 @@ if(languagesstats==[])
                  </div>
                  <div>
                  <p>Total Revenue</p>
-                  <h5>{location.state.moneystats}</h5>
+                  <h5>{location.state.moneystats[0]}</h5>
                  </div>
                   
       </div> 

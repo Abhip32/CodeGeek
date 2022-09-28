@@ -28,6 +28,8 @@ function Main(props) {
   const [key, setKey] = useState('C');
   let navigate = useNavigate();
 
+
+  window.scrollTo(0,0);
   if(usersC.length==0)
   {
     Axios.post(`http://localhost:8000/getPointsInfo`,{

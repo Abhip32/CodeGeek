@@ -29,53 +29,27 @@ recordRoutes.route('/addSubscription').post(function (req, res) {
     let sub=req.body.type;
     
     var myquery = { "name": user}
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
 
-    console.log("ads");
 
-    if(sub=="Basic"&&month+1<=12)
+    if(sub=="Basic")
     {
-        let end=`${day}-${month+1}-${year}`;
-        console.log(end);
-        var newvalues ={$set:{subscription:sub,duration:"1",end:end}};
+        var newDateb = new Date(date.setMonth(date.getMonth()+1));
+        var newvalues ={$set:{subscription:sub,duration:"1",end:newDateb}};
     }
-    if(sub=="Basic"&&month+1>12)
+
+    if(sub=="Lite")
     {
-        console.log(sub);
-        let end=`${day}-${month+1-12}-${year+1}`;
-        var newvalues = {$set:{subscription:sub,duration:"1",end:end}};
+        var newDatel = new Date(date.setMonth(date.getMonth()+3));
+        var newvalues ={$set:{subscription:sub,duration:"3",end:newDatel}};
     }
 
 
-    if(sub=="Lite"&&month+3<=12)
+    if(sub=="Pro")
     {
-        console.log(sub);
-        let end=`${day}-${month+3}-${year}`;
-        var newvalues = {$set:{subscription:sub,duration:"3",end:end}};
+        var newDatep = new Date(date.setMonth(date.getMonth()+6));
+        var newvalues ={$set:{subscription:sub,duration:"6",end:newDatep}};
     }
 
-    if(sub=="Lite"&&month+3>12)
-    {
-        console.log(sub);
-        let end=`${day}-${month+3-12}-${year+1}`;
-        var newvalues ={$set:{subscription:sub,duration:"3",end:end}};
-    }
-
-    if(sub=="Pro"&&month+6<=12)
-    {
-        console.log(sub);
-        let end=`${day}-${month+6}-${year}`;
-        var newvalues = {$set:{subscription:sub,duration:"6",end:end}};
-    }
-
-    if(sub=="Pro"&&month+6>12)
-    {
-        console.log(sub);
-        let end=`${day}-${month+6-12}-${year+1}`;
-        var newvalues = {$set:{subscription:sub,duration:"6",end:end}};
-    }
    
 
     db_connect.collection("Login_Credentials").updateOne(myquery, newvalues, function(err, res){
@@ -166,6 +140,14 @@ recordRoutes.route('/getTotalTransactionsbyCatagory').post(function (req, res) {
         res.send({Basic:Basic,Lite:Lite,Pro:Pro});
     })
 })
+
+
+recordRoutes.route('/getTransactions').post(function(req, res) {
+    let db_connect = dbo.getDb();
+    db_connect.collection("transaction").find().toArray().then((ans)=>{
+        res.send(ans);
+    })
+});
 
 
 module.exports = recordRoutes;

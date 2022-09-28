@@ -6,6 +6,7 @@ import {useNavigate} from "react-router-dom";
 import {useLocation} from "react-router-dom";
 import Axios from 'axios';
 import "./Buysubscription.scss"
+import CardItem from "./CardItem"
 import {
     AiOutlineMail,
     AiOutlineUpload,
@@ -28,6 +29,7 @@ function Login() {
     const [cardnumber,setCardNumber]=useState("");
     const [EXPMM,setEXPMM]=useState("");
     const [EXPYY,setEXPYY]=useState("");
+    const [plans,setPlans]=useState([]);
 
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
@@ -54,10 +56,19 @@ function Login() {
       }).then((res)=>
       {
         setSubscriptions(e);
-        navigate("/Login");
+        navigate("/Login", {state: {result:"Subscribed Successfully !"}});
       })
 
     }
+
+    useEffect(() => {
+      Axios.post(`http://localhost:8000/getPlans`,{
+  
+      }).then((res)=>{
+        console.log(res.data)
+        setPlans(res.data);
+      })
+   }, []);
 
     const setSubscriptions = (e) => {
       e.preventDefault();
@@ -97,6 +108,26 @@ function Login() {
              
             
             </div>
+           <br/>
+            <h3 style={{marginLeft:"13vw"}}>Plans :</h3>
+            <div style={{padding:"20px", display:"flex",gap:"20px",marginLeft:"13vw",marginRight:"auto"}}>
+            
+      { plans.map((item,index) => 
+            (
+                <CardItem objProp={{
+                    level: item.level,
+                    applyGradient: item.applyGradient,
+                    price: item.price,
+                    para1: item.para1,
+                    para2: item.para2,
+                    btnDark: item.btnDark,
+                    tick: item.tick,
+                  }}/>
+            ))}
+      </div>
+
+      <br/>
+      <h3 style={{marginLeft:"13vw"}}>Payment  :</h3>
             <div>
             <div class="cc__main__container">
     <div class="form__container">

@@ -20,19 +20,15 @@ recordRoutes.route("/login").post(function (req, res) {
   let db_connect = dbo.getDb();
   const date = new Date();
 
-    let day = date.getDate();
-    let month = date.getMonth() + 1;
-    let year = date.getFullYear();
-    let today=`${day}-${month+1}-${year}`
   db_connect
       .collection("Login_Credentials")
       .find({ "name": user })
       .toArray().then ((ans) => {
-        if(ans.length!=0&&ans[0].password==pass&&today<ans[0].end)
+        if(ans.length!=0&&ans[0].password==pass&&date<=ans[0].end)
         {
-            res.status(200).send(ans);
+          res.status(200).send(ans);
         }
-        else if(ans.length!=0&&ans[0].password==pass&&today>ans[0].end)
+        else if(ans.length!=0&&ans[0].password==pass&&date>ans[0].end)
         {
           res.status(305).send(ans);
         }
@@ -40,6 +36,26 @@ recordRoutes.route("/login").post(function (req, res) {
             res.status(404).send(ans);
         }
     })
+});
+
+recordRoutes.route("/glogin").post(function (req, res) {
+  let email=req.body.email
+  let db_connect = dbo.getDb();
+  db_connect.collection("Login_Credentials").find({"email": email}).toArray().then((ans)=>{
+    console.log(ans);
+    if(ans.length!=0)
+    {
+      console.log(ans[0].name)
+      res.send(ans[0].name)
+    }
+    else
+    {
+      res.send("failed")
+    }
+  })
+
+
+  
 });
 
   

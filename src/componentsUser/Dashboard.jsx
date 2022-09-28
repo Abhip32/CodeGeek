@@ -124,7 +124,7 @@ function Dashboard() {
                 <p>{bio}</p>
                 <h6>Type of Subscription : {subscription}</h6>
                 <h6>Duration of Subscription : {duration} months</h6>
-                <h6>Subscription Expires At : {end}</h6>
+                <h6>Subscription Expires At : {end.substring(0,10)}</h6>
             </div>
 
         </div>
