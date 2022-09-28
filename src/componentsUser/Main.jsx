@@ -29,7 +29,6 @@ function Main(props) {
   let navigate = useNavigate();
 
 
-  window.scrollTo(0,0);
   if(usersC.length==0)
   {
     Axios.post(`http://localhost:8000/getPointsInfo`,{
@@ -102,6 +101,7 @@ function Main(props) {
 
   return (
     <div className="mainpageback">
+      
       <div className="userInfo" style={{backgroundImage: `url("https://livewirecbe.com/assets/images/breadcrumbs/2.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
       <h1>Hello {location.state.username}</h1>
       <br/>

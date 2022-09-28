@@ -21,6 +21,26 @@ recordRoutes.route("/getPlans").post(function (req, res) {
     })
 })
 
+recordRoutes.route("/upPlans").post(function (req, res) {
+    let level = req.body.level
+    let duration = req.body.duration
+    let price = req.body.price
+    let db_connect = dbo.getDb();
+    let out="";
+
+    var myquery = { "level": level}
+    var newvalues = { $set:{duration: duration, price: price}}
+
+    db_connect
+        .collection("Plans")
+        .updateOne(myquery, newvalues, function(err, res){
+            if (err) console.log(err)
+            else console.log("sucess")
+        })
+        console.log(level+" "+duration+" "+price);
+        res.send(out)
+})
+
 
 
 // This section will help you get a single record by id

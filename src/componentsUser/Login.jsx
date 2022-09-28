@@ -33,7 +33,7 @@ function Login() {
             email:res.profileObj.email
         }).then((res) => {
             console.log(res.data);
-            if(res.data!="failed")
+            if(res.data!="failed"&&res.data!="Subscription")
             {
                 navigate("/home", {
                     state: {
@@ -42,10 +42,14 @@ function Login() {
                 })
                 window.location.reload(false);
             }
-            else{
+            else if(res.data=="failed"){
                 setstatus("Email not Registered Sign Up first");
             }
-
+            else if(res.data=="Subscription")
+            {
+                setstatus("Subscription Expired");
+                setLink("Click Here to renew your subscription");
+            }
             
             
         })
@@ -133,7 +137,7 @@ function Login() {
                        <h3 style={{color:"greenyellow"}}>{location.state.result!=undefined&&location.state.result}</h3>
                         <label class="inp">
                             <input type="email" id="email" class="input-text" placeholder="&nbsp;"/>
-                            <span class="label">Email</span>
+                            <span class="label">Username</span>
                             <span class="input-icon"><AiOutlineMail/></span>
                         </label>
                         <label class="inp">

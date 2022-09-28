@@ -12,8 +12,9 @@ body{
 //Styling the card item
 .card__item{
     padding: 8.5px;
-    min-width: 350px;
-    max-width: 350px;
+    min-width: 370px;
+    max-width: 500px;
+    height: max-content;
     width: 100%;
     background-color: $secondary-white;
     text-align: center;

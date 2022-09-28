@@ -122,6 +122,7 @@ function Login() {
                     para2: item.para2,
                     btnDark: item.btnDark,
                     tick: item.tick,
+                    type:"User"
                   }}/>
             ))}
       </div>

@@ -39,7 +39,7 @@ function AdminHostEvent() {
     <div style={{display:'flex',height:"100vh",width:"98vw"}}>
       <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
       <div>
-      <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",margin:"40px",borderRadius:"20px",width:"60vw"}}> Approve Certificates</h2>
+      <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",margin:"40px",borderRadius:"20px",width:"60vw"}}> Transaction Details</h2>
       <Table striped bordered hover variant="dark" style={{margin:"40px"}}>
                     <thead>
                         <tr>

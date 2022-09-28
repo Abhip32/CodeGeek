@@ -28,6 +28,8 @@ function AdminPlan() {
       setPlans(res.data);
     })
  }, []);
+
+
   
   
   
@@ -35,22 +37,28 @@ function AdminPlan() {
 
   
   return (
-    <div style={{display:'flex',height:"100vh",width:"98vw"}}>
+    <div style={{display:'flex',height:"100%",width:"98vw",color:"white"}}>
       <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
-      <div style={{padding:"20px", display:"flex"}}>
+      <div>
+      <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"10px",padding:"20px",margin:"40px",borderRadius:"20px",width:"60vw"}}>Update Plans</h2>
+      <div style={{padding:"20px", display:"flex", gap:"20px"}}>
       { plans.map((item,index) => 
             (
                 <CardItem objProp={{
                     level: item.level,
                     applyGradient: item.applyGradient,
+                    duration: item.duration,
                     price: item.price,
                     para1: item.para1,
                     para2: item.para2,
                     btnDark: item.btnDark,
                     tick: item.tick,
+                    type: "Admin"
                   }}/>
             ))}
       </div>
+      </div>
+      
     </div>
   )
 }

@@ -41,12 +41,17 @@ recordRoutes.route("/login").post(function (req, res) {
 recordRoutes.route("/glogin").post(function (req, res) {
   let email=req.body.email
   let db_connect = dbo.getDb();
+  const date = new Date();
   db_connect.collection("Login_Credentials").find({"email": email}).toArray().then((ans)=>{
     console.log(ans);
-    if(ans.length!=0)
+    if(ans.length!=0&&date<=ans[0].end)
     {
       console.log(ans[0].name)
       res.send(ans[0].name)
+    }
+    if(ans.length!=0&&date>ans[0].end)
+    {
+      res.send("Subscription")
     }
     else
     {
