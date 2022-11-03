@@ -11,13 +11,55 @@ const dbo = require("../db/conn");
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
 
+const Cryptr = require('cryptr');
+const cryptr = new Cryptr('myTotallySecretKey');
+
+
+function CheckPassword(inputtxt) 
+{ 
+var paswd=  /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
+console.log(inputtxt);
+if(inputtxt.match(paswd)) 
+{ 
+    return true;
+    }
+    else
+    { 
+    return false;
+}
+}  
+
+function ValidateEmail(mail) 
+{
+ if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+  {
+    return (true)
+  }
+    return (false)
+}
+
+function phonenumber(inputtxt)
+{
+  var phoneno = /^\d{10}$/;
+  if(inputtxt.match(phoneno))
+    {
+            return true;
+    }
+  else
+    {
+          return false;
+    }
+}
+
+
+
 
 
 
 // This section will help you get a single record by id
 recordRoutes.route("/SignUp").post(function (req, res) {
     let user=req.body.user;
-	let pass=req.body.pass;
+	let pass=cryptr.encrypt(req.body.pass);
     let pic=req.body.pic;
     if(pic=="")
     {
@@ -36,7 +78,6 @@ recordRoutes.route("/SignUp").post(function (req, res) {
 
     let db_connect= dbo.getDb();
     db_connect.collection("Login_Credentials").find({"name":user}).toArray().then((ans)=>{
-        console.log(ans);
         if(ans.length>0)
         {
             errors.push("Username is already taken");
@@ -45,7 +86,22 @@ recordRoutes.route("/SignUp").post(function (req, res) {
         {
             errors.push("Email is already taken");
         }
-        if(ans.length==0&&user!=""&&email!=""&&pass!=""&&bio!=""&&phoneno!="")
+        if(!CheckPassword(cryptr.decrypt(pass)))
+        {
+            errors.push("Check if a password between 7 to 15 characters which contain at least one numeric digit and a special character");
+        }
+
+        if(!ValidateEmail(email))
+        {
+            errors.push("Please Enter a valid email");
+        }
+
+        if(!phonenumber(phoneno))
+        {
+            errors.push("Please Enter a valid phonenumber");
+        }
+        
+        if(ans.length==0&&user!=""&&email!=""&&pass!=""&&bio!=""&&phoneno!=""&&CheckPassword(cryptr.decrypt(pass))&&ValidateEmail(email)&&phonenumber(phoneno))
         {
             var myobj = { name: user, password: pass, pic: pic, email: email, phone: phoneno, bio : bio, c_points:[],cpp_points:[],java_points:[],python_points:[],C_certificate:"",Cpp_certificate:"",Java_certificate:"",Python_certificate:"",linkc:"",linkcp:"",linkj:"",linkp:"",subscription:"",duration:"",end:""};
             db_connect

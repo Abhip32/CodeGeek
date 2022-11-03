@@ -104,7 +104,7 @@ function ApproveCertificate() {
           }).then((res)=>
           {
             setTestdata(res.data);
-          }) 
+          }).then(window.location.reload(false))
         )
       }
 
@@ -141,7 +141,7 @@ function ApproveCertificate() {
                     <div className='ApproveCard' style={item1.id==item._id ? {display:"block"}:{display:"none"}}>
                       {
                         item1.id==item._id&&item1.language=="c"&&item._id!=undefined&&<div style={{display:"flex",alignItems:"center",gap:"100px"}}>
-                          <div >
+                          <div>
                           <img src={item.pic} style={{width:"100px",height:"100px",borderRadius:"100px"}}/>
                           <h4>Name : {item1.name}</h4>
                           <h4>ID : {item1._id}</h4>
@@ -181,25 +181,22 @@ function ApproveCertificate() {
                   </div>
                   
                   &&Testdata.map((item1,index) => (
-                    <div className='ApproveCard'>
+                    <div className='ApproveCard' >
                       {
                         item1.id==item._id&&item1.language=="cpp"&&
                         <div style={{display:"flex",alignItems:"center",gap:"100px"}}>
                           <div>
-                          <img src={item.pic} style={{width:"100px",height:"100px",borderRadius:"100px"}}/>
-                          <h4>Name : {item1.name}</h4>
-                          <h4>Name : {item1.name}</h4>
-                          <h4>ID : {item1._id}</h4>
-                          <h4>Date : {item1.date}</h4>
-                          <h4>Case : {item1.case}</h4>
-                          <h4>Language : {item1.language}</h4>
+                            <img src={item.pic} style={{width:"100px",height:"100px",borderRadius:"100px"}}/>
+                            <h4>Name : {item1.name}</h4>
+                            <h4>ID : {item1._id}</h4>
+                            <h4>Date : {item1.date}</h4>
+                            <h4>Case : {item1.case}</h4>
+                            <h4>Language : {item1.language}</h4>
                           </div>
                           <div>
-                          <button className='Approve' onClick={()=>{approve(item._id,item1.language,item1.name,item1.date)}}>Approve</button>
-                          <button className='Reject' onClick={()=>{reject(item._id,item1.language,item1.name,item1.date)}}>Reject</button>
+                            <button className='Approve' onClick={()=>{approve(item._id,item1.language,item1.name,item1.date)}}>Approve</button>
+                            <button className='Reject' onClick={()=>{reject(item._id,item1.language,item1.name,item1.date)}}>Reject</button>
                           </div>
-                          
-                         
                         </div>
                       }
                         
@@ -229,7 +226,6 @@ function ApproveCertificate() {
                         item1.id==item._id&&item1.language=="python3"&&<div style={{display:"flex",alignItems:"center",gap:"100px"}}>
                           <div>
                           <img src={item.pic} style={{width:"100px",height:"100px",borderRadius:"100px"}}/>
-                          <h4>Name : {item1.name}</h4>
                           <h4>Name : {item1.name}</h4>
                           <h4>ID : {item1._id}</h4>
                           <h4>Date : {item1.date}</h4>
@@ -271,7 +267,6 @@ function ApproveCertificate() {
                         <div style={{display:"flex",alignItems:"center",gap:"100px"}}>
                           <div>
                           <img src={item.pic} style={{width:"100px",height:"100px",borderRadius:"100px"}}/>
-                          <h4>Name : {item1.name}</h4>
                           <h4>Name : {item1.name}</h4>
                           <h4>ID : {item1._id}</h4>
                           <h4>Date : {item1.date}</h4>

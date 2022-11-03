@@ -36,7 +36,7 @@ function AdminHostEvent() {
 
   
   return (
-    <div style={{display:'flex',height:"100vh",width:"98vw"}}>
+    <div style={{display:'flex',height:"100vh",width:"98vw",background: "#E2E8F0"}}>
       <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
       <div>
       <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",margin:"40px",borderRadius:"20px",width:"60vw"}}> Transaction Details</h2>

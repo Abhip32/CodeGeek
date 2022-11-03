@@ -16,6 +16,9 @@ app.use(require("./routes/AdminLogin"));
 app.use(require("./routes/AdminFunctions"));
 app.use(require("./routes/Examination"));
 app.use(require("./routes/Plan"));
+app.use(require("./routes/Tests"));
+
+
 var bodyParser = require('body-parser')
 // To connect with your mongoDB database
 const mongoose = require("mongoose");

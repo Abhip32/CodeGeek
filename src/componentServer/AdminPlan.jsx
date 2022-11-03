@@ -37,7 +37,7 @@ function AdminPlan() {
 
   
   return (
-    <div style={{display:'flex',height:"100%",width:"98vw",color:"white"}}>
+    <div style={{display:'flex',height:"100%",width:"98vw",color:"white",background: "#E2E8F0"}}>
       <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
       <div>
       <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"10px",padding:"20px",margin:"40px",borderRadius:"20px",width:"60vw"}}>Update Plans</h2>

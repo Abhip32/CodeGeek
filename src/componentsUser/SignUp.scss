@@ -90,12 +90,14 @@
     width: 100%;
     margin-top: 2rem;
     box-shadow: 0 5px 5px #00000020;
+    background: #2180f9;
   }
   .btn-login:active {
     box-shadow: none;
+    background: rgb(232, 240, 254);
   }
   .btn-login:hover {
-    background: #2180f9;
+    background: rgb(232, 240, 254);
   }
   .inp {
     position: relative;

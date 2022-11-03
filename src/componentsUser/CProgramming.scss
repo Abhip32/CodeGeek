@@ -1,8 +1,8 @@
 .languagePage
 {
     margin: 0;
-    padding: 0;
-    height: 100vmin;
+    padding: 20px;
+    height: min-content;
     background: linear-gradient(to right, #191654, #43c6ac); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .headingC{
@@ -50,10 +50,7 @@
     margin-right: auto;
     color:white;
     margin-bottom: 20px;
-    transition: transform 1s;
-    &:hover{
-        transform: scale(1.05);
-    }
+
 
     button{
         background-color: #02729e;

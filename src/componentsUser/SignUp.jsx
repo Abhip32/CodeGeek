@@ -5,6 +5,7 @@ import FileBase64 from 'react-file-base64';
 import {useNavigate} from "react-router-dom";
 import Axios from 'axios';
 import "./SignUp.scss";
+import {AiFillWarning} from "react-icons/ai"
 import {
     AiOutlineMail,
     AiOutlineUpload,
@@ -85,12 +86,20 @@ function Login() {
 
 
                         <form class="signup-form">
-                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[0]}</h3>
-                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[1]}</h3>
-                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[2]}</h3>
-                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[3]}</h3>
-                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[4]}</h3>
-                            <h3 style={{color:"red",fontWeight:"900"}}>{errors[5]}</h3>
+                        <br/>
+                            <div style={errors.length == 0 ?{display:"none"}:{backgroundColor:"rgb(232, 240, 254)",borderRadius:"20px",padding:"30px"}}>
+                            <h1 style={{color:"#2196f3",fontWeight:"900"}}><AiFillWarning style={{color:"red"}}/> Oops !!</h1>
+                            <br/>
+                            <ul>
+                                {errors.map((item,index) => (
+                                <li>
+                                    <h5 style={{color:"red",fontWeight:"700"}}>{item}</h5>
+                               </li>
+                                ))}
+                            </ul>
+
+                            </div>
+                            <br/>
                             <label class="inp">
                                 <input type="email" id="username" class="input-text" placeholder="&nbsp;"/>
                                 <span class="label">Username</span>

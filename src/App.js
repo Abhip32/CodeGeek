@@ -29,12 +29,19 @@ import Buysubscription from "./componentsUser/Buysubscription";
 import Pagenotfound from "./componentsUser/Pagenotfound";
 import AdminTransactions from "./componentServer/AdminTransactions";
 import AdminPlan from "./componentServer/AdminPlan";
+import Compiler from "./componentsUser/Compiler";
+import CreateTestPreview from "./componentServer/CreateTestPreview";
+import Event from "./componentsUser/Event";
+import TestPage from "./componentsUser/TestPage";
+import GetEventResults from "./componentServer/GetEventResult";
+import TestDetails from "./componentServer/TestDetails";
+import ForgotPassword from "./componentsUser/ForgotPassword";
 
 function App() {
   const [type, setType]= useState("Login")
   console.log(window.location.href)
   useEffect(()=>{
-    if(window.location.href !== "http://localhost:3000/Login"&&window.location.href !== "http://localhost:3000/"&&window.location.href !== "http://localhost:3000/SignUp"&&window.location.href !=="http://localhost:3000/AdminLogin")
+    if(window.location.href !== "http://localhost:3000/Login"&&window.location.href !== "http://localhost:3000/"&&window.location.href !== "http://localhost:3000/SignUp"&&window.location.href !=="http://localhost:3000/AdminLogin"&&window.location.href !=="http://localhost:3000/ForgotPassword"&&window.location.href !=="http://localhost:3000/Buysubscription")
       {
         setType("LoggedIn");
       }
@@ -69,6 +76,7 @@ function App() {
       <Route path="/CppProgrammingProblems" element={<CppProgramming/>} />
       <Route path="/JavaProgrammingProblems" element={<JavaProgramming/>} />
       <Route path="/PythonProgrammingProblems" element={<PythonProgramming/>} />
+      <Route path="/Compiler" element={<Compiler/>} />
       <Route path="/Certification" element={<Certification/>} />
       <Route path="/Problem" element={<Problem title="Problem Title" description="Problem description" language="programming language" expectedOutput="Output"/>} />
       <Route path="/Examination" element={<Examination/>} />
@@ -81,6 +89,12 @@ function App() {
       <Route path="/AdminHostEvent" element={<AdminHostEvent/>} />
       <Route path="/AdminTransaction" element={<AdminTransactions/>} />
       <Route path="/AdminPlans" element={<AdminPlan/>} />
+      <Route path="/CreateTestPreview" element={<CreateTestPreview/>} />
+      <Route path="/Events" element={<Event/>} />
+      <Route path="/TestPage" element={<TestPage/>} />
+      <Route path="/AdminGetEventResults" element={<GetEventResults/>} />
+      <Route path="/AdminTestDetails" element={<TestDetails/>} />
+      <Route path="/ForgotPassword" element={<ForgotPassword/>} />
       </Routes>
     </Router>
   </div>

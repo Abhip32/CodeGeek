@@ -7,6 +7,7 @@ import {TbCertificate} from "react-icons/tb"
 import "./SidebarAdmin.scss";
 import {GrTransaction} from 'react-icons/gr'
 import {GrPlan} from "react-icons/gr"
+import {VscOutput} from "react-icons/vsc"
 
 //import react pro sidebar components
 import {
@@ -105,6 +106,7 @@ const Header = (props) => {
               <MenuItem onClick={()=>navigate("/AdminAddQuestion", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat,moneystats:props.name.moneystats,substats:props.name.substats}})}  icon={<AiFillFileAdd size={20} />}>Add Question</MenuItem>
               <MenuItem onClick={()=>goToAdminApprove()}  icon={<TbCertificate size={20} />}>Approve Certificates</MenuItem>
               <MenuItem onClick={()=>navigate("/AdminHostEvent", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat,moneystats:props.name.moneystats,substats:props.name.substats}})}  icon={<BsCalendar2Event size={20} />}>Host Event</MenuItem>
+              <MenuItem onClick={()=>navigate("/AdminGetEventResults", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat,moneystats:props.name.moneystats,substats:props.name.substats}})}  icon={<VscOutput size={20} />}>Get Event Details</MenuItem>
               <MenuItem onClick={()=>navigate("/AdminTransaction", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat,moneystats:props.name.moneystats,substats:props.name.substats}})}  icon={<GrTransaction size={20} />}>Transaction Details</MenuItem>
               <MenuItem onClick={()=>navigate("/AdminPlans", {state:{name: props.name.user,pic:props.name.pic,lang:props.name.lang,test:props.name.test,userstat:props.name.userstat,moneystats:props.name.moneystats,substats:props.name.substats}})}  icon={<GrPlan size={20} />}>Edit Subscription Plans</MenuItem>
             </Menu>

@@ -9,11 +9,14 @@ import "../stylesheet/WebcamModified.scss";
 import Axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {useLocation} from 'react-router-dom';
-import warning from './warning';
-import ReactAudioPlayer from "react-audio-player";
 
 
 
+
+if(window.location.href=="http://localhost3000/Examination"||window.location.href=="http://localhost3000/TestPage")
+{
+   new Promise(r => setTimeout(r, 10000));
+}
 var count=-450;
 var active = false;
 
@@ -66,39 +69,40 @@ const link =
  facesdata.push(xCenterBoundingBox,yCenterBoundingBox);
 
 
-  if((xCenterBoundingBox<0.20946518272161484||xCenterBoundingBox>0.5195659756660461)&&xCenterBoundingBox.length!=0&&window.location.href==="http://localhost:3000/Examination"&&active)
+  if((xCenterBoundingBox<0.20946518272161484||xCenterBoundingBox>0.5195659756660461)&&xCenterBoundingBox.length!=0&&(window.location.href==="http://localhost:3000/Examination"||window.location.href==="http://localhost:3000/TestPage")&&active)
   {
      count=count+1;
      audio.play();     
   }
 
-  if((yCenterBoundingBox>0.5532440972328186||yCenterBoundingBox<0.0429329723119735)&&yCenterBoundingBox.length!=0&&window.location.href==="http://localhost:3000/Examination"&&active)        
+  if((yCenterBoundingBox>0.5532440972328186||yCenterBoundingBox<0.0429329723119735)&&yCenterBoundingBox.length!=0&&(window.location.href==="http://localhost:3000/Examination"||window.location.href==="http://localhost:3000/TestPage")&&active)        
   {
       count=count+1;
 
           audio.play();
   }
 
-  if(xCenterBoundingBox.length!=0&&yCenterBoundingBox.length!=0&&window.location.href==="http://localhost:3000/Examination")       
+  if(xCenterBoundingBox.length!=0&&yCenterBoundingBox.length!=0&&(window.location.href==="http://localhost:3000/Examination"||window.location.href==="http://localhost:3000/TestPage"))       
   {
       active=true;
+      console.log("active");
       if(count<0)
       {
         count=0;
       }
   }  
 
-  if(xCenterBoundingBox.length==0&&yCenterBoundingBox.length==0&&active&&window.location.href=="http://localhost:3000/Examination"&&active)        
+  if(xCenterBoundingBox.length==0&&yCenterBoundingBox.length==0&&active&&(window.location.href==="http://localhost:3000/Examination"||window.location.href==="http://localhost:3000/TestPage")&&active)        
   {
         count=count+1;
           audio.play();        
   } 
 
-  if(facesdata[0].length>=2&&facesdata[1].length>=2&&window.location.href==="http://localhost:3000/Examination"&&active)
+  if(facesdata[0].length>=2&&facesdata[1].length>=2&&(window.location.href==="http://localhost:3000/Examination"||window.location.href==="http://localhost:3000/TestPage")&&active)
   {
         count=count+1;
 
-          audio.play();
+          audio1.play();
   }
   
   context.stroke();
@@ -158,27 +162,31 @@ const WebcamModified = (props) => {
   let navigate = useNavigate();
   const location = useLocation();
 
-  function isFullScreen() {
+  
+  if (document.fullscreenEnabled&&(window.location.href==="http://localhost:3000/Examination"||window.location.href==="http://localhost:3000/TestPage")) {
+    elem.requestFullscreen();
+  }
+  
+  if(active)
+  {
+    document.addEventListener("fullscreenchange", function () {
+      (document.fullscreenEnabled) ? notFullScreen() : isFullScreen();
+    }, false);
+  }
+
+  const isFullScreen=()=> {
     console.log("full");
   }
   
-  async function notFullScreen() {
+  const notFullScreen=()=> {
     console.log("nfull");
-    if(count>-10&&window.location.href==="http://localhost:3000/Examination")
+    if(count>-10&&(window.location.href==="http://localhost:3000/Examination"||window.location.href==="http://localhost:3000/TestPage")&&active)
     {
-      await audio3.play();
+      audio3.play();
       count=100;
     }
 
   }
-  
-  if (document.fullscreenEnabled&&window.location.href==="http://localhost:3000/Examination") {
-    elem.requestFullscreen();
-  }
-  
-  document.addEventListener("fullscreenchange", function () {
-    (document.fullscreenEnabled) ? notFullScreen() : isFullScreen();
-  }, false);
 
   const { webcamRef, boundingBox } = useFaceDetection({
     faceDetectionOptions: {
@@ -232,10 +240,6 @@ const WebcamModified = (props) => {
     );
   }, []);
 
-
-
-
-
   const dis=()=>{
     navigate("/ExamEnd",{state:{username: props.username, id: props.id, lang: props.lang}})
     Axios.post(`http://localhost:8000/setcaseresult`,{
@@ -243,10 +247,17 @@ const WebcamModified = (props) => {
       result: "fail(unfair)",
       lang: location.state.lang
   })
+
     window.location.reload(false);
     Camera.mediaSrc.stop();
-    
   }
+
+
+
+
+
+
+ 
 
   return (
     <div>
@@ -259,15 +270,15 @@ const WebcamModified = (props) => {
           style={{ objectFit: "cover" }}
           className="canvas"
         />
-        <h3>{count}</h3>
+        <h3 style={{display:"none"}}>{count}</h3>
   
-        <h3 className={count<=0&&props.type=='test'? "_0stWarning" : "NoWarning"}>No Warning </h3>
-        <h3 className={count<=20&&count>1&&props.type=='test'? "_1stWarning" : "NoWarning"}>1st Warning </h3>
-        <h3 className={count<=40&&count>=21&&props.type=='test'? "_2ndWarning" : "NoWarning"}>2nd Warning </h3>
-        <h3 className={count<=60&&count>=41&&props.type=='test'? "_3rdWarning" : "NoWarning"}>3rd Warning </h3>
-        <h3 className={count<=80&&count>=61&&props.type=='test'? "_4thWarning" : "NoWarning"}>4th Warning </h3>
-        <h3 className={count<=99&&count>=81&&props.type=='test'? "_5thWarning" : "NoWarning"}>5th Warning </h3>
-        <h3 className={count>=100 &&props.type=='test'?  dis(): "NoWarning"}>You are disqualified</h3> 
+        <h3 className={count<=0&&props.type=="test"? "_0stWarning" : "NoWarning"}>No Warning </h3>
+        <h3 className={count<=20&&count>1&&props.type=="test"? "_1stWarning" : "NoWarning"}>1st Warning </h3>
+        <h3 className={count<=40&&count>=21&&props.type=="test"? "_2ndWarning" : "NoWarning"}>2nd Warning </h3>
+        <h3 className={count<=60&&count>=41&&props.type=="test" ? "_3rdWarning" : "NoWarning"}>3rd Warning </h3>
+        <h3 className={count<=80&&count>=61&&props.type=="test" ? "_4thWarning" : "NoWarning"}>4th Warning </h3>
+        <h3 className={count<=99&&count>=81&&props.type=="test" ? "_5thWarning" : "NoWarning"}>5th Warning </h3>
+        <h3 className={count>=100&&props.type=="test" ?  dis(): "NoWarning"}>You are disqualified</h3> 
 
 
       
@@ -275,7 +286,7 @@ const WebcamModified = (props) => {
         
         
         <Webcam
-          audio={true}
+          audio={false}
           width={300}
           height={300}
           mirrored={true}
@@ -290,10 +301,10 @@ const WebcamModified = (props) => {
 };
 
 document.addEventListener("visibilitychange", event => {
-  if (document.visibilityState === "visible"&&(window.location.href==="http://localhost:3000/ExamStart"||window.location.href==="http://localhost:3000/Examination")) {
+  if (document.visibilityState === "visible"&&(window.location.href==="http://localhost:3000/ExamStart"||window.location.href==="http://localhost:3000/Examination"||window.location.href==="http://localhost:3000/TestPage")&&active) {
      
   } 
-  else if(document.visibilityState !== "visible"&&(window.location.href==="http://localhost:3000/ExamStart"||window.location.href==="http://localhost:3000/Examination")) {
+  else if(document.visibilityState !== "visible"&&(window.location.href==="http://localhost:3000/ExamStart"||window.location.href==="http://localhost:3000/Examination"||window.location.href==="http://localhost:3000/TestPage")&&active) {
       audio2.play();
       count+=30;
   }

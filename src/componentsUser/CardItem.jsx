@@ -42,7 +42,7 @@ const CardItem = (props) => {
         </div>
         <div className="card__item--pricing">
           <div>
-            <h1>${price} for {duration}</h1>
+            <h1>{price + " ₹ "} for {duration}</h1>
             <p>{para1}</p>
             <p>{para2}</p>
           </div>
@@ -72,9 +72,11 @@ const CardItem = (props) => {
         </div>
         <div className="card__item--pricing">
           <div>
-            <h1><input id="price"  onChange={(e)=>{setpricez(e.target.value)}} placeholder={price} style={{width:"50%"}}/> for<input onChange={(e)=>{setdurationz(e.target.value)}} id="duration"  placeholder={duration} style={{width:"100%"}}/></h1>
-            <p>{para1}</p>
-            <p>{para2}</p>
+            <h2><input id="price"  onChange={(e)=>{setpricez(e.target.value)}} placeholder={price+ " ₹ "} style={{width:"40%",borderRadius:"20px",textAlign:"center",border:"none"}}/> <br/>for <br/><input onChange={(e)=>{setdurationz(e.target.value)}} id="duration"  placeholder={duration} style={{width:"60%",borderRadius:"20px",textAlign:"center",border:"none"}}/></h2>
+            <p>{para1}
+                <br/>
+                {para2}
+            </p>
           </div>
         </div>
         <div className="card__item--btn-ul">

@@ -1,0 +1,14 @@
+.problemportal{
+    display: flex;
+    height: 100vh;
+    gap:5vw;
+
+    .sidecom{
+        text-align: center;
+        width: 30vw;
+    }
+
+    .compiler{
+        width: 60vw;
+    }
+}

@@ -6,12 +6,18 @@ import Axios from 'axios';
 import "./Examstart.scss"
 import WebcamModified from "./WebcamModified";
 import { FullScreen } from '@chiragrupani/fullscreen-react';
-import voicetospeech from './voice-to-speech';
+import Modal from 'react-bootstrap/Modal'
+import Button from 'react-bootstrap/Button';
 
 var elem = document.documentElement;
 function ExamStart() {
     const location = useLocation();
+    const [status,setStatus]= useState("");
     let navigate = useNavigate();
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
    
    
@@ -34,12 +40,25 @@ function ExamStart() {
         }
         )
           }, function() {
-              alert('Camera Error');
+            setStatus("No Camera Found")
+            setShow(true)
           });
         
     }
   return (
     <div className='ExamStartBlock' id="fullscreen">
+        <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title><h4>Alert</h4></Modal.Title>
+                </Modal.Header>
+                <Modal.Body> <h6 style={{color:"red",fontWeight:"bolder"}}>{status}</h6></Modal.Body>
+
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
         <div className="ExamStartSidebar"> 
           <h3>Welcome to</h3>
           <h3>{location.state.language.toUpperCase()} Programming Test</h3>

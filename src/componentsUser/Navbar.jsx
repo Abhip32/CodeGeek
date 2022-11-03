@@ -28,13 +28,13 @@ function NavbarFunction(props) {
           <Nav className="me-auto">
               <a className="nlink" onClick={() =>navigate("/Login" ,{state: {result:""}})}>Login</a>
               <a className="nlink" onClick={() =>navigate("/AdminLogin")}>Employee Login</a>
+              <a className="nlink" onClick={() =>navigate("/Compiler")}>Compiler</a>
           </Nav>
         </Navbar.Collapse>
       </Container>
     </Navbar>
     );
   }
-
 
   if(props.type=="LoggedIn")
   {
@@ -54,6 +54,7 @@ function NavbarFunction(props) {
               <a className="nlink" onClick={() =>navigate("/Home", {state:{username: location.state.username}})}>Practice</a>
               <a className="nlink" onClick={() =>navigate("/Dashboard", {state:{username: location.state.username}})}><img className="profilepic" src={profileImage}/></a>
               <a className="nlink" onClick={() =>navigate("/Certification", {state:{username: location.state.username}})}>Certification</a>
+              <a className="nlink" onClick={() =>navigate("/Events", {state:{username: location.state.username}})}>Events</a>
           </Nav>
         </Navbar.Collapse>
       </Container>

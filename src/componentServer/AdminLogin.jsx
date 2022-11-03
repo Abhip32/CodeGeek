@@ -150,7 +150,7 @@ function Login() {
                 <form class="signup-form">
                     <label class="inp">
                         <input type="email" id="username" class="input-text" placeholder="&nbsp;"/>
-                        <span class="label">Email</span>
+                        <span class="label">username</span>
                         <span class="input-icon"><AiOutlineMail/></span>
                     </label>
                     <label class="inp">

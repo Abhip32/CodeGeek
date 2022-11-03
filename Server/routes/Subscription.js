@@ -61,14 +61,14 @@ recordRoutes.route('/addSubscription').post(function (req, res) {
 })
 
 
-recordRoutes.route('/insertTransaction').post(function (req, res) {
+recordRoutes.route('/InsertTransaction').post(function (req, res) {
     let db_connect = dbo.getDb();
     var cardno=req.body.cardno
     var cardhld=req.body.cardhld
     var userid=req.body.userid
     var date=new Date();
     var type=req.body.type
-
+    console.log("transaction inserted");
     let day = date.getDate();
     let month = date.getMonth() + 1;
     let year = date.getFullYear();

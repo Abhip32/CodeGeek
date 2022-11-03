@@ -21,7 +21,7 @@ function Problem(props) {
     const [userOutput, setUserOutput] = useState("");
 	const [link, setLink] = useState("");
 	const [result,setResult] = useState("none");
-	const [comments, setComments] = useState([])
+	const [comments, setComments] = useState([{pic:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_gOipfceOB3QyvgMmFs8p56KvQKFIIc8ccQ&usqp=CAU",name:"No Comments"}])
 
 
     const [loading, setLoading] = useState(false);
@@ -49,7 +49,10 @@ useEffect(()=>{
 			lang: location.state.language,
 			comment: document.getElementById("comment").value
 		}).then((res) => {
-			setComments(res.data);
+			if(res.data.length!=0)
+			{
+				setComments(res.data);
+			}
 			console.log(comments);
 
 		})
@@ -95,9 +98,39 @@ function compile() {
 	language: userLang,
 	input: userInput }).then((res) => {
 	console.log(location.state.inputval)
-	setUserOutput(res.data);
-	console.log(location.state.inputval);
+	console.log(res.data)
+	console.log(location.state.userOutput);
+	setUserOutput(res.data)
+	
 	if(location.state.expectedOutput===res.data)
+	{
+		console.log(typeof (res.data));
+		console.log(typeof (location.state.expectedOutput));
+		setLink("Go Back")
+		setResult("Success")
+
+		Axios.post(`http://localhost:8000/addsolved`,
+		{
+			id: location.state.userid,
+			identi: location.state.identi,
+			lang: location.state.language
+		}).then((res) => {
+			console.log(solve);
+			if(solve=="Unsolved")
+			{
+				Axios.post(`http://localhost:8000/addpoints/`+location.state.language,
+				{
+				id: location.state.userid,
+				identi: location.state.identi,
+				lang: location.state.language
+				}).then((res) => {	
+				})
+			}
+			solve="Solved"
+			console.log(solve);
+		})		
+	}
+	else if(location.state.expectedOutput.replace("{input}",userInput).trim()==res.data.trim())
 	{
 		console.log(typeof (res.data));
 		console.log(typeof (location.state.expectedOutput));
@@ -147,7 +180,7 @@ function change()
 
 
   return (
-    <div className='problemportal'>
+    <div className='problemportal' style={{height:"max-content"}}>
 
         <div className="sidebarcontent">
         <h5>Problem : </h5>

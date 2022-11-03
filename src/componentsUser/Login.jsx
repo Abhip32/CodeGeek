@@ -6,14 +6,22 @@ import React, { useState, useEffect } from 'react';
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import Axios from "axios";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal'
 
 
 function Login() {
     const [status, setstatus] = useState("");
     const [icon, setIcon] = useState("hide");
     const [link, setLink] = useState("");
+    
+    
     let navigate = useNavigate();
     let location = useLocation();
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const [ profile, setProfile ] = useState([]);
     const clientId = '316466299912-nr5umh7iho0hsag07864a414fd2kl6hd.apps.googleusercontent.com';
@@ -44,11 +52,13 @@ function Login() {
             }
             else if(res.data=="failed"){
                 setstatus("Email not Registered Sign Up first");
+                setShow(true)
             }
             else if(res.data=="Subscription")
             {
                 setstatus("Subscription Expired");
                 setLink("Click Here to renew your subscription");
+                setShow(true)
             }
             
             
@@ -59,7 +69,7 @@ function Login() {
         console.log('failed', err);
     };
 
-    function show() {
+    function showpass() {
         console.log("show pass");
         var x = document.getElementById("password");
         if (x.type === "password") {
@@ -98,12 +108,14 @@ function Login() {
             }
             if (res.status === 404) {
                 setstatus("Invalid username or password");
+                setShow(true)
             }
 
             if(res.status===305)
             {
                 setstatus("Subscription Expired");
                 setLink("Click Here to renew your subscription");
+                setShow(true)
             }
         });
     }
@@ -111,6 +123,17 @@ function Login() {
 
     return (
         <div className="Login">
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                <Modal.Title><h4>Alert</h4></Modal.Title>
+                </Modal.Header>
+                <Modal.Body> <h6 style={{color:"red",fontWeight:"bolder"}}>{status}</h6></Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
             <div class="container">
                 <main class="signup-container">
                     <h1 class="heading-primary">Log in<span class="span-blue">.</span>
@@ -152,7 +175,7 @@ function Login() {
                                     }
                                 }><FaEyeSlash onClick={
                                         () => {
-                                            show()
+                                            showpass()
                                         }
                                     }/></div>
                             <div style={
@@ -169,9 +192,9 @@ function Login() {
                             </div>
                     </span>
                 </label>
+                <a class="text-mute" href="http://localhost:3000/ForgotPassword">Forgot Password ? </a>
                 <button class="btn btn-login"
                     onClick={onSubmit}>Login</button>
-                    <h6 style={{color:"red",fontWeight:"bolder"}}>{status}</h6>
                     <h6 onClick={()=>navigate("/Buysubscription", {state: {username: document.getElementById("email").value}})} style={{color:"#2196f3",fontWeight:"bolder"}}>{link}</h6>
             </form>
             <p class="text-mute">Not a member?

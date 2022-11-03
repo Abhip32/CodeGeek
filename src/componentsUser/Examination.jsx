@@ -205,7 +205,7 @@ function change()
       }
 
   return (       
-    <div className="ExaminationScreen">
+    <div className="ExaminationScreen" style={{height:"min-content"}}>
           <div className='problemportal'>
 
         <div className="sidebarcontent">

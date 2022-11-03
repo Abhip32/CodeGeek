@@ -15,6 +15,7 @@ import python from '../Assets/python.png'
 import Axios from 'axios';
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
+import {FaCrown} from 'react-icons/fa'
 
 
 function Main(props) {
@@ -195,7 +196,7 @@ function Main(props) {
   <div class="profile" >
     {usersC.map((item,index) => 
       <div class="person second" style={index+1==2?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"silver"}}/></div>
       <i class="fas fa-caret-up"></i>
       <img src={item.pic} style={{  border: "5px solid silver",boxShadow: "0 0 20px silver"}} alt="" class="photo"/>
       <p class="link">{item.name}</p>
@@ -207,7 +208,7 @@ function Main(props) {
     
     {usersC.map((item,index) => 
     <div class="person first" style={index+1==1?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"gold"}}/></div>
       <i class="fas fa-crown"></i>
       <img src={item.pic} style={{  border: "5px solid gold",boxShadow: "0 0 20px gold"}} alt="" class="photo main"/>
       <p class="link">{item.name}</p>
@@ -217,7 +218,7 @@ function Main(props) {
 
     {usersC.map((item,index) => 
     <div class="person third" style={index+1==3?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"#cd7f32"}}/></div>
       <i class="fas fa-caret-up"></i>
       <img src={item.pic} style={{  border: "5px solid #cd7f32",boxShadow: "0 0 20px #cd7f32"}} alt="" class="photo"/>
       <p class="link">{item.name}</p>
@@ -266,7 +267,7 @@ function Main(props) {
   <div class="profile" >
     {usersC.map((item,index) => 
       <div class="person second" style={index+1==2?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"silver"}}/></div>
       <i class="fas fa-caret-up"></i>
       <img src={item.pic} style={{  border: "5px solid silver",boxShadow: "0 0 20px silver"}} alt="" class="photo"/>
       <p class="link">{item.name}</p>
@@ -278,7 +279,7 @@ function Main(props) {
     
     {usersC.map((item,index) => 
     <div class="person first" style={index+1==1?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"gold"}}/></div>
       <i class="fas fa-crown"></i>
       <img src={item.pic} style={{  border: "5px solid gold",boxShadow: "0 0 20px gold"}} alt="" class="photo main"/>
       <p class="link">{item.name}</p>
@@ -288,7 +289,7 @@ function Main(props) {
 
     {usersC.map((item,index) => 
     <div class="person third" style={index+1==3?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"#cd7f32"}}/></div>
       <i class="fas fa-caret-up"></i>
       <img src={item.pic} style={{  border: "5px solid #cd7f32",boxShadow: "0 0 20px #cd7f32"}} alt="" class="photo"/>
       <p class="link">{item.name}</p>
@@ -337,7 +338,7 @@ function Main(props) {
   <div class="profile" >
     {usersC.map((item,index) => 
       <div class="person second" style={index+1==2?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"silver"}}/></div>
       <i class="fas fa-caret-up"></i>
       <img src={item.pic} style={{  border: "5px solid silver",boxShadow: "0 0 20px silver"}} alt="" class="photo"/>
       <p class="link">{item.name}</p>
@@ -349,7 +350,7 @@ function Main(props) {
     
     {usersC.map((item,index) => 
     <div class="person first" style={index+1==1?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"gold"}}/></div>
       <i class="fas fa-crown"></i>
       <img src={item.pic} style={{  border: "5px solid gold",boxShadow: "0 0 20px gold"}} alt="" class="photo main"/>
       <p class="link">{item.name}</p>
@@ -359,7 +360,7 @@ function Main(props) {
 
     {usersC.map((item,index) => 
     <div class="person third" style={index+1==3?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"#cd7f32"}}/></div>
       <i class="fas fa-caret-up"></i>
       <img src={item.pic} style={{  border: "5px solid #cd7f32",boxShadow: "0 0 20px #cd7f32"}} alt="" class="photo"/>
       <p class="link">{item.name}</p>
@@ -409,7 +410,7 @@ function Main(props) {
   <div class="profile" >
     {usersC.map((item,index) => 
       <div class="person second" style={index+1==2?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"silver"}}/></div>
       <i class="fas fa-caret-up"></i>
       <img src={item.pic} style={{  border: "5px solid silver",boxShadow: "0 0 20px silver"}} alt="" class="photo"/>
       <p class="link">{item.name}</p>
@@ -421,7 +422,7 @@ function Main(props) {
     
     {usersC.map((item,index) => 
     <div class="person first" style={index+1==1?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"gold"}}/></div>
       <i class="fas fa-crown"></i>
       <img src={item.pic} style={{  border: "5px solid gold",boxShadow: "0 0 20px gold"}} alt="" class="photo main"/>
       <p class="link">{item.name}</p>
@@ -431,7 +432,7 @@ function Main(props) {
 
     {usersC.map((item,index) => 
     <div class="person third" style={index+1==3?{display:'flex',alignItem:'center',gap:"20px",padding:"10px",borderRadius:"100px",padding:"20px",margin:"10px"}:{display:'none'}}>
-      <div class="num">{index+1}</div>
+      <div class="num"><FaCrown size={40} style={{color:"#cd7f32"}}/></div>
       <i class="fas fa-caret-up"></i>
       <img src={item.pic} style={{  border: "5px solid #cd7f32",boxShadow: "0 0 20px #cd7f32"}} alt="" class="photo"/>
       <p class="link">{item.name}</p>
