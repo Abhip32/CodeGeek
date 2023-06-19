@@ -1,11 +1,13 @@
-import {React, useState, useEffect} from 'react'
-import "./AdminLogin.scss";
-import axios from 'axios';
-import {useNavigate, useLocation} from "react-router-dom";
-import Axios from 'axios';
+import {useLocation, useNavigate} from "react-router-dom";
 import {AiOutlineMail} from "react-icons/ai"
 import {FaEye, FaEyeSlash} from 'react-icons/fa'
-
+import React, { useState, useEffect } from 'react';
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import { gapi } from 'gapi-script';
+import Axios from "axios";
+import { Container, Row, Col, Button, Modal } from 'react-bootstrap';
+import "./AdminLogin.scss"
+import { setLoginCookieAdmin } from "../utils/loginCookie";
 
 function Login() {
     const [status, setstatus] = useState("");
@@ -20,7 +22,7 @@ function Login() {
     const [user, setUser] = useState([])
     const [icon, setIcon] = useState("hide");
 
-    function show() {
+    function showpass() {
         console.log("show pass");
         var x = document.getElementById("password");
         if (x.type === "password") {
@@ -44,25 +46,19 @@ function Login() {
               console.log(user);
           })
       
-          await  Axios.post(`http://localhost:8000/getbardata`).then((res) => {
-              teststats.push(res.data)
-              console.log(teststats);
-          })
       
           await Axios.post(`http://localhost:8000/getpiedata`).then((res) => {
               languagesstats.push(res.data);
               console.log(languagesstats);
           })
 
-          await Axios.post(`http://localhost:8000/getTotalTransactions`).then((res) => {
-                console.log(res.data);
-                moneystats.push(res.data.price);
-          })
+          await Axios.post(`http://localhost:8000/testdata`).then((res) => {
+            teststats.push(res.data);
+            console.log(languagesstats);
+        })
 
-          await Axios.post(`http://localhost:8000/getTotalTransactionsbyCatagory`).then((res) => {
-                console.log(res.data);
-                substats.push(res.data);
-          })
+
+
 
 
         await Axios.post(`http://localhost:8000/adminlogin`, {
@@ -71,6 +67,7 @@ function Login() {
         }).then((res) => {
             console.log(res.data._id);
             if (res.data._id!=undefined&&languagesstats.length > 0) {
+              setLoginCookieAdmin(res.data.name,"admin",res.data.pic,languagesstats[0],teststats[0],user);
                 navigate("/AdminHome", {
                     state: {
                         name: res.data.name,
@@ -78,8 +75,6 @@ function Login() {
                         lang: languagesstats[0],
                         test: teststats[0],
                         userstat: user,
-                        moneystats: moneystats,
-                        substats: substats
                     }
                 })
                 window.location.reload(false);
@@ -92,6 +87,7 @@ function Login() {
                 }
                 else
                 {
+                  setLoginCookieAdmin(res.data.name,"admin");
                     navigate("/AdminHome", {
                         state: {
                             name: res.data.name,
@@ -139,73 +135,40 @@ function Login() {
 
 
     return (
-        <div className="Login">
-        <div class="container">
-            <main class="signup-container">
-                <h1 class="heading-primary">Log in<span class="span-blue">.</span>
-                </h1>
-                <p class="text-mute">Enter your credentials to access your account.</p>
-              
-
-                <form class="signup-form">
-                    <label class="inp">
-                        <input type="email" id="username" class="input-text" placeholder="&nbsp;"/>
-                        <span class="label">username</span>
-                        <span class="input-icon"><AiOutlineMail/></span>
-                    </label>
-                    <label class="inp">
-                        <input type="password" class="input-text" placeholder="&nbsp;" id="password"/>
-                        <span class="label">Password</span>
-                        <span class="input-icon input-icon-password" data-password>
-                            <div style={
-                                icon == "hide" ? {
-                                    display: "block"
-                                } : {
-                                    display: "none"
-                                }
-                            }><FaEyeSlash onClick={
-                                    () => {
-                                        show()
-                                    }
-                                }/></div>
-                        <div style={
-                            icon == "show" ? {
-                                display: "block"
-                            } : {
-                                display: "none"
-                            }
-                        }><FaEye onClick={
-                                () => {
-                                    show()
-                                }
-                            }/>
-                        </div>
-                </span>
-            </label>
-            <h6 style={{color:"red",fontWeight:"bolder"}}>{status}</h6>
-            <button class="btn btn-login"
-                onClick={handleSubmit}>Login</button>
-        </form>
-    </main>
-
-    <div class="welcome-container">
-        <h1 class="heading-secondary">
-            Hello Admin
-            <br/><em style={
-                {color: '#2196f3'}
-            }>CODE</em>
-            <em style={
-                {color: 'black'}
-            }>GEEK</em>
-        </h1>
-        <br/>
-        <br/>
-        <img src="https://cdn.dribbble.com/users/76502/screenshots/5251755/jet_animation.gif" alt=""/>
+             <Container className="Login-Main">
+<div >
+  <div className="signup-container">
+    <div>
+    <h1 className="heading-primary">
+        Hello <span className="span-blue">Admin</span>
+      </h1>
+      <p className="text-mute">Enter your credentials to access your account.</p>
     </div>
-</div>
 
+    <form className="signup-form">
+ 
+      <label className="signIn-inp">
+        <span className="input-icon"><AiOutlineMail /></span>
+        <input type="email" id="username" className="input-text" placeholder="Username" required/>
+      </label>
+      <label className="signIn-inp">
+        <span className="input-icon input-icon-password" data-password>
+          <div style={icon === "hide" ? { display: "block" } : { display: "none" }}>
+            <FaEyeSlash onClick={() => showpass()} />
+          </div>
+          <div style={icon === "show" ? { display: "block" } : { display: "none" }}>
+            <FaEye onClick={() => showpass()} />
+          </div>
+        </span>
+        <input type="password" className="input-text" placeholder="Password" id="password" required/>
+      </label>
+      <a className="LoginLink" href="/ForgotPassword">Forgot Password?</a>
+      <button className="Login-btn btn-login" onClick={handleSubmit}>Login</button>
 
+    </form>
+  </div>
 </div>
+</Container>
     )
 }
 

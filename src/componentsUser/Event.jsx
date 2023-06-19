@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Spinner from 'react-bootstrap/Spinner';
 import Modal from 'react-bootstrap/Modal'
+import EventBread from "../Assets/EventBread.jpg"
 
 function AvailableTests() {
     const [QuestionsData, setQuestionsData] = useState([]);
@@ -22,6 +23,7 @@ function AvailableTests() {
 
     useEffect(() => {
       Axios.post(`http://localhost:8000/getQuestions`,{
+        email:JSON.parse(localStorage.getItem('loginCookie')).email,
     }).then((res) => {
         setQuestionsData(res.data);
 
@@ -33,14 +35,14 @@ function AvailableTests() {
     })
     }, []);
 
-    const EnterTest=(Name,ID,NoQue)=>{
+    const EnterTest=(Name,ID)=>{
       navigator.getMedia = ( navigator.getUserMedia || // use the proper vendor prefix
       navigator.webkitGetUserMedia ||
       navigator.mozGetUserMedia ||
       navigator.msGetUserMedia);
 
         navigator.getMedia({video: true}, function() {
-          navigate("/TestPage",{state:{name: Name,username:location.state.username,email: location.state.email}})
+          navigate(`/TestPage/${ID}`,{state:{name: Name,username:location.state.username,email: location.state.email}})
         }, function() {
           setStatus("No Camera Found")
           setShow(true)
@@ -64,8 +66,8 @@ function AvailableTests() {
                 </Button>
                 </Modal.Footer>
             </Modal>
-         <div className="userInfo" style={{backgroundImage: `url("https://t4.ftcdn.net/jpg/04/67/93/01/360_F_467930159_UcfrOkjhFG436zoT9fSetYccBgpNkokp.jpg")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
-      <h1>Hello {location.state.username}</h1>
+         <div className="userInfo" style={{backgroundImage: `url(${EventBread})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
+      <h1>Hello {JSON.parse(localStorage.getItem('loginCookie')).username}</h1>
       <br/>
       <h4>Appear for Events to build your Resume </h4>
       </div>
@@ -101,7 +103,7 @@ function AvailableTests() {
                       <h4 style={{color: "white", fontWeight:"bolder"}}>Hosting Company : {item.company}</h4>
                     
                     </Card.Text>
-                    <Button variant="primary" style={{backgroundColor:"#008F9C",borderRadius:"20px",width:"200px",boxShadow:"2px 2px 10px white",fontWeight:"bolder",border: "none"}} onClick={()=>{EnterTest(item.Event)}}>Appear for the Event</Button>
+                    <Button variant="primary" style={{backgroundColor:"#008F9C",borderRadius:"20px",width:"200px",boxShadow:"2px 2px 10px white",fontWeight:"bolder",border: "none"}} onClick={()=>{EnterTest(item.Event,item._id)}}>Appear for the Event</Button>
                   </div>
                 </Card.Body>
              </Card> 

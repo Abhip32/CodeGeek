@@ -1,27 +1,11 @@
+// db.js
+const mongoose = require('mongoose');
 
-const { MongoClient } = require("mongodb");
-const Db = "mongodb://localhost:27017";
-const client = new MongoClient(Db, {
+mongoose.connect('mongodb://localhost:27017/CodeGeeks', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
-});
+})
+  .then(() => console.log('Connected to MongoDB'))
+  .catch(error => console.error('Failed to connect to MongoDB:', error));
 
-var _db;
-
-module.exports = {
-  connectToServer: function (callback) {
-    client.connect(function (err, db) {
-      // Verify we got a good "db" object
-      if (db)
-      {
-        _db = db.db("CodeGeeks");
-        console.log("Successfully connected to MongoDB."); 
-      }
-      return callback(err);
-         });
-  },
-
-  getDb: function () {
-    return _db;
-  },
-};
+module.exports = mongoose.connection;

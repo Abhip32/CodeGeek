@@ -8,45 +8,21 @@ const recordRoutes = express.Router();
 
 // This will help us connect to the database
 const dbo = require("../db/conn");
+const AdminDetailsModel = require("../models/adminDetailsModel");
+const UserModel = require("../models/usermodel");
+const ProblemModel = require("../models/problemModel");
+const TestDataModel = require("../models/TestModel");
+const eventModel = require("../models/eventModel");
 
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
 
 recordRoutes.route('/getbardata').post(function (req, res) {
     let pass1=0;
-    let db_connect = dbo.getDb();
     let fail=0;
     let data1=[];
     let unfair=0;
-    db_connect
-    .collection("TestData")
-    .find().toArray().then((ans) => {
-            for(i=0;i<ans.length;i++) {
-                {
-                    if(ans[i].case =="Success")
-                    {
-                        pass1=pass1+1;
-                    }
 
-                    else if(ans[i].case =="Failure"||ans[i].case =="none")
-                    {
-                        fail=fail+1;
-                    }
-
-                    else if(ans[i].case =="fail(unfair)")
-                    {
-                        unfair=unfair+1;
-                    }
-                }
-            }
-            data1.push(pass1)
-            data1.push(fail)
-            data1.push(unfair)
-            res.send(data1)
-            console.log(data1)
-            
-
-})
 
 })
 
@@ -57,11 +33,9 @@ recordRoutes.route('/getpiedata').post(function (req, res) {
     let data=[];
     let datajava=0;
     let datapython=0;
-    let db_connect = dbo.getDb();
 
-        db_connect
-        .collection("Problems")
-        .find().toArray().then((ans) => {
+
+        ProblemModel.find().then((ans) => {
             for(i=0;i<ans.length;i++) {
                 {
                     if(ans[i].language =="c")
@@ -98,13 +72,45 @@ recordRoutes.route('/getpiedata').post(function (req, res) {
 })
 
 recordRoutes.route("/usersdata").post(function (req, res) {
-    let db_connect = dbo.getDb();
 
-    db_connect
-    .collection("Login_Credentials")
-    .find().toArray().then((ans) => {
+
+    UserModel.find().then((ans) => {
             var i =ans.length;
             res.send({users:i});
+        })
+})
+
+
+
+recordRoutes.route("/testdata").post(function (req, res) {
+    let countfail=0;
+    let countsuccess=0;
+    let countnone=0;
+    let noEvents=0;
+
+    eventModel.find().then((ans) => {
+      noEvents=ans.length;  
+    })
+    
+    TestDataModel.find().then((ans) => {
+        for (i in ans){
+            if(ans[i].case == "none")
+            {
+                countnone++;
+            }
+
+            if(ans[i].case == "Success")
+            {
+                countsuccess++;
+            }
+            
+            if(ans[i].case == "fail(unfair)")
+            {
+                countfail++;
+            }
+        }
+
+            res.send([countfail, countsuccess, countnone,noEvents])
         })
 })
 
@@ -117,11 +123,8 @@ recordRoutes.route("/adminlogin").post(function (req, res) {
 	let pass=req.body.pass;
     let output="output";
     console.log("Admin Login")
-    let db_connect = dbo.getDb();
-    // Connect to collection
-    db_connect
-    .collection("Admin_Credentials")
-    .find({ "name": user }).toArray().then ((ans) => {
+
+    AdminDetailsModel.find({ "name": user }).then ((ans) => {
         if(ans.length!=0&&ans[0].password==pass)
         {
             res.send(ans[0]);

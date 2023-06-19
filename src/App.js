@@ -3,7 +3,10 @@ import {
   BrowserRouter as Router,
   Route,
   Routes,
+  useLocation,
 } from "react-router-dom";
+import Footer from "./componentsUser/Footer";
+import NotFoundPage from "./componentsUser/NotFoundPage";
 import Home from "./componentsUser/Home";
 import Login from "./componentsUser/Login";
 import Navbar from "./componentsUser/Navbar";
@@ -25,10 +28,6 @@ import AdminAddQuestion from "./componentServer/AdminAddQuestion";
 import AdminHome from "./componentServer/AdminHome";
 import ApproveCertificate from "./componentServer/ApproveCertificate";
 import AdminHostEvent from "./componentServer/AdminHostEvent";
-import Buysubscription from "./componentsUser/Buysubscription";
-import Pagenotfound from "./componentsUser/Pagenotfound";
-import AdminTransactions from "./componentServer/AdminTransactions";
-import AdminPlan from "./componentServer/AdminPlan";
 import Compiler from "./componentsUser/Compiler";
 import CreateTestPreview from "./componentServer/CreateTestPreview";
 import Event from "./componentsUser/Event";
@@ -36,24 +35,37 @@ import TestPage from "./componentsUser/TestPage";
 import GetEventResults from "./componentServer/GetEventResult";
 import TestDetails from "./componentServer/TestDetails";
 import ForgotPassword from "./componentsUser/ForgotPassword";
+import {useNavigate} from "react-router-dom";
+import { isLoginCookieValid } from "./utils/loginCookie";
+
 
 function App() {
-  const [type, setType]= useState("Login")
+  
+  const navigate = useNavigate();
+  const location = useLocation();
   console.log(window.location.href)
-  useEffect(()=>{
-    if(window.location.href !== "http://localhost:3000/Login"&&window.location.href !== "http://localhost:3000/"&&window.location.href !== "http://localhost:3000/SignUp"&&window.location.href !=="http://localhost:3000/AdminLogin"&&window.location.href !=="http://localhost:3000/ForgotPassword"&&window.location.href !=="http://localhost:3000/Buysubscription")
-      {
-        setType("LoggedIn");
-      }
 
-    if(window.location.href.includes("Admin")&&window.location.href!=="http://localhost:3000/AdminLogin")
+useEffect(() => {
+  if(localStorage.getItem('loginCookie')!= null)
+  {
+      if((location.pathname=="/"||location.pathname=="/Login")&&JSON.parse(localStorage.getItem('loginCookie')).role !="admin")
       {
-        console.log("sda");
-        if(type=="Login"||type=="LoggedIn")
-        {
-          setType("LoggedInAdmin");
-        } 
+        navigate("/Home")
       }
+      else if((location.pathname=="/"||location.pathname=="/Login")&&JSON.parse(localStorage.getItem('loginCookie')).role =="admin")
+      {
+        navigate("/AdminHome")
+      }
+      else
+      {
+        
+      }
+  }
+  if(localStorage.getItem('loginCookie') == null)
+  {
+    navigate("/Login")
+  }
+
     
 }, []) 
 
@@ -63,40 +75,37 @@ function App() {
   return (
     <div className="App">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap" rel="stylesheet"></link>
-    <Router>
-      <Navbar type={type}/>
+      <Navbar/>
       <Routes>
-      <Route path="/" element={<Navbar type="Login"/>&&<Home/>} />
-      <Route path="/Buysubscription" element={<Buysubscription/>} />
+      <Route path="/" element={<Home/>} />
       <Route path="/Login" element={<Login/>} />
       <Route path="/Home" element={<Main id= "123"/>}/>
       <Route path="/SignUp" element={<SignUp/>} />
-      <Route path="/Dashboard" element={<Dashboard/>} />
+      <Route path="/Dashboard/:uid" element={<Dashboard/>} />
       <Route path="/CProgrammingProblems" element={<CProgramming/>} />
       <Route path="/CppProgrammingProblems" element={<CppProgramming/>} />
       <Route path="/JavaProgrammingProblems" element={<JavaProgramming/>} />
       <Route path="/PythonProgrammingProblems" element={<PythonProgramming/>} />
       <Route path="/Compiler" element={<Compiler/>} />
       <Route path="/Certification" element={<Certification/>} />
-      <Route path="/Problem" element={<Problem title="Problem Title" description="Problem description" language="programming language" expectedOutput="Output"/>} />
-      <Route path="/Examination" element={<Examination/>} />
-      <Route path="/ExamStart" element={<ExamStart/>} />
+      <Route path="/Problem/:problemName" element={<Problem title="Problem Title" description="Problem description" language="programming language" expectedOutput="Output"/>} />
+      <Route path="/Examination/:TestID" element={<Examination/>} />
+      <Route path="/ExamStart/:language" element={<ExamStart/>} />
       <Route path="/ExamEnd" element={<ExamEnd/>} />
       <Route path="/AdminLogin" element={<AdminLogin/>} />
       <Route path="/AdminHome" element={<AdminHome/>} />
       <Route path="/AdminAddQuestion" element={<AdminAddQuestion/>} />
       <Route path="/AdminApproveCertificate" element={<ApproveCertificate/>} />
       <Route path="/AdminHostEvent" element={<AdminHostEvent/>} />
-      <Route path="/AdminTransaction" element={<AdminTransactions/>} />
-      <Route path="/AdminPlans" element={<AdminPlan/>} />
       <Route path="/CreateTestPreview" element={<CreateTestPreview/>} />
       <Route path="/Events" element={<Event/>} />
-      <Route path="/TestPage" element={<TestPage/>} />
+      <Route path="/TestPage/:TestID" element={<TestPage/>} />
       <Route path="/AdminGetEventResults" element={<GetEventResults/>} />
       <Route path="/AdminTestDetails" element={<TestDetails/>} />
       <Route path="/ForgotPassword" element={<ForgotPassword/>} />
+      <Route path="*" element={<NotFoundPage/>} />
       </Routes>
-    </Router>
+      <Footer/>
   </div>
   );
 }

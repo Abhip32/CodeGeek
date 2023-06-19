@@ -1,13 +1,11 @@
 const {response} = require("express");
 const express = require("express");
-
-// recordRoutes is an instance of the express router.
-// We use it to define our routes.
-// The router will be added as a middleware and will take control of requests starting with path /record.
 const recordRoutes = express.Router();
+const problemModel = require("../models/problemModel");
+const userModel= require("../models/usermodel");
+const testModel = require("../models/TestModel");
+const ProblemModel = require("../models/problemModel");
 
-// This will help us connect to the database
-const dbo = require("../db/conn");
 
 // This help convert the id from string to ObjectId for the _id.
 const ObjectId = require("mongodb").ObjectId;
@@ -16,9 +14,8 @@ recordRoutes.route('/getIdentifier').post(function (req, res) {
     var lang = req.body.lang;
     var i = 0;
 
-    let db_connect = dbo.getDb();
 
-    db_connect.collection("Problems").find().toArray().then((ans) => {
+    problemModel.find().then((ans) => {
         for (item of ans) {
             if (lang == item.language) {
                 i++;
@@ -44,30 +41,21 @@ recordRoutes.route('/addProblem').post(function (req, res) {
         description: description,
         language: language,
         expectedoutput: ouput,
-        identifer: identifer,
+        identifier: identifer,
         level: level,
         solved: [],
         comments: []
     };
-    let db_connect = dbo.getDb();
 
-    db_connect.collection("Problems").insertOne(myobj, function (err, res) {
-        if (err) 
-            out = "fail"
-         else 
-            out = "success"
-        
-        console.log("1 document inserted");
-
-    });
-    res.send("success");
+    const problemData=new ProblemModel(myobj);
+    problemData.save();
 
 })
 
 
 recordRoutes.route('/AdminPendingCcerti').post(function (req, res) {
-    let db_connect = dbo.getDb();
-    db_connect.collection("Login_Credentials").find({"C_certificate": "pending"}).toArray().then((ans) => {
+
+    userModel.find({"C_Status": "pending"}).then((ans) => {
         if (ans.length != 0) {
             res.send(ans)
         }
@@ -76,8 +64,8 @@ recordRoutes.route('/AdminPendingCcerti').post(function (req, res) {
 
 
 recordRoutes.route('/AdminPendingCppcerti').post(function (req, res) {
-    let db_connect = dbo.getDb();
-    db_connect.collection("Login_Credentials").find({"Cpp_certificate": "pending"}).toArray().then((ans) => {
+
+    userModel.find({"cpp_Status": "pending"}).then((ans) => {
         if (ans.length != 0) {
             res.send(ans)
         }
@@ -85,8 +73,8 @@ recordRoutes.route('/AdminPendingCppcerti').post(function (req, res) {
 })
 
 recordRoutes.route('/AdminPendingJavacerti').post(function (req, res) {
-    let db_connect = dbo.getDb();
-    db_connect.collection("Login_Credentials").find({"Java_certificate": "pending"}).toArray().then((ans) => {
+
+    userModel.find({"java_Status": "pending"}).then((ans) => {
         if (ans.length != 0) {
             res.send(ans)
         }
@@ -94,8 +82,7 @@ recordRoutes.route('/AdminPendingJavacerti').post(function (req, res) {
 })
 
 recordRoutes.route('/AdminPendingPythoncerti').post(function (req, res) {
-    let db_connect = dbo.getDb();
-    db_connect.collection("Login_Credentials").find({"Python_certificate": "pending"}).toArray().then((ans) => {
+    userModel.find({"python_Status": "pending"}).then((ans) => {
         if (ans.length != 0) {
             res.send(ans)
         }
@@ -103,8 +90,7 @@ recordRoutes.route('/AdminPendingPythoncerti').post(function (req, res) {
 })
 
 recordRoutes.route('/getTestData').post(function (req, res) {
-    let db_connect = dbo.getDb();
-    db_connect.collection("TestData").find().toArray().then((ans) => {
+    testModel.find().then((ans) => {
         if (ans.length != 0) {
             res.send(ans)
         }
@@ -112,53 +98,93 @@ recordRoutes.route('/getTestData').post(function (req, res) {
 })
 
 recordRoutes.route('/AdminApprove').post(function (req, res) {
-    let db_connect = dbo.getDb();
     var id = req.body.id;
+    console.log(id)
     var lang = req.body.lang;
     var date = req.body.date;
     var name = req.body.name;
     var result = req.body.result;
-    var myquery = { _id: ObjectId(id) };
+    var myquery = { email:id };
+
 
     if (lang == "c") {
-        var newvalues = {
-            $set: {
-                C_certificate: result,
-                linkc: name+" "+lang+" "+date
+        if(result=="Approved")
+        {
+            var newvalues = {
+                $set: {
+                    c_Status: name+" "+lang+" "+date
+                }
+            }
+        }
+        else
+        {
+            var newvalues = {
+                $set: {
+                    c_Status: ""
+                }
             }
         }
     }
 
     if (lang == "cpp") {
-        var newvalues = {
-            $set: {
-                Cpp_certificate: result,
-                linkcp: name+" "+lang+" "+date
+        if(result=="Approved")
+        {
+            var newvalues = {
+                $set: {
+                    cpp_Status: name+" "+lang+" "+date
+                }
+            }
+        }
+        else
+        {
+            var newvalues = {
+                $set: {
+                    cpp_Status: ""
+                }
             }
         }
     }
 
     if (lang == "java") {
-        var newvalues = {
-            $set: {
-                Java_certificate: result,
-                linkj: name+" "+lang+" "+date
+        if(result=="Approved")
+        {
+            var newvalues = {
+                $set: {
+                    java_Status: name+" "+lang+" "+date
+                }
+            }
+        }
+        else
+        {
+            var newvalues = {
+                $set: {
+                    java_Status: ""
+                }
             }
         }
     }
 
     if (lang == "python3") {
-        var newvalues = {
-            $set: {
-                Python_certificate: result,
-                linkp: name+" "+lang+" "+date
+        if(result=="Approved")
+        {
+            var newvalues = {
+                $set: {
+                    python_Status: name+" "+lang+" "+date
+                }
+            }
+        }
+        else
+        {
+            var newvalues = {
+                $set: {
+                    python_Status: ""
+                }
             }
         }
     }
 
-    db_connect
-    .collection("Login_Credentials")
-    .updateOne(myquery, newvalues, function (err, res) {
+
+    userModel.updateOne(myquery, newvalues, function (err, res) {
         if (err)
         {
             console.log(err);
@@ -166,6 +192,9 @@ recordRoutes.route('/AdminApprove').post(function (req, res) {
         else
         {
             console.log("1 document updated");
+            testModel.deleteMany({email:id,language:lang}).then((data)=>{
+                console.log(data);
+            });
         }   
     })
 })

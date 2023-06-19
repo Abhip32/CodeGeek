@@ -1,188 +1,46 @@
 
-    .container {  
-        @media (min-width: 350px) and (max-width: 767px) {
-            display: block;
-        }
-          
-        /* Media Query for Tablets Ipads portrait mode */
-        @media (min-width: 768px) and (max-width: 1024px){
-            display: grid;
-        }
-          
-        /* Media Query for Laptops and Desktops */
-        @media (min-width: 1025px) and (max-width: 1280px){
-            display: grid;
-        }
-          
-        /* Media Query for Large screens */
-        @media (min-width: 1281px) {
-            display: grid;
-        }
-        
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 1fr 1fr 1fr;
-        gap: 0px 0px;
-        grid-auto-flow: row;
-        grid-template-areas:
-          "Sidebar Batches Batches"
-          "Sidebar Certificates Certificates"
-          ". . .";
+.medal {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100px;
+      height: 100px;
+      &.Gold{
+         background-color: #FBC02D;
       }
-      
-      .Sidebar { grid-area: Sidebar;
-        padding: 2vw;
-        img{
-            width: 115px;
-            height: 115px;
-            margin-bottom: 20px;
-            border-radius: 20px;
-            box-shadow: 3px 5px 18px #2c436b;
-        }
 
-        .about{
-            background-color: white;
-            padding: 20px;
-            height: fit-content;
-            border-radius: 20px;
-            box-shadow: 3px 5px 18px white;
-        }
-     }
-      
-      .Batches { 
-        overflow: hidden;
-        overflow-x: auto;
-        height: 250px;
-        margin-top: 3vw;
-        margin-left: 1vw;
-        margin-right: 1vw;
-        margin-bottom: 30px;
+      &.Silver{
+        background-color:  #C0C0C0;
+      }
 
-        .badgehead{
-            margin: 10px;
-        }
-        grid-area: Batches; 
-        background-color: white;
-        height: fit-content;
-        padding: 2vw;
-        border-radius: 20px;
-        box-shadow: 3px 5px 18px white;
-
-        .badgecontent{
-            overflow: hidden;
-            height: 200px;
-
-            .hex {
-                float: left;
-                margin-top: 10vh;
-                margin-right: 20px;
-            }
-            .hex .top {
-                width: 0;
-                border-bottom: 30px solid #250c40;
-                border-left: 52px solid transparent;
-                border-right: 52px solid transparent;
-                
-            }
-            .hex .middle {
-                width: 104px;
-                height: 60px;
-                background: #6C6;
-
-                .hexagonbronze{
-                    background-color: coral;
-                    box-shadow: 2px 3px 20px coral;
-                    font-size: 1px;
-                    padding: 2px;
-
-                    h6{
-                        font-size: 15px;
-                       }
-                       padding: 8px;
-                }
-                .hexagonsliver{
-                    background-color: silver;
-                    box-shadow: 2px 3px 20px silver;
-                   h6{
-                    font-size: 15px;
-                   }
-                    padding: 8px;
-                }
-                
-                .hexagongold{
-                    background-color: gold;
-                    box-shadow: 2px 3px 20px gold;
-                    font-size: 1px;
-                    padding: 2px;
-
-                    h6{
-                        font-size: 15px;
-                       }
-                       padding: 8px;
-                }
-            }
-            .hex .bottom {
-                width: 0;
-                border-top: 30px solid #250c40;
-                border-left: 52px solid transparent;
-                border-right: 52px solid transparent;
-            }
-            .hex-row {
-                clear: left;
-            }
-            .hex-row.even {
-                margin-left: 53px;
-            }
-        }
-    }
-      
-      .Certificates { 
-        margin-left: 1vw;
-        margin-right: 1vw;
-        margin-bottom: 2vw;
-        padding: 2vw;
-        overflow: hidden;
-        overflow-x: auto;
-        .certihead{
-            margin: 5px;
-        }
-       
-        grid-area: Certificates;
-        background-color: white;
-        border-radius: 20px;
-        height: fit-content;
-        
-        box-shadow: 3px 5px 18px white;  
-        
-        .certicontent{
-            float: left;
-            height: 200px;
-            .middle{
-                display: flex;
-                align-items: center;
-                overflow: hidden;
-                overflow-y: auto;
-            }
-
-            .certi{
-                margin: 1vw;
-                width: 200px;
-                margin-top: 70px;
-                height: 100px;
-                padding: 1vw;
-                background: greenyellow;
-                box-shadow: 3px 3px 20px #250c40;
-            }
-        }
-
-        
+      &.Bronze{
+        background-color: #CD7F32;
+      }
+      color: #fff;
+      font-family: Arial, sans-serif;
+      font-size: 24px;
+      font-weight: bold;
+      border-radius: 50%;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
     }
 
-.nohexagon{
-    display: none;
-}
 
 
+    .certificate-card {
+        width: 200px;
+        height: 155px;
+        margin-top: 20px;
+        border: 1px solid #ccc;
 
+        h6 {
+            text-align: center;
+            margin-top: 10px;
+          }
+      }
     
       
-    
+      
+     
+
+      

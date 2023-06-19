@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react'
-import {useLocation} from 'react-router-dom';
+import {useLocation, useParams} from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import Webcam from "react-webcam";
 import Axios from 'axios';
@@ -11,8 +11,14 @@ import Button from 'react-bootstrap/Button';
 
 var elem = document.documentElement;
 function ExamStart() {
+    const language = useParams() 
     const location = useLocation();
     const [status,setStatus]= useState("");
+    const [allow,setAllow] = useState(false);
+    const handleDataFromChild = (data) => {
+      setAllow(data);
+    }
+    let problem=[];
     let navigate = useNavigate();
     const [show, setShow] = useState(false);
 
@@ -23,20 +29,32 @@ function ExamStart() {
    
 
 
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+
+    const getQuestion=async ()=>{
+      const response = await Axios.post(`http://localhost:8000/getQuestion`,{
+        lang: language.language} )
+
+      const data=response.data;
+      problem.push(data)
+      console.log(problem[0])
+      
+
+    }
     const  CreateID=()=>{
+      getQuestion();
       navigator.getMedia = ( navigator.getUserMedia || // use the proper vendor prefix
                        navigator.webkitGetUserMedia ||
                        navigator.mozGetUserMedia ||
                        navigator.msGetUserMedia);
 
           navigator.getMedia({video: true}, function() {
-            navigate("/Examination", {state:{username: location.state.username, id: location.state.id, lang: location.state.language,title:location.state.title,describe:location.state.description,expectedOutput:location.state.expectedOutput}})
+            navigate(`/Examination/${problem[0]._id}`, {state:{username:  JSON.parse(localStorage.getItem('loginCookie')).username, id: JSON.parse(localStorage.getItem('loginCookie')).email, lang: problem[0].language,title:problem[0].title,describe:problem[0].description,expectedOutput:problem[0].expectedoutput}})
             Axios.post(`http://localhost:8000/CreateExamID`,{
-            username: location.state.username,
-            id: location.state.id,
+            username:  JSON.parse(localStorage.getItem('loginCookie')).username,
+            id:  JSON.parse(localStorage.getItem('loginCookie')).email,
             date : new Date(),
-            lang: location.state.language
+            lang: problem[0].language
         }
         )
           }, function() {
@@ -45,6 +63,8 @@ function ExamStart() {
           });
         
     }
+
+    
   return (
     <div className='ExamStartBlock' id="fullscreen">
         <Modal show={show} onHide={handleClose}>
@@ -61,8 +81,8 @@ function ExamStart() {
             </Modal>
         <div className="ExamStartSidebar"> 
           <h3>Welcome to</h3>
-          <h3>{location.state.language.toUpperCase()} Programming Test</h3>
-          <h3>{location.state.username}</h3>
+          <h3>{language.language} Programming Test</h3>
+          <h3>{JSON.parse(localStorage.getItem('loginCookie')).username}</h3>
 
           <div className="TestInfo">
             <div className="TestDuration">
@@ -75,7 +95,7 @@ function ExamStart() {
             </div>
 
           </div>
-          <button className="startExamButton" onClick={CreateID} >Start Exam</button>
+          {allow ? <button className="startExamButton" onClick={()=>CreateID()} >Start Exam</button> : <h3 className='text-danger'>Not able to detect face</h3>}
          
         </div>
         <div className="ExamInstructions">
@@ -85,7 +105,7 @@ function ExamStart() {
             <li>You will not be able to continue exam after 5 warnings</li>
             <li>Adjust Your Vision : <br/>
 
-                    <WebcamModified  type="demo"/>
+                    <WebcamModified type="test" sendDataToParent={handleDataFromChild}/>
             </li>
           </ol>
 

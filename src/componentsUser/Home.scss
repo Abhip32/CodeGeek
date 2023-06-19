@@ -1,11 +1,11 @@
 
-.Home{
+.Home-Main{
     background-color: white;
     height: 100vh;
     
 }
 
-.Intro{
+.Home-Intro{
     @media (min-width: 350px) and (max-width: 767px) {
         display: block;
         margin-left: auto;

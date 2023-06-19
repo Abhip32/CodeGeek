@@ -5,23 +5,27 @@ import "./Problem.scss";
 import Select from 'react-select';
 import Editor from "@monaco-editor/react";
 import Axios from "axios";
+import NoComments from "../Assets/NoComments.png"
+import {useParams} from 'react-router-dom';
 
 function Problem(props) {
 	
 
     const location = useLocation();
     let navigate = useNavigate();
+	const problemId = useParams();
 	const [inputValue, setInputValue] = useState(false);
     const [userCode, setUserCode] = useState(``);
 	var solve=location.state.status;
-    const [userLang, setUserLang] = useState(location.state.language);
+	const [problemData,setProblemData] = useState([]);
+    const [userLang, setUserLang] = useState();
     const [userTheme, setUserTheme] = useState("vs-dark");
     const [fontSize, setFontSize] = useState(20);
     const [userInput, setUserInput] = useState(location.state.inputval);
     const [userOutput, setUserOutput] = useState("");
 	const [link, setLink] = useState("");
 	const [result,setResult] = useState("none");
-	const [comments, setComments] = useState([{pic:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR_gOipfceOB3QyvgMmFs8p56KvQKFIIc8ccQ&usqp=CAU",name:"No Comments"}])
+	const [comments, setComments] = useState([{pic:NoComments,name:"No Comments"}])
 
 
     const [loading, setLoading] = useState(false);
@@ -42,136 +46,141 @@ const options = {
 }
 
 useEffect(()=>{
-    Axios.post(`http://localhost:8000/getcomments`,
-		{
-			id: location.state.userid,
-			identi: location.state.identi,
-			lang: location.state.language,
-			comment: document.getElementById("comment").value
-		}).then((res) => {
-			if(res.data.length!=0)
-			{
-				setComments(res.data);
-			}
-			console.log(comments);
 
-		})
+	        const getProblem = async () => {
+
+            try {
+
+                const response = await Axios.get('http://localhost:8000/getProblemDetails', {
+                    params: {
+                        id:problemId.problemName
+                    }
+                });
+                const data = await response.data
+				setProblemData(data[0])
+				setComments(data[0].comments);
+				setUserLang(data[0].language)
+				solve=[data[0].solved.find(JSON.parse(localStorage.getItem('loginCookie')).email)]
+                console.log(data);
+            } catch (error) {
+                console.error(error);
+                // Handle any errors that occurred during the request
+            }
+        };
+
+		getProblem();
 }, []) 
 
 		
 
-function addcomment()
+const addcomment = async()=>
 {
-	Axios.post(`http://localhost:8000/addcomment`,
-		{
-			id: location.state.userid,
-			identi: location.state.identi,
-			lang: location.state.language,
-			comment: document.getElementById("comment").value
-		}).then((res) => {
-			console.log(res.data);
-			Axios.post(`http://localhost:8000/getcomments`,
-		{
-			id: location.state.userid,
-			identi: location.state.identi,
-			lang: location.state.language,
-			comment: document.getElementById("comment").value
-		}).then((res) => {
-			setComments(res.data);
-			console.log(comments);
-		})
 
-		})
+	try {
+
+		const response = await Axios.post('http://localhost:8000/addComment', {
+			params: {
+				email:  JSON.parse(localStorage.getItem('loginCookie')).email,
+				name:  JSON.parse(localStorage.getItem('loginCookie')).username,
+				identi: problemId.problemName,
+				comment: document.getElementById("comment").value
+			}
+		});
+		const data = await response.data
+		getComments();
+		console.log(data);
+	} catch (error) {
+		console.error(error);
+		// Handle any errors that occurred during the request
+	}
 }
 
 
-// Function to call the compile endpoint
-function compile() {
-	setLoading(true);
-	if (userCode === ``) {
-	return
+const getComments = async()=>{
+	try {
+
+		const response = await Axios.get('http://localhost:8000/getComments', {
+			params: {
+				identi: problemId.problemName,
+			}
+		});
+		const data = await response.data
+		console.log(data);
+		setComments(data[0].comments)
+	} catch (error) {
+		console.error(error);
+		// Handle any errors that occurred during the request
 	}
 
-	// Post request to compile endpoint
-	Axios.post(`http://localhost:8000/compile`, {
-	code: userCode,
-	language: userLang,
-	input: userInput }).then((res) => {
-	console.log(location.state.inputval)
-	console.log(res.data)
-	console.log(location.state.userOutput);
-	setUserOutput(res.data)
+}
+
+const AddSolved =()=>{
+	Axios.post(`http://localhost:8000/addsolved`,
+	{
+		id: JSON.parse(localStorage.getItem('loginCookie')).email,
+		identi: problemData.identifier,
+		lang: problemData.language,
+	}).then((res) => {
+
+			AddPoints();
+	})	
 	
-	if(location.state.expectedOutput===res.data)
-	{
-		console.log(typeof (res.data));
-		console.log(typeof (location.state.expectedOutput));
-		setLink("Go Back")
-		setResult("Success")
-
-		Axios.post(`http://localhost:8000/addsolved`,
-		{
-			id: location.state.userid,
-			identi: location.state.identi,
-			lang: location.state.language
-		}).then((res) => {
-			console.log(solve);
-			if(solve=="Unsolved")
-			{
-				Axios.post(`http://localhost:8000/addpoints/`+location.state.language,
-				{
-				id: location.state.userid,
-				identi: location.state.identi,
-				lang: location.state.language
-				}).then((res) => {	
-				})
-			}
-			solve="Solved"
-			console.log(solve);
-		})		
-	}
-	else if(location.state.expectedOutput.replace("{input}",userInput).trim()==res.data.trim())
-	{
-		console.log(typeof (res.data));
-		console.log(typeof (location.state.expectedOutput));
-		setLink("Go Back")
-		setResult("Success")
-
-		Axios.post(`http://localhost:8000/addsolved`,
-		{
-			id: location.state.userid,
-			identi: location.state.identi,
-			lang: location.state.language
-		}).then((res) => {
-			console.log(solve);
-			if(solve=="Unsolved")
-			{
-				Axios.post(`http://localhost:8000/addpoints/`+location.state.language,
-				{
-				id: location.state.userid,
-				identi: location.state.identi,
-				lang: location.state.language
-				}).then((res) => {	
-				})
-			}
-			solve="Solved"
-			console.log(solve);
-		})		
-	}
-	else
-	{
-		setResult("Failure")
-	}
-
-	}).then(() => {
-	setLoading(false);
-	})
 }
 
-// Function to clear the output screen
-function clearOutput() {
-	setUserOutput("");
+const AddPoints =async()=>{
+	Axios.post(`http://localhost:8000/addpoints/`,
+				{
+					id: JSON.parse(localStorage.getItem('loginCookie')).email,
+					identi: problemData.identifier,
+					lang: problemData.language,
+				}).then((res) => {	
+					solve="Solved"
+					console.log(solve);
+				})
 }
+
+
+
+
+
+async function compile() {
+	setLoading(true);
+  
+	if (userCode === '') {
+	  return;
+	}
+  
+	try {
+	  const response = await Axios.post('http://localhost:8000/compile', {
+		code: userCode,
+		language: userLang,
+		input: userInput
+	  });
+  
+	  setUserOutput(await response.data);
+  
+	  if (problemData.expectedoutput === response.data) {
+		AddSolved();
+		setLink('Go Back');
+		setResult('Success');
+	  } else if (
+		userInput !== undefined &&
+		problemData.expectedoutput.replace('{input}', userInput).trim() === response.data.trim()
+	  ) {
+		AddSolved();
+		setLink('Go Back');
+		setResult('Success');
+	  } else {
+		setResult('Failure');
+	  }
+	} catch (error) {
+	  console.error('Error compiling:', error);
+	  // Handle error if necessary
+	} finally {
+	  setLoading(false);
+	}
+  }
+  
 
 function change()
 {
@@ -185,16 +194,16 @@ function change()
         <div className="sidebarcontent">
         <h5>Problem : </h5>
         <p>
-            {location.state.title}
+            {problemData.title}
         </p>
         <h5>Description : </h5>
         <p>
-            {location.state.description}
+            {problemData.description}
         </p>
 		<h5 >Expected Output : </h5>
 		<div className='ExpectedOutput'>
         	<p>
-            	{location.state.expectedOutput}
+            	{problemData.expectedoutput}
         	</p>
 		</div>
 		<br/>
@@ -205,8 +214,7 @@ function change()
 			(
 				<div className="commentdiv">
 					<div className="commentsubdiv">
-						<img src={item.pic}/>
-						<h6>{item.name}</h6>
+						<h6>{item.name} | {item.userEmail}</h6>
 					</div>
 					<div className="commenttext">
 						<p>{item.comment}</p>
@@ -226,7 +234,7 @@ function change()
 			</div>
 			
 		</div>
-		<button className='BackP' onClick={() =>  navigate(location.state.origin, {state:{username: location.state.username}})}>
+		<button className='BackP' onClick={() =>  navigate(location.state.origin, {state:{username:JSON.parse(localStorage.getItem('loginCookie')).usernmae}})}>
 			Go Back
 		</button>
         </div>
@@ -271,7 +279,7 @@ function change()
 				<br/>
 				<h5>Input</h5>
 				<textarea id="code-inp" onChange=
-				{(e) => setUserInput(e.target.value)}>
+				{(e) => setUserInput(e.target.value)} placeholder='Add input for your code here'>
 				</textarea>
 			</div>
 
@@ -279,7 +287,11 @@ function change()
 				<br/>
 			</div>
 
-			<div className={result =="none" ? "NoOutputCase" : "OutputCase"}>
+			<div className={loading ? "d-block align-center":"d-none"}>
+				<h5>Loading</h5>
+			</div>
+			
+			<div className={result =="none" || loading ? "NoOutputCase" : "OutputCase"}>
 				<div className={result =="Success" ? "Success" : "Failure"}>
 					<h1>{result}</h1>
 					<p className="resInfoS">Try solving more problems</p>
@@ -292,7 +304,7 @@ function change()
 					</div>
 					</div>
 
-					<button className='BackO' onClick={() =>  navigate(location.state.origin, {state:{username: location.state.username}})}>{link}</button>
+					<button className='BackO' onClick={() =>  navigate(location.state.origin, {state:{username: JSON.parse(localStorage.getItem('loginCookie')).username}})}>{link}</button>
 					<p className="resInfoF">Try Again</p>
 					<div className='resInfoF'>
 					<div className="ErrorMessage">

@@ -5,30 +5,45 @@ import { useNavigate } from "react-router-dom";
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import 'bootstrap/dist/css/bootstrap.css';
-import "./Navbar.scss";
 import {useLocation} from 'react-router-dom';
-import Axios from 'axios';
-import Button from 'react-bootstrap/Button';
+import "./Navbar.scss"
+import { MdArrowDropDown,MdDashboard } from 'react-icons/md';
+import { MdLogout } from 'react-icons/md';
+import { Buffer } from 'buffer';
 
 
 function NavbarFunction(props) {
-  const [profileImage, setprofileImage] = useState("");
   const location = useLocation();
   let navigate = useNavigate();
   
+    const [isOpen, setIsOpen] = useState(false);
 
-  if(props.type=="Login")
+  const handleToggle = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('loginCookie')
+    navigate("/")
+  }
+
+  if(location.pathname.includes("/Examination")||location.pathname.includes("/TestPage"))
+  {
+    return(null)
+  }
+
+  else if(localStorage.getItem('loginCookie')==null)
   {
     return (
       <Navbar bg="dark" expand="lg">
       <Container>
-        <Navbar.Brand href="/"><h3 className='WebsiteHeading'><em style={{color: '#2196f3'}}>CODE</em><em style={{color: 'white'}}>GEEK</em></h3></Navbar.Brand>
+        <Navbar.Brand href="/"><h3 className='WebsiteHeading m-2'><em style={{color: '#2196f3'}}>CODE</em><em style={{color: 'white'}}>GEEK</em></h3></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-              <a className="nlink" onClick={() =>navigate("/Login" ,{state: {result:""}})}>Login</a>
-              <a className="nlink" onClick={() =>navigate("/AdminLogin")}>Employee Login</a>
-              <a className="nlink" onClick={() =>navigate("/Compiler")}>Compiler</a>
+              <a className="nlink m-2" onClick={() =>navigate("/Login" ,{state: {result:""}})}>Login</a>
+              <a className="nlink m-2" onClick={() =>navigate("/AdminLogin")}>Employee Login</a>
+              <a className="nlink m-2" onClick={() =>navigate("/Compiler")}>Compiler</a>
           </Nav>
         </Navbar.Collapse>
       </Container>
@@ -36,26 +51,32 @@ function NavbarFunction(props) {
     );
   }
 
-  if(props.type=="LoggedIn")
+  else if(localStorage.getItem('loginCookie')!=null && JSON.parse(localStorage.getItem('loginCookie')).role=="user")
   {
-    Axios.post(`http://localhost:8000/getProfilePic`,{
-    user: location.state.username
-  }).then((res)=>
-  {
-    setprofileImage(res.data);
-  })
+   
     return (
-      <Navbar bg="dark" expand="lg">
+      <Navbar bg="dark" expand="lg" >
       <Container>
         <Navbar.Brand href="/"><h3 className='WebsiteHeading'><em style={{color: '#2196f3'}}>CODE</em><em style={{color: 'white'}}>GEEK</em></h3></Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-              <a className="nlink" onClick={() =>navigate("/Home", {state:{username: location.state.username}})}>Practice</a>
-              <a className="nlink" onClick={() =>navigate("/Dashboard", {state:{username: location.state.username}})}><img className="profilepic" src={profileImage}/></a>
-              <a className="nlink" onClick={() =>navigate("/Certification", {state:{username: location.state.username}})}>Certification</a>
-              <a className="nlink" onClick={() =>navigate("/Events", {state:{username: location.state.username}})}>Events</a>
+              <a className="nlink m-2" onClick={() =>navigate("/Home", {state:{username: JSON.parse(localStorage.getItem('loginCookie')).username}})}>Practice</a>
+              <a className="nlink m-2" onClick={() =>navigate("/Certification", {state:{username: JSON.parse(localStorage.getItem('loginCookie')).username}})}>Certification</a>
+              <a className="nlink m-2" onClick={() =>navigate("/Events", {state:{username: JSON.parse(localStorage.getItem('loginCookie')).username}})}>Events</a>
           </Nav>
+          <div className="Profiledropdown">
+                <div className="profileDefault" onClick={handleToggle}>
+                  <img className="profile-pic" src={`data:image/jpeg;base64,${Buffer.from(JSON.parse(localStorage.getItem('loginCookie')).pic.data).toString('base64')}`} width={40} height={40} alt="Profile" />
+                  <span className="profile-name d-flex align-center">{JSON.parse(localStorage.getItem('loginCookie')).username} <MdArrowDropDown size={20}/></span>
+                </div>
+                {isOpen && (
+                  <div className="dropdown-content" style={{backgroundColor:"white"}}>
+                    <button style={{width:"95%",margin:"0.5rem",backgroundColor:"white",border:"none",color:"black",display:"flex",alignItems:"center",justifyContent:"space-between",fontSize:"18px",padding:"10px"}} onClick={() =>navigate(`/Dashboard/${JSON.parse(localStorage.getItem('loginCookie')).email}})}`, {state:{username: JSON.parse(localStorage.getItem('loginCookie')).username}})}> <MdDashboard/>Dashboard</button>
+                    <button style={{width:"95%",margin:"0.5rem",backgroundColor:"white",border:"none",color:"red",display:"flex",alignItems:"center",justifyContent:"space-between",fontSize:"18px",padding:"10px"}} onClick={()=>handleLogout()}><MdLogout/>Logout</button>
+                  </div>
+                )}
+              </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
@@ -63,10 +84,12 @@ function NavbarFunction(props) {
   }
 
 
-  if(props.type=="LoggedInAdmin")
+  else if(localStorage.getItem('loginCookie')!=null && JSON.parse(localStorage.getItem('loginCookie')).role=="admin")
   {
     return (
-      <div></div>
+      <div>
+        
+      </div>
     );
   }
   

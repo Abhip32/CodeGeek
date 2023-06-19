@@ -15,6 +15,7 @@ import python from '../Assets/python.png'
 import Axios from 'axios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal'
+import CertificationBread from "../Assets/CertificationBread.png"
 
 
 function Certification() {
@@ -34,8 +35,9 @@ function Certification() {
     
     useEffect(()=>{
 
-      Axios.post(`http://localhost:8000/getUserInfoAll`,{
-          user: location.state.username
+      const getUserData = async () =>{
+        await Axios.post(`http://localhost:8000/getAllUserInfo`,{
+          user: JSON.parse(localStorage.getItem('loginCookie')).email
         }).then((res)=>
         {
           setid(res.data.id);
@@ -44,6 +46,9 @@ function Certification() {
           setExamJava(res.data.Java_certificate);    
           setExamPython(res.data.Python_certificate);    
         })
+      }
+
+      getUserData()
       
     }, []) 
   
@@ -63,8 +68,8 @@ function Certification() {
                 </Button>
                 </Modal.Footer>
             </Modal>
-      <div className="userInfo" style={{backgroundImage: `url("https://cemhri.org/wp-content/uploads/2018/04/Home-Four-Banner-Background-Image.png")`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
-      <h1>Hello {location.state.username}</h1>
+      <div className="userInfo" style={{backgroundImage: `url(${CertificationBread})`, backgroundRepeat: 'no-repeat', backgroundSize: 'cover'}}>
+      <h1>Hello { JSON.parse(localStorage.getItem('loginCookie')).username}</h1>
       <br/>
       <h4>Verify your skills and stand out from the crowd </h4>
       </div>
@@ -73,7 +78,7 @@ function Certification() {
 
       <Row xs={1} md={2} className="g-4">
         <Col>
-          <a onClick={() =>  {ExamC =="pending" ? setShow(true)||setstatus("Pending C Certificate Result !!") : navigate("/ExamStart", {state:{username: location.state.username, id:id, title: "Print Hello World in C", description: "Print Hello World on console", language: "c", expectedOutput: "Hello World"}})}}>
+          <a onClick={() =>  {ExamC =="pending" ? setShow(true)||setstatus("Pending C Certificate Result !!") : navigate(`/ExamStart/c`)}}>
           <Card className="CardLang" style={{backgroundColor: "#000000"}}>
             <Card.Img variant="top" src={c} style={{width: '150px', height: '160px'}}/>
             <Card.Body>
@@ -84,7 +89,7 @@ function Certification() {
         </Col>
 
         <Col>
-          <a onClick={() =>  {ExamCpp =="pending" ? setShow(true)||setstatus("Pending C++ Certificate Result !!") : navigate("/ExamStart", {state:{username: location.state.username, id:id, title: "Print Hello World in C++", description: "Print Hello World on console", language: "cpp", expectedOutput: "Hello World"}})}}>
+          <a onClick={() =>  {ExamCpp =="pending" ? setShow(true)||setstatus("Pending C++ Certificate Result !!") : navigate("/ExamStart/cpp", {state:{username: location.state.username, id:id, title: "Print Hello World in C++", description: "Print Hello World on console", language: "cpp", expectedOutput: "Hello World"}})}}>
           <Card className="CardLang" style={{backgroundColor: "#000000"}}>
             <Card.Img variant="top" src={cpp} style={{width: '150px', height: '160px'}}/>
             <Card.Body>
@@ -96,7 +101,7 @@ function Certification() {
 
 
         <Col>
-          <a onClick={() =>  {ExamJava =="pending" ? setShow(true)||setstatus("Pending Java Certificate Result !!") : navigate("/ExamStart", {state:{username: location.state.username, id:id, title: "Print Hello World in Java", description: "Print Hello World on console", language: "java", expectedOutput: "Hello World"}})}}>
+          <a onClick={() =>  {ExamJava =="pending" ? setShow(true)||setstatus("Pending Java Certificate Result !!") : navigate("/ExamStart/java", {state:{username: location.state.username, id:id, title: "Print Hello World in Java", description: "Print Hello World on console", language: "java", expectedOutput: "Hello World"}})}}>
           <Card className="CardLang" style={{backgroundColor: "#000000"}}>
             <Card.Img variant="top" src={java} style={{width: '150px', height: '160px'}}/>
             <Card.Body>
@@ -108,7 +113,7 @@ function Certification() {
 
 
         <Col>
-          <a onClick={() =>  {ExamPython =="pending" ? setShow(true)||setstatus("Pending Python Certificate Result !!") : navigate("/ExamStart", {state:{username: location.state.username, id:id, title: "Print Hello World in Python", description: "Print Hello World on console", language: "python3", expectedOutput: "Hello World"}})}}>
+          <a onClick={() =>  {ExamPython =="pending" ? setShow(true)||setstatus("Pending Python Certificate Result !!") : navigate("/ExamStart/python3", {state:{username: location.state.username, id:id, title: "Print Hello World in Python", description: "Print Hello World on console", language: "python3", expectedOutput: "Hello World"}})}}>
           <Card className="CardLang" style={{backgroundColor: "#000000"}}>
             <Card.Img variant="top" src={python} style={{width: '150px', height: '160px'}}/>
             <Card.Body>

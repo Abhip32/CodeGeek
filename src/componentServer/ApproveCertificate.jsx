@@ -11,6 +11,7 @@ import cppi from '../Assets/c++.png'
 import javai from '../Assets/java.ico'
 import pythoni from '../Assets/python.png'
 import {GrCertificate} from 'react-icons/gr'
+import {Row,Col} from 'react-bootstrap'
 
 function ApproveCertificate() {
     const location = useLocation();
@@ -41,30 +42,6 @@ function ApproveCertificate() {
         setTestdata(res.data);
     }) 
 
-  Axios.post(`http://localhost:8000/AdminPendingCcerti`,{
-    }).then((res)=>
-    {
-        setc(res.data)
-        console.log(c);
-    }) 
-
-    Axios.post(`http://localhost:8000/AdminPendingCppcerti`,{
-    }).then((res)=>
-    {
-        setcpp(res.data)
-    }) 
-
-    Axios.post(`http://localhost:8000/AdminPendingJavacerti`,{
-    }).then((res)=>
-    {
-        setjava(res.data)
-    }) 
-
-    Axios.post(`http://localhost:8000/AdminPendingPythoncerti`,{
-    }).then((res)=>
-    {
-        setpython(res.data)
-    }) 
    },[])
 
    const getBase64 = file => {
@@ -106,187 +83,61 @@ function ApproveCertificate() {
             setTestdata(res.data);
           }).then(window.location.reload(false))
         )
+
+        alert(`Certificate Approved id : ${id}`)
       }
 
       const reject =(id,lang,name,date) =>{
         Axios.post(`http://localhost:8000/AdminApprove`,{
           id:id,
           lang:lang,
+          name:name,
           result: "Rejected"
         }).then((res)=>
         {
 
         }).then(window.location.reload(false))
+        
+        alert(`Certificate Rejected id : ${id}`)
       }
 
 
   return (
-    <div style={{display:"flex",background: "#E2E8F0"}} className='ApproveCertificate'>
+    <div style={{background: "#E2E8F0"}} className='ApproveCertificate'>
         <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
-        <div className='dataTest'>
-        <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",margin:"40px",borderRadius:"20px",width:"60vw"}}><GrCertificate/> Approve Certificates</h2>
+        <div className='dataTest' style={{padding:"20px"}}>
+        <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",margin:"2vh",borderRadius:"20px",width:"95%"}}><GrCertificate/> Approve Certificates</h2>
           <div className='languageSection'>
-            <h3 class="LangCerti"> <img src={ci} style={{width:"50px",height:"50px"}}/> C Programming</h3>
-            <div className='NoData' style={c.length==0?{display:"block"}:{display:"none"}}>
-                {c.length == 0 &&<h3>No Data</h3>}
+            <div className='NoData' style={Testdata.length==0?{display:"block"}:{display:"none"}}>
+                {Testdata.length == 0 &&<h3>No Data</h3>}
             </div>
               <br/>
-              { c.map((item,index) => (
-                  <div>
-                    <h4>{item.name}</h4>
-                    <img src={item.pic}/>
-                  </div>
-                  
-                  &&Testdata.map((item1,index) => (
-                    <div className='ApproveCard' style={item1.id==item._id ? {display:"block"}:{display:"none"}}>
+              { Testdata.map((item,index) => (
+                <div>
                       {
-                        item1.id==item._id&&item1.language=="c"&&item._id!=undefined&&<div style={{display:"flex",alignItems:"center",gap:"100px"}}>
-                          <div>
-                          <img src={item.pic} style={{width:"100px",height:"100px",borderRadius:"100px"}}/>
-                          <h4>Name : {item1.name}</h4>
-                          <h4>ID : {item1._id}</h4>
-                          <h4>Date : {item1.date}</h4>
-                          <h4>Case : {item1.case}</h4>
-                          <h4>Language : {item1.language}</h4>
-                          </div>
-                            <div>
-                            <button className='Approve' onClick={()=>{approve(item._id,item1.language,item1.name,item1.date)}}>Approve</button>
-                          <button className='Reject' onClick={()=>{reject(item._id,item1.language,item1.name,item1.date)}}>Reject</button>
+                        <Row className='ApproveCard' style={{marginLeft:"0.9vh"}} >
+                        <Col md={10}>
+                          <h4>Name : {item.name}</h4>
+                          <h4>ID : {item._id}</h4>
+                          <h4>Date : {item.date}</h4>
+                          <h4>Case : {item.case}</h4>
+                          <h4>Language : {item.language}</h4>
+                          </Col>
+                            <Col md={2}>
+                            <button className='Approve' onClick={()=>{approve(item.email,item.language,item.name,item.date)}}>Approve</button>
+                          <button className='Reject' onClick={()=>{reject(item.email,item.language,item.name,item.date)}}>Reject</button>
 
-                            </div>
-                         
-                         
-                        </div>
-                        
+                            </Col>    
+                            </Row>                    
                       }
                       
                     </div>
                   ))
                   
-              ))
               }
               
             </div>
             
-            <div className='languageSection'>
-            <h3 class="LangCerti"><img src={cppi} style={{width:"50px",height:"50px"}}/> Cpp Programming</h3>
-            <div className='NoData' style={cpp.length==0?{display:"block"}:{display:"none"}}>
-                {cpp.length == 0 && <h3>No Data </h3>}
-            </div>
-              <br/>
-              { cpp.map((item,index) => (
-                  <div>
-                    <h4>{item.name}</h4>
-                    <img src={item.pic}/>
-                  </div>
-                  
-                  &&Testdata.map((item1,index) => (
-                    <div className='ApproveCard' >
-                      {
-                        item1.id==item._id&&item1.language=="cpp"&&
-                        <div style={{display:"flex",alignItems:"center",gap:"100px"}}>
-                          <div>
-                            <img src={item.pic} style={{width:"100px",height:"100px",borderRadius:"100px"}}/>
-                            <h4>Name : {item1.name}</h4>
-                            <h4>ID : {item1._id}</h4>
-                            <h4>Date : {item1.date}</h4>
-                            <h4>Case : {item1.case}</h4>
-                            <h4>Language : {item1.language}</h4>
-                          </div>
-                          <div>
-                            <button className='Approve' onClick={()=>{approve(item._id,item1.language,item1.name,item1.date)}}>Approve</button>
-                            <button className='Reject' onClick={()=>{reject(item._id,item1.language,item1.name,item1.date)}}>Reject</button>
-                          </div>
-                        </div>
-                      }
-                        
-                    </div>
-                  ))
-              ))
-              }
-       
-            </div>
-
-
-            <div className='languageSection'>
-            <h3 class="LangCerti"><img src={pythoni} style={{width:"50px",height:"50px"}}/> Python Programming</h3>
-            <div className='NoData' style={python.length==0?{display:"block"}:{display:"none"}}>
-                {python.length == 0 && <h3>No Data </h3>}
-            </div>
-              <br/>
-              { python.map((item,index) => (
-                  <div>
-                    <h4>{item.name}</h4>
-                    <img src={item.pic}/>
-                  </div>
-                  
-                  &&Testdata.map((item1,index) => (
-                    <div className='ApproveCard'>
-                      {
-                        item1.id==item._id&&item1.language=="python3"&&<div style={{display:"flex",alignItems:"center",gap:"100px"}}>
-                          <div>
-                          <img src={item.pic} style={{width:"100px",height:"100px",borderRadius:"100px"}}/>
-                          <h4>Name : {item1.name}</h4>
-                          <h4>ID : {item1._id}</h4>
-                          <h4>Date : {item1.date}</h4>
-                          <h4>Case : {item1.case}</h4>
-                          <h4>Language : {item1.language}</h4>
-                          </div>
-                          <div>
-                          <button className='Approve' onClick={()=>{approve(item._id,item1.language,item1.name,item1.date)}}>Approve</button>
-                          <button className='Reject' onClick={()=>{reject(item._id,item1.language,item1.name,item1.date)}}>Reject</button>
-                          </div>
-                        
-                        </div>
-                      }
-                    </div>
-                  ))
-              ))
-              }
-        
-            </div>
-
-
-            <div className='languageSection'>
-            <h3 class="LangCerti"><img src={javai} style={{width:"50px",height:"50px"}}/> Java Programming</h3>
-              <br/>
-              <div className='NoData' style={java.length==0?{display:"block"}:{display:"none"}}>
-                {java.length == 0 && <h3>No Data </h3>}
-            </div>
-              { java.map((item,index) => (
-                  <div>
-                    <h4>{item.name}</h4>
-                    <img src={item.pic}/>
-                  </div>
-
-                  
-                  &&Testdata.map((item1,index) => (
-                    <div className='ApproveCard'>
-                      {
-                        item1.id==item._id&&item1.language=="java"&&
-                        <div style={{display:"flex",alignItems:"center",gap:"100px"}}>
-                          <div>
-                          <img src={item.pic} style={{width:"100px",height:"100px",borderRadius:"100px"}}/>
-                          <h4>Name : {item1.name}</h4>
-                          <h4>ID : {item1._id}</h4>
-                          <h4>Date : {item1.date}</h4>
-                          <h4>Case : {item1.case}</h4>
-                          <h4>Language : {item1.language}</h4>
-                          </div>
-                          <div>
-                          <button className='Approve' onClick={()=>{approve(item._id,item1.language,item1.name,item1.date)}}>Approve</button>
-                          <button className='Reject' onClick={()=>{reject(item._id,item1.language,item1.name,item1.date)}}>Reject</button>
-                          </div>
-                          
-                          
-                        </div>
-                      }
-                    </div>
-                    
-                  ))
-              ))
-              }
-            </div>
 
        
         

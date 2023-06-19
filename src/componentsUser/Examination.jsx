@@ -16,7 +16,6 @@ function Examination() {
     let navigate = useNavigate();
 	const [inputValue, setInputValue] = useState(false);
     const [userCode, setUserCode] = useState(``);
-	var solve=location.state.status;
     const [userLang, setUserLang] = useState(location.state.lang);
     const [userTheme, setUserTheme] = useState("vs-dark");
     const [fontSize, setFontSize] = useState(20);
@@ -85,10 +84,6 @@ function compile() {
 	})
 }
 
-// Function to clear the output screen
-function clearOutput() {
-	setUserOutput("");
-}
 
 function change()
 {
@@ -96,21 +91,26 @@ function change()
 }
 
 
+const dis=()=>{
+    navigate("/ExamEnd",{state:{username:location.state.username, id:location.state.email,lang:location.state.lang}})
+     Axios.post(`http://localhost:8000/setcaseresult`,{
+       id: location.state.id,
+       result: result,
+       lang: location.state.lang
+   })
+   }
 
   
 
     const checkTime=() =>{
         if(timer==='00:00:00'||endexam)
         {
-            navigate("/ExamEnd",{state:{username: location.state.username, id: location.state.id, lang: location.state.lang}})
-            Axios.post(`http://localhost:8000/setcaseresult`,{
-                id: location.state.id,
-                result: result,
-                lang: location.state.lang,
-            })
+            dis();
         }
         
     }
+
+    
       const Ref = useRef(null);
   
       // The state for our timer
@@ -177,35 +177,17 @@ function change()
     document.addEventListener("keydown", (e)=>{
         if (e.keyCode === 116) {
           e.preventDefault();
-      
-           // your code here
-           // var r = confirm("Reload!");
-           // if (r == true)
-           //  window.location.reload();
         }
       })
       
 
-    
-      // We can use useEffect so that when the component
-      // mount the timer will start as soon as possible
-    
-      // We put empty array to act as componentDid
-      // mount only
       useEffect(() => {
           clearTimer(getDeadTime());
       }, []);
-    
-      // Another way to call the clearTimer() to start
-      // the countdown is via action event from the
-      // button first we create function to be called
-      // by the button
-      const onClickReset = () => {
-          clearTimer(getDeadTime());
-      }
+
 
   return (       
-    <div className="ExaminationScreen" style={{height:"min-content"}}>
+    <div className="ExaminationScreen" style={{Height:"100px",backgroundColor:"#011333;"}}>
           <div className='problemportal'>
 
         <div className="sidebarcontent">
@@ -215,7 +197,7 @@ function change()
         </p>
         <h5>Description : </h5>
         <p>
-            {location.state.description}
+            {location.state.describe}
         </p>
         <h5 >Expected Output : </h5>
         <div className='ExpectedOutput'>
@@ -230,7 +212,7 @@ function change()
             <h5 className='ExamIDdiv'>{location.state.id}</h5>
                 
             <div className='Webcamdiv'>
-                <WebcamModified username={location.state.username} id= {location.state.id} lang= {location.state.lang} type="test"/>
+                <WebcamModified username={location.state.username} id= {location.state.id} lang= {location.state.lang} type="exam" special="no"/>
             </div>
         <br/>
 
@@ -282,7 +264,7 @@ function change()
                 {(e) => setUserInput(e.target.value)}>
                 </textarea>
             </div>
-            <button className='end-btn' onClick={() => setendexam(true)}>End test</button>
+            <button className='end-btn' onClick={() => setendexam(true)&&dis()}>End test</button>
 
             <div className={result =="none" ? "NoOutputCase" : "OutputCase"}>
                 <div className={result =="Success" ? "Success" : "Failure"}>

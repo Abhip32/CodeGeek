@@ -48,7 +48,7 @@ function AdminAddQuestion() {
           console.log(res.data.count);
         })
     } 
-
+    alert("Question added successfully")
   }
 
   const getIdentifier = (lang) =>{
@@ -65,11 +65,11 @@ function AdminAddQuestion() {
   }
   
   return (
-    <div class="addQuePage" style={{display:'flex',height:"100%",background: "#E2E8F0"}}>
+    <div class="addQuePage">
       <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
       <div style={{marginTop:"30px",margin:"40px"}}>
       <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",borderRadius:"20px"}}><GrAdd/> Add Question Here</h2>
-          <form style={{background: "white",padding:"40px",borderRadius:"2vw",textAlign:"left",width:"70vw"}}>
+          <form style={{background: "white",padding:"40px",borderRadius:"2vw",textAlign:"left",width:"100%"}}>
               <h5><BsQuestionSquareFill  style={{margin:"20px"}}/>Enter Question : <input style={{margin:"20px"}} type="text" placeholder='Enter the Question' onChange={(e)=>{setProblem(e.target.value)}}/></h5>
               <h5><FaCode style={{margin:"20px"}}/>Language : <select  style={{margin:"20px"}} onChange={e=>setLanguage(e.target.value)}>
               <option value="">Select Language</option>
@@ -99,7 +99,7 @@ function AdminAddQuestion() {
                   <option value="Hard Level">Hard Level</option>
                   </select></h5>
                   
-            <button onClick={(e)=>{addQuestion(e)}}>Add Question</button>
+            <button className="AdminFormButton" onClick={(e)=>{addQuestion(e)}}>Add Question</button>
                   
           </form>
       </div>

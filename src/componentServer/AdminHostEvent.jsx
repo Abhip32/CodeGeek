@@ -1,5 +1,4 @@
 import React from 'react'
-import "./AdminHome.scss"
 import {useLocation,useNavigate} from 'react-router-dom'
 import { useState } from 'react';
 import SidebarAdmin from './SidebarAdmin'
@@ -51,7 +50,7 @@ function AdminHostEvent() {
   const CreateTest=(e)=>{
     if(Question.length > 0)
     {
-      navigate("/CreateTestPreview",{state:{Paper:Question,eventname:event,date:date,Language:Language,company:company,companyemail:companyemail,companylogo:companylogo,name:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}});
+      navigate("/CreateTestPreview",{state:{Paper:Question,eventname:event,date:date,Language:Language,company:company,companyemail:companyemail,companylogo:companylogo,name:user,pic:profileImage,lang:languagesstats,userstat:userstat}});
       setzero(false);
     }
     else
@@ -102,11 +101,11 @@ function AdminHostEvent() {
   }
   
   return (
-    <div class="addQuePage" style={{display:'flex',height:"100%",background: "#E2E8F0"}}>
+    <div class="addQuePage" style={{height:"100%",background: "#E2E8F0"}}>
       <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
-      <div style={{marginTop:"30px",margin:"40px"}}>
+      <div style={{marginTop:"30px",margin:"4vh",padding:"2vh"}}>
       <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",borderRadius:"20px"}}><GrAdd/> Add Event Details Here</h2>
-          <form style={{background: "white",padding:"40px",borderRadius:"2vw",textAlign:"left",width:"70vw"}}>
+          <form style={{background: "white",padding:"40px",borderRadius:"2vw",textAlign:"left",width:"100%"}}>
               <h5><BsQuestionSquareFill  style={{margin:"20px"}}/>Enter Name of Event : <input style={{margin:"20px"}} type="text" placeholder='Enter the Question' onChange={(e)=>{setEvent(e.target.value)}}/></h5>
               <h5><FaCode style={{margin:"20px"}}/>Language : <select  style={{margin:"20px"}} onChange={e=>setLanguage(e.target.value)}>
               <option value="">Select Language</option>
@@ -139,11 +138,11 @@ function AdminHostEvent() {
                             accept="image/*"/>
                   <br/>
 
-                  <h5><MdDescription style={{margin:"20px"}}/> Enter email of the company  :</h5>
+                  <h5><MdDescription style={{margin:"2vh"}}/> Enter email of the company  :</h5>
                   <input type="email" id="Email" onChange={(e)=>{setCompanyEmail(e.target.value)}}/> 
                   <br/>
 
-                  <h5><MdDescription style={{margin:"20px"}}/> Add Questions  :</h5>
+                  <h5><MdDescription style={{margin:"2vh"}}/> Add Questions  :</h5>
 
                   <Card style={{ width: '90%',margin: '5px',marginLeft:"4.5vw",padding:"1.5vw",border: '3px solid black',boxShadow:'2px 2px 10px black',backgroundColor:"white",color:"black",fontWeight:"bolder"}}> 
     <h5 style={{float:"left"}}>Q.{Question.length+1} : 
@@ -187,7 +186,7 @@ function AdminHostEvent() {
         <br/>
         <h4>Marks : <input type="text" onChange={e=>setMarks(e.target.value)}placeholder='Marks' cols="50"/></h4>
         
-        <button style={{margin:"20px",color:"black",fontWeight:"bold",fontSize:"10px",padding:"1vw",borderRadius:"2vw",width:"150px",boxShadow:"2px 2px 10px blue",fontWeight:"bolder",border: "none",color:"black",backgroundColor:"white"}} type='submit' onClick={(e)=>{AddShortQuestion(e)}}>Add Question </button>
+        <button className="AdminFormButton" type='submit' onClick={(e)=>{AddShortQuestion(e)}}>Add Question </button>
         
       </div>}
       <center>
@@ -205,7 +204,7 @@ function AdminHostEvent() {
     </Card>
 
             
-            <button onClick={(e)=>{CreateTest(e)}}>Host Event</button>
+            <button style={{margin: "50px", width: "90%",backgroundColor: "black",borderRadius: "30px", color: "white",padding: "15px 0",fontSize: "2vh", fontWeight: "600", cursor: "pointer", boxShadow: "1px 1px 20px violet"}} onClick={(e)=>{CreateTest(e)}}>Host Event</button>
                   
           </form>
       </div>

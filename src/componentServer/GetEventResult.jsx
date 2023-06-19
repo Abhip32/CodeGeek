@@ -56,9 +56,9 @@ function GetEventResults() {
 
   
   return (
-    <div class="addQuePage" style={{display:'flex',height:"100%",background: "#E2E8F0"}}>
+    <div class="addQuePage" style={{height:"100%",background: "#E2E8F0"}}>
       <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
-      <div style={{marginTop:"30px",margin:"40px"}}>
+      <div style={{marginTop:"30px",margin:"2vh",padding:"4vh"}}>
       <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",borderRadius:"20px"}}> Details of Events</h2>
       <Card style={Question ? {display:"block"}:{display:'none'}}>
         <h3 style={{marginLeft:"4vw"}}>No Quiz Available today  ?</h3>
@@ -75,7 +75,7 @@ function GetEventResults() {
         }
         
         {QuestionsData.map(item => (  
-             <Card style={{ width: '70vw',margin: '4vw',padding:'1vw',boxShadow: '2px 2px 15px black',borderRadius:'3vw',border: "none",backgroundImage: "linear-gradient(to right, #3f2b96, #4286f4)",color:"white"}}>
+             <Card style={{ width: '90%',margin: '4vw',padding:'1vw',boxShadow: '2px 2px 15px black',borderRadius:'3vw',border: "none",backgroundImage: "linear-gradient(to right, #3f2b96, #4286f4)",color:"white"}}>
               
                 <Card.Body>
                     <h3 style={{color: "white", fontWeight:"bolder"}}>Event Name : {item.Event}</h3>

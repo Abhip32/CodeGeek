@@ -17,7 +17,7 @@ function CreateTestPreview() {
 const [sidebarVisible, setsidebarVisible] = useState(true);
 const [languagesstats, setlanguagestats] = useState(location.state.lang);
 const [teststats, setteststats] = useState(location.state.test);
-const [user,setUser]=useState(location.state.name)
+const [user,setUser]=useState(JSON.parse(localStorage.getItem('loginCookie')).username);
 const [Language,setLanguage]=useState("");
 const [userstat,setUserstat]=useState(location.state.userstat)
 const [moneystats,setMoneyState]=useState(location.state.moneystats)
@@ -113,31 +113,21 @@ const [substats, setsubstats] = useState(location.state.substats);
             }
     }
   return (
-    <div style={{display:"flex"}}>
+    <div>
         <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
-        <div>
+        <div style={{padding:"2vh"}}>
         <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title><h4>Alert</h4></Modal.Title>
                 </Modal.Header>
-                <Modal.Body> <h6 style={{color:"red",fontWeight:"bolder"}}>Test Submitted Successfully</h6></Modal.Body>
-                <Button variant="secondary" onClick={handleShow}>
+                <Modal.Body> <h6 style={{color:"red",fontWeight:"bolder"}}>Event Test Submitted Successfully</h6></Modal.Body>
+                <Button variant="secondary" onClick={handleShow} style={{width:"20%",margin:"20px"}}>
                     Ok
                 </Button>
-                <Modal.Footer>
-                <Button variant="secondary" onClick={handleClose}>
-                    Close
-                </Button>
-                </Modal.Footer>
             </Modal>
-        <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",margin:"40px",borderRadius:"20px",width:"60vw",boxShadow:"1px 1px 20px black"}}> Test Preview</h2>
-        <h5 style={{ width: '70vw',margin:"20px",marginLeft:"5.5vw",padding:"0.5vw"}}>Sort by : 
-        <select style={{padding: '6px',marginLeft:"10px"}} onChange={e=>Sort(e.target.value,e)}  required>
-                <option selected>Selecting sorting method</option>
-                <option value="Problem">Sort Alphabetically by Problem</option>
-                <option value="Marks">Sort Acending by Marks</option>
-            </select></h5>
-        <Card style={{ width: '70vw',margin: '15px',marginLeft:"4.5vw",padding:"1.5vw",border: '3px solid black',boxShadow:'2px 2px 10px black',backgroundImage: "linear-gradient(to right, #3f2b96, #4286f4)",color:"white",fontWeight:"bolder"}}>
+        <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",margin:"40px",borderRadius:"20px",width:"90%",boxShadow:"1px 1px 20px black"}}> Test Preview</h2>
+        <Card style={{ width: '90%',margin: '15px',marginLeft:"4.5vw",padding:"1.5vw",border: '3px solid black',boxShadow:'2px 2px 10px black',backgroundColor:"black",color:"white",fontWeight:"bolder"}}>
+            
         <div style={{display:"flex",gap:"5vw"}}>
         
             <div>
@@ -156,8 +146,15 @@ const [substats, setsubstats] = useState(location.state.substats);
  
        </Card>
       
+       <h5 style={{ width: '70vw',margin:"20px",marginLeft:"5.5vw",padding:"0.5vw"}}>Sort by : 
+        <select style={{padding: '6px',marginLeft:"10px"}} onChange={e=>Sort(e.target.value,e)}  required>
+                <option selected>Selecting sorting method</option>
+                <option value="Problem">Sort Alphabetically by Problem</option>
+                <option value="Marks">Sort Acending by Marks</option>
+            </select></h5>
+
           {Problems.map(item => (  
-            <Card style={{ width: '70vw',margin: '15px',marginLeft:"4.5vw",padding:"1.5vw",border: '3px solid black',boxShadow:'2px 2px 10px black',backgroundImage: "linear-gradient(to right, #3f2b96, #4286f4)",color:"white",fontWeight:"bolder"}}>
+            <Card style={{ width: '90%',margin: '15px',marginLeft:"4.5vw",padding:"1.5vw",border: 'none',boxShadow:'2px 2px 10px black ',color:"black",fontWeight:"bolder",backgroundColor:"white"}}>
                  <h2>Problem :  {item[0].Problem}</h2>
                  <h4>Type :  {item[0].Choice}</h4>
                  <h4 style={item[0].Choice=="MCQ" ? {display: 'block'}:{display:'none'}}> Option A : {item[0].optionA}</h4>
@@ -166,7 +163,7 @@ const [substats, setsubstats] = useState(location.state.substats);
                  <h4 style={item[0].Choice=="MCQ" ? {display: 'block'}:{display:'none'}}> Option D : {item[0].optionD}</h4>
                  <h4>Answer :  {item[0].answer}</h4>
                  <h4>Marks :  {item[0].marks}</h4>
-                 <button style={{margin:"20px",color:"black",fontWeight:"bold",fontSize:"15px",padding:"0.6vw",borderRadius:"2vw",width:"150px",boxShadow:"2px 2px 10px blue",fontWeight:"bolder",border: "none",color:"black",backgroundColor:"white"}} onClick={(e)=>Delete(item[0].Problem,item[0].Choice,e)&&e.preventDefault()}>Delete</button>
+                 <button style={{margin:"20px",color:"white",fontWeight:"bold",fontSize:"15px",padding:"0.6vw",borderRadius:"2vw",width:"150px",backgroundColor:"black"}} onClick={(e)=>Delete(item[0].Problem,item[0].Choice,e)&&e.preventDefault()}>Delete</button>
                  <br/>
 
             </Card>
@@ -175,7 +172,7 @@ const [substats, setsubstats] = useState(location.state.substats);
             
 
             <center>
-                <button style={{margin:"20px",color:"white",fontWeight:"bold",fontSize:"15px",padding:"0.6vw",borderRadius:"2vw",width:"150px",boxShadow:"2px 2px 10px blue",fontWeight:"bolder",border: "none",backgroundColor:"black"}} onClick={(e)=>Submit(e)}>Submit</button>
+                <button style={{margin:"20px",color:"white",fontWeight:"bold",fontSize:"15px",padding:"0.6vw",borderRadius:"2vw",width:"90%",boxShadow:"2px 2px 10px blue",fontWeight:"bolder",border: "none",backgroundColor:"black"}} onClick={(e)=>Submit(e)}>Submit</button>
                 <br/>
                 <h3 style={error ? {display: 'block',color:"red",marginLeft:"auto",marginRight:"auto"} : {display:'none'}}>You deleted All Questions Unable to submit test</h3>
             </center>  

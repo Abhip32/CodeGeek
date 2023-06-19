@@ -83,7 +83,7 @@ function change()
 			<h1 style={{fontWeight:"900",textShadow:"1px 1px 20px #2196f3",alignItems:"center",margin:"20px"}}>Practice Compiler</h1>
 			<br/>
 			<br/>
-			<img style={{margin:"20px",boxShadow:"1px 1px 20px #2196f3"}} src="https://c.tenor.com/NOYF3f82b_gAAAAC/programmer.gif"/>
+			<img style={{margin:"20px",boxShadow:"1px 1px 20px #2196f3",width:"90%"}} src="https://c.tenor.com/NOYF3f82b_gAAAAC/programmer.gif"/>
 
 		</div>
         <div className='compiler'>

@@ -1,3 +1,4 @@
+
 .WebsiteHeading{
     font-family: 'Montserrat', sans-serif;
 }
@@ -49,19 +50,23 @@ span.navbar-toggler.icon{
 }
 }
 
-.profilepic{
-    width: 40px;
-    height: 40px;
-    border-radius: 50px;
-    box-shadow: 2px 2px 18px white;
-    background-color: #8458B3;
-    float: right;
-    position: absolute;
-    right: 5vw;
-    top: 10px;
+.Profiledropdown{
+    width: max-content;
+    height:45px;
+    color: white;
+    font-weight: bold;
+    align-items: flex-end;
     &:hover{
         cursor: pointer;
     }
+
+    .profileDefault{
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        font-size: medium;
+    }
 }
+
 
 

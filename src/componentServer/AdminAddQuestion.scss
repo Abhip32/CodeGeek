@@ -17,12 +17,12 @@ input,select,textarea {
    
   }
 
-  button {
-    width: 50%;
+ .AdminFormButton {
+    margin: 50px;
+    width: 90%;
     background-color: black;
     border-radius: 30px;
     color: white;
-    margin: 15px;
     padding: 15px 0;
     font-size: 2vh;
     font-weight: 600;

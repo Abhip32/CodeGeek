@@ -1,4 +1,3 @@
-import "./Login.scss";
 import {useLocation, useNavigate} from "react-router-dom";
 import {AiOutlineMail} from "react-icons/ai"
 import {FaEye, FaEyeSlash} from 'react-icons/fa'

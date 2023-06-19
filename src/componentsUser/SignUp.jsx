@@ -1,10 +1,8 @@
 import {React, useState} from 'react'
-import "./SignUp.scss";
 import axios from 'axios';
 import FileBase64 from 'react-file-base64';
 import {useNavigate} from "react-router-dom";
 import Axios from 'axios';
-import "./SignUp.scss";
 import {AiFillWarning} from "react-icons/ai"
 import {
     AiOutlineMail,
@@ -13,18 +11,22 @@ import {
     AiFillInfoCircle,
     AiOutlineUser
 } from "react-icons/ai"
+import "./SignUp.scss"
 import {FaEye, FaEyeSlash} from 'react-icons/fa'
 import Card from 'react-bootstrap/Card';
 import ListGroup from 'react-bootstrap/ListGroup';
 import Carousel from 'react-bootstrap/Carousel';
-import CardContainer from './CardContainer';
-import { useEffect } from 'react';
+import {useEffect} from 'react';
+import {Container} from 'react-bootstrap';
+import {setLoginCookieUser} from "../utils/loginCookie";
+import defaultImg from "../Assets/coder.gif"
 
-function Login() {
-    const [img, setImg] = useState("");
+
+function SignUp() {
+    const [img, setImg] = useState(defaultImg);
     const [index, setIndex] = useState(0);
     const [data, setData] = useState([]);
-    const [errors, setErrors] = useState([]);
+    const [errors,setErrors]=useState("");
 
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
@@ -43,167 +45,156 @@ function Login() {
     }
     let lo = "oho"
 
-    
-  
-
 
     const handleSubmit = (event) => {
         event.preventDefault();
-      
-            Axios.post(`http://localhost:8000/SignUp`, {
-            user: document.getElementById("username").value,
-            pass: document.getElementById("password").value,
-            pic: img,
-            email: document.getElementById("email").value,
-            phoneno: document.getElementById("phoneno").value,
-            bio: document.getElementById("bio").value
-        }).then((res) => {
-            if(res.data.length==0)
-            {
-                console.log(res.data);
-                setSuccess(res.data);
-                navigate("/Buysubscription", {state: {username: document.getElementById("username").value}})
+        const formData = new FormData()
+        formData.append('user', document.getElementById('username').value);
+        formData.append('pass', document.getElementById('password').value);
+        formData.append('profileImg', img)
+        formData.append('email', document.getElementById('email').value);
+        formData.append('phone', document.getElementById('phoneno').value);
+        formData.append('bio', document.getElementById('bio').value);
 
-            }
-            else
-            {
+
+        Axios.post(`http://localhost:8000/SignUp`, formData).then((res) => {
+            if (res.status===200) {
+                console.log(res.data);
+                setLoginCookieUser(res.data.name, res.data.email, res.data.pic);
+                setSuccess(res.data);
+                navigate("/home", {
+                })
+
+            } else {
+                setErrors(res.data.message);
                 window.scrollTo(0, 0);
-                setErrors(res.data);
             }
         })
-        
+
     };
 
 
     return (
-        <div>
-            <div className="Login">
-                <div class="container">
-                    <main class="signup-container">
-                        <h1 class="heading-primary">Sign Up<span class="span-blue">.</span>
-                        </h1>
-                        <p class="text-mute">Become a member of largest coding community.</p>
+        <Container>
+            <div className="SignIn-Main">
+                <main class="signin-container">
+                    <h1 class="heading-primary">Sign Up<span class="span-blue">.</span>
+                    </h1>
+                    <p class="text-mute">Become a member of largest coding community.</p>
 
 
-                        <form class="signup-form">
+                    <form class="signup-form">
                         <br/>
-                            <div style={errors.length == 0 ?{display:"none"}:{backgroundColor:"rgb(232, 240, 254)",borderRadius:"20px",padding:"30px"}}>
-                            <h1 style={{color:"#2196f3",fontWeight:"900"}}><AiFillWarning style={{color:"red"}}/> Oops !!</h1>
+                        <div style={
+                            errors.length == 0 ? {
+                                display: "none"
+                            } : {
+                                backgroundColor: "rgb(232, 240, 254)",
+                                borderRadius: "20px",
+                                padding: "30px"
+                            }
+                        }>
+                            <h1 style={
+                                {
+                                    color: "#2196f3",
+                                    fontWeight: "900"
+                                }
+                            }><AiFillWarning style={
+                                    {color: "red"}
+                                }/>
+                                Oops !!</h1>
                             <br/>
-                            <ul>
-                                {errors.map((item,index) => (
-                                <li>
-                                    <h5 style={{color:"red",fontWeight:"700"}}>{item}</h5>
-                               </li>
-                                ))}
-                            </ul>
-
-                            </div>
-                            <br/>
-                            <label class="inp">
-                                <input type="email" id="username" class="input-text" placeholder="&nbsp;"/>
-                                <span class="label">Username</span>
-                                <span class="input-icon"><AiOutlineUser/></span>
-                            </label>
-                            <label class="inp">
-                                <input type="email" id="email" class="input-text" placeholder="&nbsp;"
-                                    style={
-                                        {backgroundColor: "rgb(232, 240, 254)"}
-                                    }/>
-                                <span class="label">Email</span>
-                                <span class="input-icon"><AiOutlineMail/></span>
-                            </label>
-                            <label class="inp">
-                                <input type="password" class="input-text" placeholder="&nbsp;" id="password"/>
-                                <span class="label">Password</span>
-                                <span class="input-icon input-icon-password" data-password>
-                                    <div style={
-                                        icon == "hide" ? {
-                                            display: "block"
-                                        } : {
-                                            display: "none"
-                                        }
-                                    }><FaEyeSlash onClick={
-                                            () => {
-                                                show()
+                            <ul> {
+                               
+                                    <li>
+                                        <h5 style={
+                                            {
+                                                color: "red",
+                                                fontWeight: "700"
                                             }
-                                        }/></div>
+                                        }>
+                                            {errors}</h5>
+                                    </li>
+                            } </ul>
+
+                        </div>
+                        <br/>
+                        <label class="signUp-inp">
+                            <span class="input-icon"><AiOutlineUser/></span>
+                            <input type="text" id="username" class="input-text" placeholder="Username" required/>
+
+                        </label>
+                        <label class="signUp-inp">
+
+                            <span class="input-icon"><AiOutlineMail/></span>
+                            <input type="email" id="email" class="input-text" placeholder="Email" required/>
+
+                        </label>
+                        <label class="signUp-inp">
+
+                            <span class="input-icon input-icon-password" data-password>
                                 <div style={
-                                    icon == "show" ? {
+                                    icon == "hide" ? {
                                         display: "block"
                                     } : {
                                         display: "none"
                                     }
-                                }><FaEye onClick={
+                                }><FaEyeSlash onClick={
                                         () => {
                                             show()
                                         }
-                                    }/>
-                                </div>
-                        </span>
-                    </label>
-                    <label class="inp"
-                        style={
-                            {
-                                backgroundColor: "rgb(232, 240, 254)",
-                                padding: "20px",
-                                borderRadius: "26px"
-                            }
-                    }>
-                        <span style={
-                            {color: "#2196f3"}
-                        }>Upload Profile Picture
-                        </span>
-                        <br/>
-                        <FileBase64 class="input-text"
-                            multiple={false}
-                            style={
-                                {
-                                    backgroundColor: "red",
-                                    padding: "10px"
+                                    }/></div>
+                            <div style={
+                                icon == "show" ? {
+                                    display: "block"
+                                } : {
+                                    display: "none"
                                 }
-                            }
-                            onDone={
-                                ({base64}) => setImg(base64)
-                            }
-                            accept="image/*"/>
-                        <span class="input-icon"><AiOutlineUpload/></span>
-                    </label>
-                    <label class="inp">
-                        <input type="text" id="phoneno" class="input-text" placeholder="&nbsp;"
-                            style={
-                                {backgroundColor: "rgb(232, 240, 254)"}
-                            }/>
-                        <span class="label">Phone No</span>
-                        <span class="input-icon"><AiFillPhone/></span>
-                    </label>
+                            }><FaEye onClick={
+                                    () => {
+                                        show()
+                                    }
+                                }/>
+                            </div>
+                    </span>
 
-                    <label class="inp">
-                        <textarea id="bio" class="input-text" placeholder="&nbsp;"
-                            style={
-                                {backgroundColor: "rgb(232, 240, 254)"}
-                            }/>
-                        <span class="label">Bio
-                        </span>
-                        <span class="input-icon"><AiFillInfoCircle/></span>
-                    </label>
-                    
-                    
-                    
+                    <input type="password" class="input-text" placeholder="password" id="password" required/>
+                </label>
+                <label class="signUp-inp">
+                    <br/>
+                    <span class="input-icon"><AiOutlineUpload/></span>
+                    <input type="file" id="pic"
+                        onChange={
+                            (e) => setImg(e.target.files[0])
+                        }
+                        accept="image/*" required/>
 
-                    <button class="btn btn-login"
-                        onClick={handleSubmit}>Sign Up</button>
+                </label>
+                <label class="signUp-inp">
+                    <span class="input-icon"><AiFillPhone/></span>
+                    <input type="text" id="phoneno" class="input-text" placeholder="Phone Number" required/>
+                </label>
 
-                </form>
+                <label class="signUp-inp">
+                    <span class="input-icon"><AiFillInfoCircle/></span>
+                    <textarea id="bio" class="input-text" placeholder="Your Bio Here" required/>
+                </label>
 
-            </main>
 
-        </div>
+                <button class="SignUp-btn btn-login" type="submit" 
+                    style={
+                        {marginBottom: "5vh"}
+                    }
+                    onClick={handleSubmit}>Sign Up</button>
+
+            </form>
+
+        </main>
     </div>
 
 
-</div>
+</Container>
     )
 }
 
-export default Login
+export default SignUp

@@ -74,12 +74,16 @@ function TestDetails() {
 
     if(ans.length >0)
     {
-        for (let i=0; i<ans.length; i++)
+        for (let i=0; i<=ans.length; i++)
       {
         marks=parseInt(marks,10)+parseInt(ans[i].Marks,10);
       }
 
       percentage=(marks/totalmarks)*100;
+    }
+    else
+    {
+      percentage=(0/totalmarks)*100;
     }
     
     if(percentage>=50&&marks!=0)
@@ -108,7 +112,7 @@ function TestDetails() {
   }
   
   return (
-    <div class="addQuePage" style={{display:'flex',height:"100%",background: "#E2E8F0"}}>
+    <div class="addQuePage" style={{height:"100%",background: "#E2E8F0"}}>
       <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
       <div style={{marginTop:"30px",margin:"40px"}}>
       <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",borderRadius:"20px"}}> Test Details</h2>
@@ -128,11 +132,11 @@ function TestDetails() {
             {result.map(item => (  
                     <tbody>
                     <tr>
-                    <td>{item[0].user}</td>
-                    <td>{calculatemarks(item[0].answers,item[0].user).marks}</td>
+                    <td>{item.email}</td>
+                    <td>{calculatemarks(item.answers,item[0].email).marks}</td>
                     <td>{totalmarks}</td>
-                    <td>{calculatemarks(item[0].answers,item[0].user).percentage}</td>
-                    <td>{calculatemarks(item[0].answers,item[0].user).status}</td>
+                    <td>{calculatemarks(item.answers,item[0].email).percentage}</td>
+                    <td>{calculatemarks(item.answers,item[0].email).status}</td>
                     </tr>
                     </tbody>
               ))
