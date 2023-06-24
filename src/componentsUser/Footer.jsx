@@ -12,18 +12,19 @@ const Footer = () => {
   
     else{
       return (
-      <footer className="footer">
-      <Container>
-        <Row>
-          <Col md={6}>
-            <p>Footer content goes here</p>
-          </Col>
-          <Col md={6}>
-            <p>Additional footer content goes here</p>
-          </Col>
-        </Row>
-      </Container>
-    </footer>  );
+        <footer className="footer bg-dark text-white p-5">
+        <Container>
+          <Row>
+            <Col md={8}>
+              <a href="/" style={{textDecoration:"none"}}><h3 className='WebsiteHeading m-2'><em style={{color: '#2196f3'}}>CODE</em><em style={{color: 'white'}}>GEEK</em></h3></a>
+            </Col>
+            <Col md={4} className='mt-3'>
+            <h5>Made with React</h5>
+            </Col>
+          </Row>
+        </Container>
+      </footer>
+     );
 
     }
 };

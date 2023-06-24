@@ -105,7 +105,7 @@ function ForgotPassword() {
                 </Button>
                 </Modal.Footer>
             </Modal>
-            <div class="container">
+            <div class="Login-Main" style={{minHeight:"100vh"}}>
                 <main class="signup-container">
                     <h1 class="heading-primary">Forgot Password<span class="span-blue">.</span>
                     </h1>
@@ -115,20 +115,21 @@ function ForgotPassword() {
                     <form class="signup-form">
                        <h3 style={{color:"greenyellow"}}></h3>
                         <label class="inp" style={otp==""?{display:"block"}:{display:"none"}}>
-                            <input type="email" id="email" class="input-text" placeholder="&nbsp;"/>
-                            <span class="label">Email</span>
-                            <span class="input-icon"><AiOutlineMail/></span>
+                        <label className="signIn-inp">
+                        <span className="input-icon"><AiOutlineMail/></span>
+                        <input type="email" id="email" className="input-text" placeholder="email" required/>
+                    </label>
                         </label>
-                <button class="btn btn-login" style={otp==""?{display:"block"}:{display:"none"}} onClick={(e)=>{getotp(e)}}
+                <button class="Login-btn btn-login" style={otp==""?{display:"block"}:{display:"none"}} onClick={(e)=>{getotp(e)}}
                     >Get OTP</button>
                     <br/>
-                    <h3>Username : {user}</h3>
+                   {user!=""&& <h3>Username : {user}</h3>}
                     <label class="inp" style={otp!=""&&!authtic?{display:"block"}:{display:"none"}}>
-                            <input type="text" id="otp" class="input-text" placeholder="&nbsp;"/>
+                            <input style={{width:"100%",borderRadius:"100px",padding:"1vw"}} type="text" id="otp" class="input-text" placeholder="&nbsp;"/>
                             <span class="label">OTP</span>
                             <span class="input-icon"></span>
                         </label>
-                    <button class="btn btn-login" style={otp!=""&&!authtic?{display:"block"}:{display:"none"}} onClick={(e)=>{submitotp(e)}}
+                    <button class="Login-btn btn-login" style={otp!=""&&!authtic?{display:"block"}:{display:"none"}} onClick={(e)=>{submitotp(e)}}
                     >Submit OTP</button>
 
 
@@ -148,21 +149,6 @@ function ForgotPassword() {
                     >Reset Password</button>
             </form>
         </main>
-
-        <div class="welcome-container">
-            <h1 class="heading-secondary">
-                Welcome to
-                <br/><em style={
-                    {color: '#2196f3'}
-                }>CODE</em>
-                <em style={
-                    {color: 'black'}
-                }>GEEK</em>
-            </h1>
-            <br/>
-            <br/>
-            <img src="https://codersera.com/blog/wp-content/uploads/2019/07/BLOG-23-L-3.jpg" alt=""/>
-        </div>
     </div>
 
 

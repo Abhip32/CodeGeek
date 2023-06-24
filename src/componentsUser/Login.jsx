@@ -15,6 +15,7 @@ import {
 import "./Login.scss"
 import Footer from "./Footer";
 import {setLoginCookieUser} from "../utils/loginCookie";
+import Loader from "./Loader";
 
 
 function Login() {
@@ -22,7 +23,7 @@ function Login() {
     let [icon, setIcon] = useState("hide");
 
     let navigate = useNavigate();
-    let location = useLocation();
+    const [Loading,setLoading]= useState(false);
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -39,10 +40,10 @@ function Login() {
     });
 
     const onSuccess = async (res) => {
-        await Axios.post(`http://localhost:8000/glogin`, {email: res.profileObj.email}).then((res) => {
+        await Axios.post(`https://code-geek-server-abhip32.vercel.app/glogin`, {email: res.profileObj.email}).then((res) => {
             console.log(res.data);
             if (res.status === 200) {
-              setLoginCookieUser(res.data[0].name, res.data[0].email, res.data[0].pic);
+              setLoginCookieUser(res.data[0].name, res.data[0].email, res.data[0].pic.data.data);
                 navigate("/home", {
                     state: {
                         username: res.data[0].name,
@@ -76,13 +77,14 @@ function Login() {
 
 
     const onSubmit = async (e) => {
+        setLoading(true);
         e.preventDefault();
         let data = {
             user: document.getElementById("email").value,
             pass: document.getElementById("password").value
         };
         try {
-            const response = await fetch("http://localhost:8000/login", {
+            const response = await fetch("https://code-geek-server-abhip32.vercel.app/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -92,7 +94,7 @@ function Login() {
             if (response.status === 200) {
                 console.log("response is ok");
                 const data = await response.json();
-                setLoginCookieUser(data[0].name, data[0].email, data[0].pic);
+                setLoginCookieUser(data[0].name, data[0].email, data[0].pic.data.data);
                 navigate("/home", {
                     state: {
                         username: data[0].name,
@@ -100,16 +102,19 @@ function Login() {
                         pic: data[0].pic
                     }
                 })
+                setLoading(false);
             }
 
             else if (response.status === 350) {
               setstatus("Email not Registered Sign Up first");
               setShow(true)
+              setLoading(false);
           } 
           else if (response.status === 315)
           {
             setstatus("Wrong Credentials");
             setShow(true)
+            setLoading(false);
 
           }
 
@@ -120,7 +125,8 @@ function Login() {
 
 
     return (<Container className="Login-Main">
-        <div>
+        {Loading && <Loader/>}
+        {!Loading && <>  <div>
             <Modal show={show}
                 onHide={handleClose}>
                 <Modal.Header closeButton>
@@ -214,7 +220,8 @@ function Login() {
                     </p>
                 </div>
             </div>
-        </div>
+        </div></>}
+      
     </Container>)
 }
 

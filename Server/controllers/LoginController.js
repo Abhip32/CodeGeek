@@ -3,6 +3,7 @@ const Cryptr = require('cryptr');
 const UserModel = require("../models/usermodel");
 const cryptr = new Cryptr('myTotallySecretKey');
 const fs = require('fs');
+const defImg = require('../models/defaultImg');
 
 function CheckPassword(inputtxt) {
   const paswd = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{7,15}$/;
@@ -55,8 +56,8 @@ const LoginControllers = {
   },
 
   SignUp: async (req, res) => {
-    const url = req.protocol + '://' + req.get('host');
     const user = req.body.user;
+    var img = req.body.profileImg;
     const pass = cryptr.encrypt(req.body.pass);
     const email = req.body.email;
     const phoneno = req.body.phone;
@@ -77,14 +78,18 @@ const LoginControllers = {
       if (existingUser) {
         res.status(203).json({ message: "Email Already Taken" });
       } else {
-        let filePath = 'Storage/default.jpg';
-        if (req.file && req.file.filename) {
-          filePath = 'Storage/' + req.file.filename;
+        if(img.length == 0)
+        {
+          img =defImg;
         }
-
+        
+        console.log(img);
         const newUser = new UserModel({
           name: user,
-          pic: { data: fs.readFileSync(filePath), contentType: "image/jpg" },
+          pic: {
+            data: img,
+            contentType: "image/jpg" // Set the content type based on the uploaded file or use "image/jpg" as default
+          },
           password: pass,
           email: email,
           phone: phoneno,
@@ -94,9 +99,15 @@ const LoginControllers = {
           java_Status: "",
           python_Status: "",
         });
-
+      
         const savedUser = await newUser.save();
-        res.status(200).json({ name: savedUser.name, email: savedUser.email, pic: fs.readFileSync(filePath) });
+        res.status(200).json({ name: savedUser.name, email: savedUser.email, pic: {
+          data: img,
+          contentType: "image/jpg" // Set the content type based on the uploaded file or use "image/jpg" as default
+        } });
+      
+
+            
       }
     } catch (error) {
       console.log(error);
@@ -109,7 +120,7 @@ const LoginControllers = {
     const val = Math.floor(1000 + Math.random() * 9000);
 
     try {
-      const data = await dbo.getDb().collection("Login_Credentials").find({ "email": email }).toArray();
+      const data = await UserModel.find({ "email": email })
       if (data.length !== 0) {
         const transporter = nodemailer.createTransport({
           service: 'outlook',
@@ -162,6 +173,33 @@ const LoginControllers = {
       console.log(error);
       res.sendStatus(500);
     }
+  },
+
+  update:async (req, res) => {
+    
+    try {
+      const myquery = { "email": req.body.email };
+      const newvalues = { $set: { "bio": req.body.bio,"phone":req.body.phone} };
+      await UserModel.updateOne(myquery, newvalues);
+      console.log("Updated");
+      res.send("Success");
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+  },
+
+  delete:async (req, res) => {
+    try {
+      const myquery = { "email": req.body.email };
+      await UserModel.deleteOne(myquery);
+      console.log("deleted");
+      res.send("Success");
+    } catch (error) {
+      console.log(error);
+      res.sendStatus(500);
+    }
+
   }
 };
 

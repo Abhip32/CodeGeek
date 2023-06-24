@@ -2,7 +2,7 @@ import React from 'react'
 import './ProgrammingPages.scss'
 import {useLocation} from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
-import {Button, Row, Col, Card} from 'react-bootstrap';
+import {Button, Row, Col, Card,Spinner} from 'react-bootstrap';
 import PythonBanner from "../Assets/PythonBanner.png"
 
 import Axios from 'axios';
@@ -38,7 +38,15 @@ function PythonProgramming() {
 
     const location = useLocation();
     let navigate = useNavigate();;
-    return (<div className="languagePage">
+    return (<div className="languagePage" style={{minHeight:"100vh"}}>
+         {problemsc.length ==0 &&
+          <center style={{height:"100vh"}}>
+            <Spinner animation="border" role="status">
+                 <span className="visually-hidden">Loading...</span>
+            </Spinner>
+
+          </center>
+        }
         <button className="backC"
             onClick={
                 () => navigate("/home", {

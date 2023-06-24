@@ -15,6 +15,7 @@ function ExamStart() {
     const location = useLocation();
     const [status,setStatus]= useState("");
     const [allow,setAllow] = useState(false);
+    const [problemLoading,setProblemLoading]=useState(true);
     const handleDataFromChild = (data) => {
       setAllow(data);
     }
@@ -36,7 +37,12 @@ function ExamStart() {
         lang: language.language} )
 
       const data=response.data;
+      console.log(data);
       problem.push(data)
+      if(problem.length >0)
+      {
+        setProblemLoading(false);
+      }
       console.log(problem[0])
       
 
@@ -95,7 +101,9 @@ function ExamStart() {
             </div>
 
           </div>
-          {allow ? <button className="startExamButton" onClick={()=>CreateID()} >Start Exam</button> : <h3 className='text-danger'>Not able to detect face</h3>}
+          {!allow&& <h3 className='text-danger'>Not able to detect face</h3>}
+          {problemLoading&& <h5>Fetching your problem</h5>}
+          {allow && !problemLoading &&  <button className="startExamButton" onClick={()=>CreateID()} >Start Exam</button> }
          
         </div>
         <div className="ExamInstructions">

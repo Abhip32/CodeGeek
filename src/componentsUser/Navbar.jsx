@@ -42,7 +42,6 @@ function NavbarFunction(props) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
               <a className="nlink m-2" onClick={() =>navigate("/Login" ,{state: {result:""}})}>Login</a>
-              <a className="nlink m-2" onClick={() =>navigate("/AdminLogin")}>Employee Login</a>
               <a className="nlink m-2" onClick={() =>navigate("/Compiler")}>Compiler</a>
           </Nav>
         </Navbar.Collapse>
@@ -67,15 +66,15 @@ function NavbarFunction(props) {
           </Nav>
           <div className="Profiledropdown">
                 <div className="profileDefault" onClick={handleToggle}>
-                  <img className="profile-pic" src={`data:image/jpeg;base64,${Buffer.from(JSON.parse(localStorage.getItem('loginCookie')).pic.data).toString('base64')}`} width={40} height={40} alt="Profile" />
+                  <img className="profile-pic" src={`data:image/jpeg;base64,${Buffer.from(JSON.parse(localStorage.getItem('loginCookie')).pic).toString('base64')}`} width={40} height={40} alt="Profile" />
                   <span className="profile-name d-flex align-center">{JSON.parse(localStorage.getItem('loginCookie')).username} <MdArrowDropDown size={20}/></span>
                 </div>
-                {isOpen && (
+                {isOpen && 
                   <div className="dropdown-content" style={{backgroundColor:"white"}}>
                     <button style={{width:"95%",margin:"0.5rem",backgroundColor:"white",border:"none",color:"black",display:"flex",alignItems:"center",justifyContent:"space-between",fontSize:"18px",padding:"10px"}} onClick={() =>navigate(`/Dashboard/${JSON.parse(localStorage.getItem('loginCookie')).email}})}`, {state:{username: JSON.parse(localStorage.getItem('loginCookie')).username}})}> <MdDashboard/>Dashboard</button>
                     <button style={{width:"95%",margin:"0.5rem",backgroundColor:"white",border:"none",color:"red",display:"flex",alignItems:"center",justifyContent:"space-between",fontSize:"18px",padding:"10px"}} onClick={()=>handleLogout()}><MdLogout/>Logout</button>
                   </div>
-                )}
+                }
               </div>
         </Navbar.Collapse>
       </Container>

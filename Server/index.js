@@ -20,11 +20,14 @@ app.use(require("./routes/TestRoutes"));
 var bodyParser = require('body-parser')
 // To connect with your mongoDB database
 const mongoose = require("mongoose");
-const { useParams } = require("react-router-dom");
 const PORT = 8000;
 const Axios = require("axios");
 const db = require('./db/conn'); 
 
+
+app.get('/',(req,res)=>{
+  res.json("CodeGeek API")
+})
 
 
 db.on('error', console.error.bind(console, 'MongoDB connection error:'));

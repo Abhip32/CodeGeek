@@ -19,14 +19,16 @@ import Carousel from 'react-bootstrap/Carousel';
 import {useEffect} from 'react';
 import {Container} from 'react-bootstrap';
 import {setLoginCookieUser} from "../utils/loginCookie";
+import Loader from './Loader';
 import defaultImg from "../Assets/coder.gif"
 
 
 function SignUp() {
-    const [img, setImg] = useState(defaultImg);
+    const [img, setImg] = useState([]);
     const [index, setIndex] = useState(0);
     const [data, setData] = useState([]);
     const [errors,setErrors]=useState("");
+    const[Loading,setLoading] = useState(false);
 
     const handleSelect = (selectedIndex, e) => {
         setIndex(selectedIndex);
@@ -46,27 +48,44 @@ function SignUp() {
     let lo = "oho"
 
 
+    const chgImg =(event)=>{
+
+    // Get the selected file
+    const file = event.target.files[0];
+    
+    // Create a new FileReader object
+    const reader = new FileReader();
+    
+    // Define the onload event handler
+    reader.onload = function(e) {
+      // Get the image buffer
+      const imageBuffer = e.target.result;
+      const uint8Array = new Uint8Array(imageBuffer);
+
+      // Convert the Uint8Array to a regular array
+      const dataArray = Array.from(uint8Array);
+      setImg(dataArray)
+    };
+     reader.readAsArrayBuffer(file);
+    
+    }
+
     const handleSubmit = (event) => {
         event.preventDefault();
-        const formData = new FormData()
-        formData.append('user', document.getElementById('username').value);
-        formData.append('pass', document.getElementById('password').value);
-        formData.append('profileImg', img)
-        formData.append('email', document.getElementById('email').value);
-        formData.append('phone', document.getElementById('phoneno').value);
-        formData.append('bio', document.getElementById('bio').value);
+        setLoading(true)
 
-
-        Axios.post(`http://localhost:8000/SignUp`, formData).then((res) => {
+        Axios.post(`http://localhost:8000/SignUp`, {user:document.getElementById('username').value,pass:document.getElementById('password').value,profileImg:img,email:document.getElementById('email').value,phone:document.getElementById('phoneno').value,bio:document.getElementById('bio').value }).then((res) => {
             if (res.status===200) {
                 console.log(res.data);
-                setLoginCookieUser(res.data.name, res.data.email, res.data.pic);
+                setLoginCookieUser(res.data.name, res.data.email, res.data.pic.data);
                 setSuccess(res.data);
+                setLoading(false)
                 navigate("/home", {
                 })
 
             } else {
                 setErrors(res.data.message);
+                setLoading(false)
                 window.scrollTo(0, 0);
             }
         })
@@ -76,6 +95,8 @@ function SignUp() {
 
     return (
         <Container>
+                    {Loading && <Loader/>}
+        {!Loading && <>  
             <div className="SignIn-Main">
                 <main class="signin-container">
                     <h1 class="heading-primary">Sign Up<span class="span-blue">.</span>
@@ -165,7 +186,7 @@ function SignUp() {
                     <span class="input-icon"><AiOutlineUpload/></span>
                     <input type="file" id="pic"
                         onChange={
-                            (e) => setImg(e.target.files[0])
+                            (e) => chgImg(e)
                         }
                         accept="image/*" required/>
 
@@ -191,6 +212,7 @@ function SignUp() {
 
         </main>
     </div>
+    </>}
 
 
 </Container>

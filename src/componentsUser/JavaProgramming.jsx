@@ -2,7 +2,7 @@ import React from 'react'
 import './ProgrammingPages.scss'
 import {useLocation} from 'react-router-dom';
 import {useNavigate} from "react-router-dom";
-import {Button, Row, Col} from 'react-bootstrap';
+import {Button, Row, Col,Spinner} from 'react-bootstrap';
 import JavaBanner from '../Assets/JavaBanner.png';
 import Card from 'react-bootstrap/Card';
 
@@ -40,7 +40,15 @@ function JavaProgramming() {
 
     const location = useLocation();
     let navigate = useNavigate();;
-    return (<div className="languagePage">
+    return (<div className="languagePage" style={{minHeight:"100vh"}}>
+         {problemsc.length ==0 &&
+          <center style={{height:"100vh"}}>
+            <Spinner animation="border" role="status">
+                 <span className="visually-hidden">Loading...</span>
+            </Spinner>
+
+          </center>
+        }
         <button className="backC"
             onClick={
                 () => navigate("/home", {

@@ -48,11 +48,11 @@ function App() {
 useEffect(() => {
   if(localStorage.getItem('loginCookie')!= null)
   {
-      if((location.pathname=="/"||location.pathname=="/Login")&&JSON.parse(localStorage.getItem('loginCookie')).role !="admin")
+      if((location.pathname=="/Login")&&JSON.parse(localStorage.getItem('loginCookie')).role !="admin")
       {
         navigate("/Home")
       }
-      else if((location.pathname=="/"||location.pathname=="/Login")&&JSON.parse(localStorage.getItem('loginCookie')).role =="admin")
+      else if((location.pathname=="/AdminLogin")&&JSON.parse(localStorage.getItem('loginCookie')).role =="admin")
       {
         navigate("/AdminHome")
       }
@@ -61,7 +61,7 @@ useEffect(() => {
         
       }
   }
-  if(localStorage.getItem('loginCookie') == null)
+  if(localStorage.getItem('loginCookie') == null && location.pathname!="/SignUp"&& location.pathname!="/"&& location.pathname!="/AdminLogin"&& location.pathname!="/ForgotPassword")
   {
     navigate("/Login")
   }

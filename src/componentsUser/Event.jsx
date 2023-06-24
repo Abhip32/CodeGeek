@@ -12,6 +12,7 @@ import EventBread from "../Assets/EventBread.jpg"
 function AvailableTests() {
     const [QuestionsData, setQuestionsData] = useState([]);
     const [userImg,setuserImg]=useState("");
+    const [Loading,setLoading] = useState(true);
     const [Question,setQuestion]= useState(false);
     const location = useLocation();
     const [status,setStatus]= useState("");
@@ -22,17 +23,19 @@ function AvailableTests() {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-      Axios.post(`http://localhost:8000/getQuestions`,{
-        email:JSON.parse(localStorage.getItem('loginCookie')).email,
-    }).then((res) => {
-        setQuestionsData(res.data);
+      const getTests = async() =>{
+        const response = await Axios.post(`http://localhost:8000/getQuestions`,{
+          email:JSON.parse(localStorage.getItem('loginCookie')).email,
+      })
+        
+        const data=await response.data;
+        console.log(data);
+          setQuestionsData(data);
+          setLoading(false);
+         
+      }
 
-        if(QuestionsData.length()==0)
-        {
-           setQuestion(true)
-        }
-       
-    })
+      getTests();
     }, []);
 
     const EnterTest=(Name,ID)=>{
@@ -53,7 +56,7 @@ function AvailableTests() {
   return (
     
     
-    <div>
+    <div style={{minHeight:"100vh"}}>
        <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title><h4>Alert</h4></Modal.Title>
@@ -79,14 +82,16 @@ function AvailableTests() {
         <h3 style={{marginLeft:"4vw"}}>Sorry</h3>
         </Card>
 
-        {QuestionsData.length === 0&&
-          <center>
+        {Loading &&
+          <center style={{height:"100vh"}}>
             <Spinner animation="border" role="status">
                  <span className="visually-hidden">Loading...</span>
             </Spinner>
 
           </center>
         }
+
+        {QuestionsData.length ===0 && <h3 style={{display:"flex",alignItems:"center",justifyContent:"center"}}>No Events</h3>}
         
         {QuestionsData.map(item => (  
              <Card style={{ width: '90vw',margin: '4vw',padding:'1vw',boxShadow: '2px 2px 15px black',borderRadius:'3vw',border: "none",backgroundColor:"black",color:"white"}}>
