@@ -1,46 +1,32 @@
 # Codegeek
 
-Codegeek is a web application which allows the user to improve and showcase their coding skills with the help of practice problems and by appearing for the proctored certification tests. Based on the users performance, various badges for that particular languages will be allocated to the user. The administration part is also implemented to manage the ongoing as well as past events and tests on the portal.
+Codegeek is a web application that allows users to improve and showcase their coding skills through practice problems and proctored certification tests. Users can earn badges for different programming languages based on their performance. The application also includes an administration part to manage events, tests, and user data.
 
-**Technologies Used**
+## Technologies Used
 
 - React
-- Node + Express
-- Mongo DB
-
+- Node.js with Express
+- MongoDB
 
 ---
 
 ## Features
-• Allow user to create its own account to save progress
-• Allow the user to buy subscription in order to access the premium features of the
-system.
-• User can login with the google authentication
-• Password Recovery through e-mail
-• Practice problems of various languages to improve coding skills
-• Appear for a certification test
-• Proctored system will be used to monitor the user when he/she will appear for
-the test.
-• User will have access to his dashboard where he can see his badges and certificates
-along with the personal information.
-• User can add comment for a particular problem in order to get help from other
-users of the system.
 
-• Admin will get an access to the interactive dashboard filled with the data visu-
-alisation which allows administrator to keep track easily.
-
-• Admin will be able to add questions for various languages.
-• Admin will approve the certificates for the user.
-• Admin will add details for hosting a event.
-• Admin will see results and details of hosted events using various types of data
-visualisations.
-• Admin will monitor the transactions in the database.
-• Admin will update the subscription plans of the platform
-
+- User authentication and account creation
+- Subscription-based access to premium features
+- Google authentication for login
+- Password recovery through email
+- Practice problems for various programming languages
+- Proctored certification tests
+- User dashboard to view badges, certificates, and personal information
+- Commenting system for problem-specific discussions
+- Interactive admin dashboard with data visualization
+- Admin privileges to add questions, approve certificates, manage events, and monitor transactions and subscriptions
 
 ---
 
 ## Screenshots
+
 <div align="center">
   <img height="200" src="/Screenshots/SC1.png"  />
 </div>
