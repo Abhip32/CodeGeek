@@ -103,7 +103,7 @@ function ApproveCertificate() {
 
 
   return (
-    <div style={{background: "#E2E8F0"}} className='ApproveCertificate'>
+    <div style={{background: "#E2E8F0",minHeight:"100vh"}} className='ApproveCertificate'>
         <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
         <div className='dataTest' style={{padding:"20px"}}>
         <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",margin:"2vh",borderRadius:"20px",width:"95%"}}><GrCertificate/> Approve Certificates</h2>

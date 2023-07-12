@@ -56,7 +56,7 @@ function GetEventResults() {
 
   
   return (
-    <div class="addQuePage" style={{height:"100%",background: "#E2E8F0"}}>
+    <div class="addQuePage" style={{height:"100vh",background: "#E2E8F0"}}>
       <SidebarAdmin name={{user:user,pic:profileImage,lang:languagesstats,test:teststats,userstat:userstat,moneystats:moneystats,substats:substats}}/>
       <div style={{marginTop:"30px",margin:"2vh",padding:"4vh"}}>
       <h2 style={{fontWeight: "900",color:"black",backgroundColor:"white",marginBottom:"20px",padding:"20px",borderRadius:"20px"}}> Details of Events</h2>

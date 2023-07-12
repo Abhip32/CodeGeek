@@ -44,11 +44,9 @@ function ExamStart() {
         setProblemLoading(false);
       }
       console.log(problem[0])
-      
 
     }
     const  CreateID=()=>{
-      getQuestion();
       navigator.getMedia = ( navigator.getUserMedia || // use the proper vendor prefix
                        navigator.webkitGetUserMedia ||
                        navigator.mozGetUserMedia ||
@@ -69,6 +67,8 @@ function ExamStart() {
           });
         
     }
+
+    getQuestion();
 
     
   return (

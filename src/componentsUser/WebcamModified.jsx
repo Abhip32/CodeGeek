@@ -122,6 +122,7 @@ navigate("/ExamEnd",{state:{username:location.state.username}})
       audioRef3.current.play();
       count=count+100
       setCount(count);
+      navigate("/ExamEnd",{state:{username:location.state.username}})
     }
 
   }
