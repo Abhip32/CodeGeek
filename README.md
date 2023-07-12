@@ -1,139 +1,173 @@
-<h1>Screenshots</h1>
+# Codegeek
 
+Codegeek is a web application which allows the user to improve and showcase their coding skills with the help of practice problems and by appearing for the proctored certification tests. Based on the users performance, various badges for that particular languages will be allocated to the user. The administration part is also implemented to manage the ongoing as well as past events and tests on the portal.
+
+**Technologies Used**
+
+- React
+- Node + Express
+- Mongo DB
+
+
+---
+
+## Features
+• Allow user to create its own account to save progress
+• Allow the user to buy subscription in order to access the premium features of the
+system.
+• User can login with the google authentication
+• Password Recovery through e-mail
+• Practice problems of various languages to improve coding skills
+• Appear for a certification test
+• Proctored system will be used to monitor the user when he/she will appear for
+the test.
+• User will have access to his dashboard where he can see his badges and certificates
+along with the personal information.
+• User can add comment for a particular problem in order to get help from other
+users of the system.
+
+• Admin will get an access to the interactive dashboard filled with the data visu-
+alisation which allows administrator to keep track easily.
+
+• Admin will be able to add questions for various languages.
+• Admin will approve the certificates for the user.
+• Admin will add details for hosting a event.
+• Admin will see results and details of hosted events using various types of data
+visualisations.
+• Admin will monitor the transactions in the database.
+• Admin will update the subscription plans of the platform
+
+
+---
+
+## Screenshots
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1CGE2aB5YCz2Ja8RHoSPwGW54-J5mCXmO=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC1.png"  />
 </div>
 
 ###
-
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1IpGsnt8eZF-P0lAgmyzcZnGwXVwB8JqB=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC2.png"  />
 </div>
 
 ###
-
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1LcohQWUlTTRskjz4gjl82oBUkxOHH99H=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC3.png"  />
 </div>
 
 ###
-
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1O5rBP7RY_zCibwN65nm3UAWYJ064pz6Q=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC4.png"  />
+</div>
+
+
+###
+<div align="center">
+  <img height="200" src="/Screenshots/SC5.png"  />
 </div>
 
 ###
-
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1CNrpbDLeBjpMY0Q1wXSKGay9yinwreNa=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC6.png"  />
 </div>
 
 ###
-
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1gKOo2PgNxGo0UuY30cTHaAJeDQbsmqiw=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC7.png"  />
+</div>
+
+
+###
+<div align="center">
+  <img height="200" src="/Screenshots/SC8.png"  />
+</div>
+
+
+
+###
+<div align="center">
+  <img height="200" src="/Screenshots/SC9.png"  />
 </div>
 
 ###
-
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1_5x4nXLYoFco5w70SsLO3E4vRVO6z-6M=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC10.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1cDL6cxGDY-tNc8c7Rs5g-yEyGfZ2B9V5=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC11.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1DErz0Rw7JJdheqgCjbgjDm9VCXQXkf7p=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC12.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1eoG5WcmvURJe9kj4iFGOAJn6vM4XxhbD=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC13.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1zwo9O4zNAAST7K0tuLloysgG9EYg98Z4=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC14.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1ccjrO14JIn33Kudqm8Hiv7wBi3nAH8pA=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC15.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1OL7fYVwaaBqho3wyKxcQ2VrNbcTrsg7Q=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC16.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1hQ1X3HHPfVGdk5Tou3DPVW8OT9tpTPus=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC17.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1uo2mWhrNv_nS_6QNQyo9x7CAeLlQ-YU_=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC18.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1R9z3CAiIyyJGiFhStVVzpXHeIfkPWX0G=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC19.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1KyNpRCGtFFOqkvFs8aI9Rzx-vCDhcEfv=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC20.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1fnkw8m8VTaKH6-URCVhnPPkK5ZFeTKyI=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC21.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1Fghruz2oXbp0Bx1YNF3AlEZrj54FJiBz=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC22.png"  />
 </div>
 
-###
 
+###
 <div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1VzRkcjdEaWpYMFeyh88j4_sDQj-BpPrD=w1920-h932-iv1"  />
+  <img height="200" src="/Screenshots/SC23.png"  />
 </div>
-
-###
-
-<div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1i0wjiBlo3teGiKNc3TH_jmG5L9cDtaLU=w1920-h932-iv1"  />
-</div>
-
-###
-
-<div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/1iyGTMR4FyLqu9N_l894-b5746m8Vshzv=w1920-h932-iv1"  />
-</div>
-
-###
-
-<div align="center">
-  <img height="200" src="https://lh3.google.com/u/0/d/18_OFdmNW46bKoy8sJKaYBQw7MJ_JNudv=w1920-h932-iv1"  />
-</div>
-
-###
